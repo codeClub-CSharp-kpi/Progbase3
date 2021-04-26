@@ -32,7 +32,7 @@ namespace Generator.models
 		public string Bio { get; set; } // actor biography / 250 symbs
 
 		[ForeignKey("Photo")]
-		public string PhotoId { get; set; } // apearence
+		public int PhotoId { get; set; } // apearence
 		public virtual Photo Photo { get; set; }
 
 		[ForeignKey("City")]
