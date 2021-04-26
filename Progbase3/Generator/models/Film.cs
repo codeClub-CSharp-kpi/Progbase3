@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Generator
+namespace Generator.models
 {
 	[Table("Films")]
 	class Film

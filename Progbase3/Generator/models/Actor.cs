@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Generator.Models
+namespace Generator.models
 {
 	[Table("Actors")]
 	class Actor
