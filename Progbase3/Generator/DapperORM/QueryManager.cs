@@ -21,9 +21,11 @@ namespace Generator.DapperORM
 		{
 			_connectionString =@"Data Source=(LocalDB)\MSSQLLocalDB;
 								AttachDbFilename=|DataDirectory|\Data\FilmManagmentDB.mdf;
-								Integrated Security = True";
+								Integrated Security = True"; // insecure(?) how to create app.config in .net core&
+
 			_providerName = "System.Data.SqlClient";
 
+			// using abstract factory to provide work with any data-provider
 			_factory = DbProviderFactories.GetFactory(_providerName);
 		}
 
@@ -36,7 +38,6 @@ namespace Generator.DapperORM
 				conn.Execute(procedureName, param, commandType: CommandType.StoredProcedure);
 			}
 		}
-
 		public static IEnumerable<T> ExecSelect<T>(string procedureName, DynamicParameters param = null)
 		{
 			using (IDbConnection conn = _factory.CreateConnection())
