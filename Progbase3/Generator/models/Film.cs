@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Generator.models
 {
-	class Film
+	public class Film
 	{
 		public int Id { get; set; }
 		public string Title { get; set; }
