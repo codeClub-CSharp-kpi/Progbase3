@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Generator.models
 {
-	public class Review
+	public class Review : UserEntity
 	{
 		public int Id { get; set; }
 		public string Title { get; set; } // 50 symbs

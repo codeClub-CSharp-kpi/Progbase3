@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Generator.models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Generator.Repostitories
+namespace Generator.Repostitories.implementations
 {
-	public class ActorRepository : IDataRepository<models.Actor>
+	public class ActorRepository: interfaces.IActorRepository
 	{
 		public void Delete(models.Actor entityToDelete)
 		{
@@ -16,6 +17,11 @@ namespace Generator.Repostitories
 		public IEnumerable<models.Actor> GetAll()
 		{
 			return DapperORM.QueryManager.ExecSelect<models.Actor>("GetAllActors");
+		}
+
+		public Actor GetById(long id)
+		{
+			throw new NotImplementedException();
 		}
 
 		public void Insert(models.Actor entityToInsert)

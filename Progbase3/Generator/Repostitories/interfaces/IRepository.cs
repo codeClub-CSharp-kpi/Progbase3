@@ -4,18 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Generator.Repostitories
+namespace Generator.Repostitories.interfaces
 {
-	public interface IDataRepository
-	{
-
-	}
-	public interface IDataRepository<T>: IDataRepository
+	public interface IRepository<T>
 		where T : class
 	{
+		void Delete(T entityToDelete);
+		IEnumerable<T> GetAll();
+		T GetById(long id);
 		void Insert(T entityToInsert);
 		void Update(T entityToUpdate);
-		IEnumerable<T> GetAll();
-		void Delete(T entityToDelete);
 	}
 }
