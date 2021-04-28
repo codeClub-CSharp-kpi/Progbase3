@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Generator.models
 {
-	public class Actor: UserEntity
+	public class Actor: IEntity
 	{
 		public int Id { get; set; } // primary key
 		public string Name { get; set; } // name of actor / 50 symbs

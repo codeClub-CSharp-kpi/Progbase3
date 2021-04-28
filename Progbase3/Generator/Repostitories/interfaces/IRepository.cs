@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Generator.Repostitories.interfaces
 {
 	public interface IRepository<T>
-		where T : class
+		where T : models.IEntity
 	{
 		void Delete(T entityToDelete);
 		IEnumerable<T> GetAll();

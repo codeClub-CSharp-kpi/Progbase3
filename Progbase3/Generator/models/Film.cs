@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Generator.models
 {
-	public class Film: UserEntity
+	public class Film: IEntity
 	{
 		public int Id { get; set; }
 		public string Title { get; set; }
