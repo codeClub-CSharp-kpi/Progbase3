@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Generator.models
 {
-	public abstract class UserEntity
-	{}
+	public interface IEntity
+	{
+		public int Id { get; set; }
+	}
 }

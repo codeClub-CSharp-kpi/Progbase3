@@ -24,7 +24,7 @@ namespace Generator.UI
 
 		private int _choice;
 
-		object _repo;
+		private object _repo;
 
 		Repostitories.interfaces.IActorRepository _actRepo;
 		Repostitories.interfaces.IFilmRepository _filmRepo;
