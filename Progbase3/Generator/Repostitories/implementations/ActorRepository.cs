@@ -33,12 +33,28 @@ namespace Generator.Repostitories.implementations
 
 		public void Insert(Actor entityToInsert)
 		{
-			throw new NotImplementedException();
+			var parameters = new Dapper.DynamicParameters();
+			parameters.Add("@actName", entityToInsert.Name);
+			parameters.Add("@actPatro", entityToInsert.Patronimic);
+			parameters.Add("@actSur", entityToInsert.Surname);
+			parameters.Add("@actBio", entityToInsert.Bio);
+			parameters.Add("@photoId", entityToInsert.PhotoId);
+			parameters.Add("@cityId", entityToInsert.CityId);
+
+			DapperORM.QueryManager.ExecDML("AddActor", parameters);
 		}
 
 		public void Update(Actor entityToUpdate)
 		{
-			throw new NotImplementedException();
+			var parameters = new Dapper.DynamicParameters();
+			parameters.Add("@actName", entityToUpdate.Name);
+			parameters.Add("@actPatro", entityToUpdate.Patronimic);
+			parameters.Add("@actSur", entityToUpdate.Surname);
+			parameters.Add("@actBio", entityToUpdate.Bio);
+			parameters.Add("@photoId", entityToUpdate.PhotoId);
+			parameters.Add("@cityId", entityToUpdate.CityId);
+
+			DapperORM.QueryManager.ExecDML("UpdateActor", parameters);
 		}
 	}
 }
