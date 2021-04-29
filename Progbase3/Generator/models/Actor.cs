@@ -20,19 +20,19 @@ namespace Generator.models
 		public int CityId { get; set; } // where was born
 	}
 
-	class Photo
+	public class Photo
 	{
 		public int Id { get; set; }
 		public string Path { get; set; }
 	}
 
-	class Country
+	public class Country
 	{
 		public int Id { get; set; }
 		public string Name { get; set; } // 50 symbs
 	}
 
-	class City
+	public class City: IEntity
 	{
 		public int Id { get; set; }
 		public string Name { get; set; } // 50 symbs
