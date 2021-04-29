@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Generator.Repostitories.implementations
 {
-	public class FilmRepository : Repostitories.interfaces.IFilmRepository
+	public class FilmRepository : IFilmRepository
 	{
-		public void Delete(Film entityToDelete)
+		public void Delete(int idEntityToDelete)
 		{
 			throw new NotImplementedException();
 		}
 
-		public Film GetById(long id)
+		public Film GetById(int id)
 		{
 			throw new NotImplementedException();
 		}

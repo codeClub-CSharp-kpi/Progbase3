@@ -9,9 +9,9 @@ namespace Generator.Repostitories.interfaces
 	public interface IRepository<T>
 		where T : models.IEntity
 	{
-		void Delete(T entityToDelete);
+		void Delete(int idEntityToDelete);
 		IEnumerable<T> GetAll();
-		T GetById(long id);
+		T GetById(int id);
 		void Insert(T entityToInsert);
 		void Update(T entityToUpdate);
 	}
