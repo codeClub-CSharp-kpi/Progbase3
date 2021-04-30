@@ -91,55 +91,5 @@ namespace Generator.EnityRandomProducers
 			return sb.ToString();
 		}
 
-		private void ReadLinesToCollection(string fullPath, IList<string> lineStorage)
-		{
-			using (FileStream fs = new FileStream(fullPath, FileMode.Open, FileAccess.Read))
-			{
-				using (StreamReader sr = new StreamReader(fs))
-				{
-					string buff = String.Empty;
-					do
-					{
-						buff = sr.ReadLine();
-						if (buff == null)
-							break;
-
-						lineStorage.Add(buff);
-
-					} while (true);
-
-				}
-			}
-		}
-		
-		private void ReadSentencesToCollection(string fullPath, IList<string> sentenceStorage)
-		{
-			using (FileStream fs = new FileStream(fullPath, FileMode.Open, FileAccess.Read))
-			{
-				using (StreamReader sr = new StreamReader(fs))
-				{
-					StringBuilder sb = new StringBuilder();
-
-					string buff = String.Empty;
-					do
-					{
-						buff = sr.ReadLine();
-
-						if (buff == null)
-							break;
-
-						sb.Append(buff);
-					}
-					while (true);
-
-					foreach(var sen in sb.ToString().Split('.'))
-					{
-						_sentences.Add(sen);
-					}
-				}
-			}
-		}
-
-
 	}
 }
