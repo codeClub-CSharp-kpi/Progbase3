@@ -5,10 +5,8 @@ using System.Text;
 
 namespace Generator.EnityRandomProducers
 {
-	public class FilmProducer : Producer
+	public class FilmProducer : RandomProducer
 	{
-		private Random _randProvider;
-
 		private string _titleSource;
 		private string _sentenceSource;
 
@@ -17,8 +15,6 @@ namespace Generator.EnityRandomProducers
 
 		public FilmProducer()
 		{
-			_randProvider = new Random();
-			
 			_titleSource = _fakeDataSource + "titles";
 			_sentenceSource = _fakeDataSource + "loremIpsum";
 		}

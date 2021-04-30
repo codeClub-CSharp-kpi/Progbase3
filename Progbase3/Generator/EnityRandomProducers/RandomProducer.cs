@@ -7,12 +7,15 @@ using System.Threading.Tasks;
 
 namespace Generator.EnityRandomProducers
 {
-	public abstract class Producer
+	public abstract class RandomProducer
 	{
+		private protected Random _randProvider;
+
 		private protected readonly string _fakeDataSource;
-		public Producer()
+		public RandomProducer()
 		{
 			_fakeDataSource = @"..\..\..\..\..\data\Generator\";
+			_randProvider = new Random();
 		}
 		public abstract models.IEntity Create();
 

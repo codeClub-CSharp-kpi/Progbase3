@@ -10,10 +10,8 @@ using Generator.Repostitories.implementations;
 namespace Generator.EnityRandomProducers
 {
 
-	public class ActorProducer: Producer
+	public class ActorProducer: RandomProducer
 	{
-		private Random _randProvider;
-
 		private string _nameSource;
 		private string _surnameSource;
 		private string _sentenceSource;
@@ -24,8 +22,6 @@ namespace Generator.EnityRandomProducers
 
 		public ActorProducer()
 		{
-			_randProvider = new Random();
-
 			_nameSource = _fakeDataSource + "names";
 			_surnameSource = _fakeDataSource + "surnames";
 			_sentenceSource = _fakeDataSource + "loremIpsum";
@@ -69,7 +65,7 @@ namespace Generator.EnityRandomProducers
 			return countries[_randProvider.Next(countries.Count)].Id;
 		}
 		
-		private int GeneratePhotoId()
+		private int GneratePhotoId()
 		{
 			var pr = new PhotoRepository();
 			List<Photo> photos = pr.GetAll().ToList(); // defining, what IDs exist
