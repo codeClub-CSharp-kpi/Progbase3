@@ -12,7 +12,10 @@ namespace Generator.Repostitories.implementations
 	{
 		public void Delete(int idEntityToDelete)
 		{
-			throw new NotImplementedException();
+			var parameters = new Dapper.DynamicParameters();
+			parameters.Add("@revId", idEntityToDelete);
+
+			DapperORM.QueryManager.ExecDML("DeleteReview", parameters);
 		}
 
 		public IEnumerable<Review> GetAll()
@@ -22,17 +25,33 @@ namespace Generator.Repostitories.implementations
 
 		public Review GetById(int id)
 		{
-			throw new NotImplementedException();
+			var parameters = new Dapper.DynamicParameters();
+			parameters.Add("@reviewId", id);
+
+			return DapperORM.QueryManager.ExecSelect<Review>("GetReview", parameters).FirstOrDefault();
 		}
 
 		public void Insert(Review entityToInsert)
 		{
-			throw new NotImplementedException();
+			var parameters = new Dapper.DynamicParameters();
+			parameters.Add("@title", entityToInsert.Title);
+			parameters.Add("@isPos", entityToInsert.isPositive);
+			parameters.Add("@reviewText", entityToInsert.ReviewText);
+			parameters.Add("@filmId", entityToInsert.FilmId);
+
+			DapperORM.QueryManager.ExecDML("AddReview", parameters);
 		}
 
 		public void Update(Review entityToUpdate)
 		{
-			throw new NotImplementedException();
+			var parameters = new Dapper.DynamicParameters();
+			parameters.Add("@rid", entityToUpdate.Id);
+			parameters.Add("@title", entityToUpdate.Title);
+			parameters.Add("@isPos", entityToUpdate.isPositive);
+			parameters.Add("@reviewText", entityToUpdate.ReviewText);
+			parameters.Add("@filmId", entityToUpdate.FilmId);
+
+			DapperORM.QueryManager.ExecDML("UpdateReview", parameters);
 		}
 	}
 }
