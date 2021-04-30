@@ -26,7 +26,7 @@ namespace Generator.models
 		public string Path { get; set; }
 	}
 
-	public class Country
+	public class Country: IEntity
 	{
 		public int Id { get; set; }
 		public string Name { get; set; } // 50 symbs
