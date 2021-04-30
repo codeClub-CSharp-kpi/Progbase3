@@ -20,7 +20,7 @@ namespace Generator.models
 		public int CityId { get; set; } // where was born
 	}
 
-	public class Photo
+	public class Photo: IEntity
 	{
 		public int Id { get; set; }
 		public string Path { get; set; }
