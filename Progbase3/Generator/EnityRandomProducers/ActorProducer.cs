@@ -48,7 +48,8 @@ namespace Generator.EnityRandomProducers
 				Patronimic = GeneratePatronimic(),
 				Surname = GenerateSurname(),
 				CityId = GenerateCityId(),
-				
+				PhotoId = GeneratePhotoId(),
+				Bio = GenerateBio()
 			};
 		}
 
@@ -61,11 +62,12 @@ namespace Generator.EnityRandomProducers
 		{
 			return GenerateName();
 		}
-
+		
 		private string GenerateSurname()
 		{
 			return _surnames[_randProvider.Next(_surnames.Count)];
 		}
+		
 		private int GenerateCityId()
 		{
 			var cr = new CountryRepository();
@@ -73,13 +75,26 @@ namespace Generator.EnityRandomProducers
 
 			return countries[_randProvider.Next(countries.Count)].Id;
 		}
-
+		
 		private int GeneratePhotoId()
 		{
 			var pr = new PhotoRepository();
 			List<Photo> photos = pr.GetAll().ToList(); // defining, what IDs exist
 
 			return photos[_randProvider.Next(photos.Count)].Id;
+		}
+
+		private string GenerateBio()
+		{
+			const int bioLimit = 250;
+			StringBuilder sb = new StringBuilder(bioLimit);
+
+			while (sb.Length < bioLimit)
+			{
+				sb.AppendFormat("{0}. ", _sentences[_randProvider.Next(_sentences.Count)]);
+			}
+
+			return sb.ToString();
 		}
 
 		private void ReadLinesToCollection(string fullPath, IList<string> lineStorage)
@@ -102,6 +117,7 @@ namespace Generator.EnityRandomProducers
 				}
 			}
 		}
+		
 		private void ReadSentencesToCollection(string fullPath, IList<string> sentenceStorage)
 		{
 			using (FileStream fs = new FileStream(fullPath, FileMode.Open, FileAccess.Read))
