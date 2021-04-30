@@ -12,27 +12,48 @@ namespace Generator.Repostitories.implementations
 	{
 		public void Delete(int idEntityToDelete)
 		{
-			throw new NotImplementedException();
+			var parameters = new Dapper.DynamicParameters();
+			parameters.Add("@filmId", idEntityToDelete);
+
+			DapperORM.QueryManager.ExecDML("DelFilm", parameters);
 		}
 
 		public Film GetById(int id)
 		{
-			throw new NotImplementedException();
+			var parameters = new Dapper.DynamicParameters();
+			parameters.Add("@fid", id);
+
+			return DapperORM.QueryManager.ExecSelect<Film>("GetFilmById", parameters).FirstOrDefault();
 		}
 
 		public void Insert(Film entityToInsert)
 		{
-			throw new NotImplementedException();
+			var parameters = new Dapper.DynamicParameters();
+			parameters.Add("@title", entityToInsert.Title);
+			parameters.Add("@rate", entityToInsert.Rate);
+			parameters.Add("@offRelease", entityToInsert.OfficialReleaseDate);
+			parameters.Add("@slogan", entityToInsert.Slogan);
+			parameters.Add("@storyline", entityToInsert.StoryLine);
+
+			DapperORM.QueryManager.ExecDML("AddFilm", parameters);
 		}
 
 		public void Update(Film entityToUpdate)
 		{
-			throw new NotImplementedException();
+			var parameters = new Dapper.DynamicParameters();
+			parameters.Add("@fid", entityToUpdate.Id);
+			parameters.Add("@title", entityToUpdate.Title);
+			parameters.Add("@rate", entityToUpdate.Rate);
+			parameters.Add("@offRelease", entityToUpdate.OfficialReleaseDate);
+			parameters.Add("@slogan", entityToUpdate.Slogan);
+			parameters.Add("@storyline", entityToUpdate.StoryLine);
+
+			DapperORM.QueryManager.ExecDML("UpdateFilm", parameters);
 		}
 
 		public IEnumerable<Film> GetAll()
 		{
-			throw new NotImplementedException();
+			return DapperORM.QueryManager.ExecSelect<Film>("GetAllFilms");
 		}
 	}
 }
