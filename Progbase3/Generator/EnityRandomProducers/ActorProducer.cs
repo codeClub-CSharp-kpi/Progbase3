@@ -9,7 +9,6 @@ using Generator.Repostitories.implementations;
 
 namespace Generator.EnityRandomProducers
 {
-	
 
 	public class ActorProducer: Producer
 	{
@@ -30,14 +29,6 @@ namespace Generator.EnityRandomProducers
 			_nameSource = _fakeDataSource + "names";
 			_surnameSource = _fakeDataSource + "surnames";
 			_sentenceSource = _fakeDataSource + "loremIpsum";
-
-			_names = new List<string>();
-			_surnames = new List<string>();
-			_sentences = new List<string>();
-
-			ReadLinesToCollection(_surnameSource, _surnames);
-			ReadLinesToCollection(_nameSource, _names);
-			ReadSentencesToCollection(_sentenceSource, _sentences);
 		}
 
 		public override IEntity Create()
@@ -55,6 +46,7 @@ namespace Generator.EnityRandomProducers
 
 		private string GenerateName()
 		{
+			_names = ReadByLines(_nameSource);
 			return _names[_randProvider.Next(_names.Count)];
 		}
 
@@ -65,6 +57,7 @@ namespace Generator.EnityRandomProducers
 		
 		private string GenerateSurname()
 		{
+			_surnames = ReadByLines(_surnameSource);
 			return _surnames[_randProvider.Next(_surnames.Count)];
 		}
 		
@@ -89,6 +82,7 @@ namespace Generator.EnityRandomProducers
 			const int bioLimit = 250;
 			StringBuilder sb = new StringBuilder(bioLimit);
 
+			_sentences = ReadBySentences(_sentenceSource);
 			while (sb.Length < bioLimit)
 			{
 				sb.AppendFormat("{0}. ", _sentences[_randProvider.Next(_sentences.Count)]);
