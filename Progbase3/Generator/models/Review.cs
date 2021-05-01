@@ -16,5 +16,6 @@ namespace Generator.models
 		public bool isPositive { get; set; }
 		public string ReviewText { get; set; } // 250 symbs
 		public int FilmId { get; set; }
+		public Film Film { get; set; }
 	}
 }

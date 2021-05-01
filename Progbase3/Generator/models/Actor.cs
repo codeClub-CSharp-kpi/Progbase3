@@ -17,26 +17,13 @@ namespace Generator.models
 		public string Surname { get; set; } // last name / 50 symbs
 		public string Bio { get; set; } // actor biography / 250 symbs
 		public int PhotoId { get; set; } // apearence
+		public Photo Photo { get; set; }
+
 		public int CityId { get; set; } // where was born
-	}
+		public City City { get; set; }
 
-	public class Photo: IEntity
-	{
-		public int Id { get; set; }
-		public string Path { get; set; }
-	}
-
-	public class Country: IEntity
-	{
-		public int Id { get; set; }
-		public string Name { get; set; } // 50 symbs
-	}
-
-	public class City: IEntity
-	{
-		public int Id { get; set; }
-		public string Name { get; set; } // 50 symbs
-		public int CounrtyId { get; set; }
+		//nav-ref that creates many2many relation
+		public IEnumerable<Film> Films { get; set; } // featured films
 	}
 	
 }

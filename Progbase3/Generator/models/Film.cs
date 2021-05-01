@@ -16,5 +16,10 @@ namespace Generator.models
 		public DateTime OfficialReleaseDate { get; set; }
 		public string Slogan { get; set; } // 50 symbols
 		public string StoryLine { get; set; } // 250 symbols
+
+		public IEnumerable<Review> Reviews { get; set; }
+
+		//nav-ref that creates many2many relation
+		public IEnumerable<Actor> Actors { get; set; } // Cast(by other words)
 	}
 }
