@@ -15,6 +15,8 @@ namespace Generator.models
 		public string Title { get; set; } // 50 symbs
 		public bool isPositive { get; set; }
 		public string ReviewText { get; set; } // 250 symbs
+		public double Rate { get; set; }
+
 		public int FilmId { get; set; }
 		public Film Film { get; set; }
 	}
