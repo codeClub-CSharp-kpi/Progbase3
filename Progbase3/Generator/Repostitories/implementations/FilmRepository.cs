@@ -55,5 +55,15 @@ namespace Generator.Repostitories.implementations
 		{
 			return DapperORM.QueryManager.ExecSelect<Film>("GetAllFilms");
 		}
+
+		public IEnumerable<Review> GetReviews(int filmId)
+		{
+			return new ReviewRepository().GetAll().Where(r => r.FilmId == filmId);
+		}
+		
+		public IEnumerable<Actor> GetActors(int filmId)
+		{
+			return new FilmActorRepository().GetActorsByFilm(filmId);
+		}
 	}
 }

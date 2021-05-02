@@ -46,5 +46,10 @@ namespace Generator.Repostitories.implementations
 
 			DapperORM.QueryManager.ExecDML("UpdateCountry", parameters);
 		}
+
+		public IEnumerable<City> GetCities(int countryId)
+		{
+			return new CityRepository().GetAll().Where(c => c.CountryId == countryId);
+		}
 	}
 }

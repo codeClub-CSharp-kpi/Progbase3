@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace Generator.Repostitories.interfaces
 {
-	interface IFilmsActorsRepository: IRepository<FilmsActors>
+	interface IFilmActorRepository
 	{
+		IEnumerable<Actor> GetActorsByFilm(int actId);
+		IEnumerable<Film> GetFilmsByActor(int filmId);
 	}
 }

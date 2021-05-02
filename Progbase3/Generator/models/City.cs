@@ -6,7 +6,7 @@ namespace Generator.models
 	{
 		public int Id { get; set; }
 		public string Name { get; set; } // 50 symbs
-		public int CounrtyId { get; set; }
+		public int CountryId { get; set; }
 		public Country Country { get; set; }
 
 		public IEnumerable<Actor> Actors { get; set; }

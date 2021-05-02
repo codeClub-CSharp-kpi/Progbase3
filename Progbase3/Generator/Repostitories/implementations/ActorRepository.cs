@@ -56,5 +56,22 @@ namespace Generator.Repostitories.implementations
 
 			DapperORM.QueryManager.ExecDML("UpdateActor", parameters);
 		}
+
+		public City GetCity(int actId)
+		{
+			int actorCityId = new ActorRepository().GetById(actId).CityId;
+			return new CityRepository().GetById(actorCityId);
+		}
+
+		public IEnumerable<Film> GetFilms(int actId)
+		{
+			return new FilmActorRepository().GetFilmsByActor(actId);
+		}
+		
+		public Photo GetPhoto(int actId)
+		{
+			int actorPhotoId = new ActorRepository().GetById(actId).PhotoId;
+			return new PhotoRepository().GetById(actorPhotoId);
+		}
 	}
 }

@@ -53,5 +53,11 @@ namespace Generator.Repostitories.implementations
 
 			DapperORM.QueryManager.ExecDML("UpdateReview", parameters);
 		}
+
+		public Film GetFilm(int revId)
+		{
+			int filmOfReviewID = GetById(revId).FilmId;
+			return new FilmRepository().GetById(filmOfReviewID);
+		}
 	}
 }

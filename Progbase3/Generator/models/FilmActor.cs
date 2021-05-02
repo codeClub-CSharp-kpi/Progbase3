@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Generator.models
 {
-	public class FilmsActors: IEntity
+	public class FilmActor: IEntity
 	{
 		public int Id { get; set; }
 		

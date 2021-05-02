@@ -1,4 +1,5 @@
 ﻿using Generator.models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -42,6 +43,11 @@ namespace Generator.Repostitories.implementations
 			parameters.Add("@pName", entityToUpdate.Path);
 
 			DapperORM.QueryManager.ExecDML("UpdatePhoto", parameters);
+		}
+
+		public Actor GetActor(int photoId)
+		{
+			return new ActorRepository().GetAll().Where(a => a.PhotoId == photoId).FirstOrDefault();
 		}
 	}
 }
