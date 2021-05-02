@@ -24,7 +24,6 @@ namespace Generator.EnityRandomProducers
 			return new Film()
 			{
 				Title = GenerateTitle(),
-				Rate = GenerateRate(),
 				OfficialReleaseDate = GenerateOffRelease(),
 				Slogan = GenerateSlogan(),
 				StoryLine = GenerateStoryLine(),
@@ -35,43 +34,6 @@ namespace Generator.EnityRandomProducers
 		{
 			_words = ReadByLines(_titleSource);
 			return _words[_randProvider.Next(_words.Count)];
-		}
-
-		private double GenerateRate()
-		{
-			Console.Write("\n>Rate lowerbound: ");
-			uint lowBound = uint.TryParse(Console.ReadLine(), out uint parsedLB) ? parsedLB : throw new Exception("Couldn't parse lowerbound");
-			
-			Console.Write("\n>Rate upperbound: ");
-			uint upBound = uint.TryParse(Console.ReadLine(), out uint parsedUB) ? parsedUB : throw new Exception("Couldn't parse upperbound");
-
-			if (lowBound > 0 && lowBound <= 10)
-			{
-				throw new Exception("Lowerbound value is inappropriate");
-			}
-			
-			if (upBound > 0 && upBound <= 10)
-			{
-				throw new Exception("Uppbound value is inappropriate");
-			}
-
-			if (!(lowBound < upBound))
-			{
-				throw new Exception("Lowerbound is greater than upperbound");
-			}
-			
-			if (lowBound == upBound)
-			{
-				throw new Exception("Lowerbound equals to upperbound");
-			}
-
-			int integerUnit;
-			double afterPointUnit;
-
-			integerUnit = _randProvider.Next( (int)lowBound, (int)upBound);
-			afterPointUnit = _randProvider.NextDouble();
-			
-			return integerUnit + afterPointUnit;
 		}
 
 		private DateTime GenerateOffRelease()
