@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Generator.Repostitories.implementations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,9 +17,21 @@ namespace Generator.models
 		public string Slogan { get; set; } // 50 symbols
 		public string StoryLine { get; set; } // 250 symbols
 
-		public IEnumerable<Review> Reviews { get; set; }
+		public IEnumerable<Review> Reviews
+		{
+			get
+			{
+				return new ReviewRepository().GetAll().Where(r => r.FilmId == Id);
+			}
+		}
 
 		//nav-ref that creates many2many relation
-		public IEnumerable<Actor> Actors { get; set; } // Cast(by other words)
+		public IEnumerable<Actor> Actors
+		{
+			get 
+			{
+				return new FilmActorRepository().GetActorsByFilm(Id);
+			}
+		}// Cast(by other words)
 	}
 }

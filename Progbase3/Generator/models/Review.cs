@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Generator.Repostitories.implementations;
 
 namespace Generator.models
 {
@@ -18,6 +19,12 @@ namespace Generator.models
 		public double Rate { get; set; }
 
 		public int FilmId { get; set; }
-		public Film Film { get; set; }
+		public Film Film
+		{
+			get
+			{
+				return new FilmRepository().GetById(FilmId);
+			}
+		}
 	}
 }
