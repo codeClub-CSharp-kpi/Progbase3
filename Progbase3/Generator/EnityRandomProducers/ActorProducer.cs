@@ -65,7 +65,7 @@ namespace Generator.EnityRandomProducers
 			return countries[_randProvider.Next(countries.Count)].Id;
 		}
 		
-		private int GneratePhotoId()
+		private int GeneratePhotoId()
 		{
 			var pr = new PhotoRepository();
 			List<Photo> photos = pr.GetAll().ToList(); // defining, what IDs exist
