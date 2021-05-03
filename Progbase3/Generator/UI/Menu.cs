@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Generator.EnityRandomProducers;
+using Generator.models;
+using Generator.Repostitories.implementations;
+using Generator.Repostitories.interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,11 +28,8 @@ namespace Generator.UI
 
 		private int _choice;
 
-		private object _repo;
-
-		Repostitories.interfaces.IActorRepository _actRepo;
-		Repostitories.interfaces.IFilmRepository _filmRepo;
-		Repostitories.interfaces.IReviewRepository _revRepo;
+		private IRepository<IEntity> _repo;
+		private RandomProducer _rp;
 
 		public bool IsExit { get; set; }
 
@@ -36,7 +37,44 @@ namespace Generator.UI
 		{
 			
 		}
+		
+		public void GetEntityChoice()
+		{
+			ShowEntityChoiceMenu();
 
+			
+			switch (GetChoice())
+			{
+				case (int)Models.Actor:
+					_repo = (IRepository<IEntity>)new ActorRepository();
+					_rp = new ActorProducer();
+					break;
+				case (int)Models.Film:
+					_repo = (IRepository<IEntity>)new FilmRepository();
+					_rp = new FilmProducer();
+					break;
+				case (int)Models.Review:
+					_repo = (IRepository<IEntity>)new ReviewRepository();
+					_rp = new ReviewProducer();
+					break;
+				default:
+					throw new Exception("Invalid entity choice!");
+			}
+			Console.WriteLine("\n\n");
+		}
+		public void ProceedGeneration()
+		{
+			ulong count = GetCountOfEntities();
+			int i = 0;
+
+			while ((ulong)i < count)
+			{
+				_repo.Insert(_rp.Create());
+				i++;
+			}
+
+		}
+		
 		private int GetChoice()
 		{
 			Console.Write("\n>");
@@ -49,42 +87,14 @@ namespace Generator.UI
 
 			return choice;
 		}
-		
-		public void GetEntityChoice()
+		private ulong GetCountOfEntities()
 		{
-			ShowEntityChoiceMenu();
-			switch (GetChoice())
-			{
-				case (int)Models.Actor:
-					_repo = new Repostitories.implementations.ActorRepository();
-					break;
-				case (int)Models.Film:
-					_repo = new Repostitories.implementations.FilmRepository();
-					break;
-				case (int)Models.Review:
-					_repo = new Repostitories.implementations.ReviewRepository();
-					break;
-				default:
-					throw new Exception("Invalid entity choice!");
-			}
-			Console.WriteLine("\n\n");
-		}
-		
-		public void HandleOperationChoice()
-		{
-			ulong countOfEntities = ulong.TryParse(Console.ReadLine(), out ulong parsed)
-				? parsed 
+			Console.Write("\n>Count of entities: ");
+			return ulong.TryParse(Console.ReadLine(), out ulong parsed)
+				? parsed
 				: throw new Exception("Couldn't recognize count of entities!");
-
-
-			_actRepo = _repo as Repostitories.implementations.ActorRepository;
-			_filmRepo = _repo as Repostitories.implementations.FilmRepository;
-			_revRepo = _repo as Repostitories.implementations.ReviewRepository;
-
 		}
-
-
-		void ShowEntityChoiceMenu()
+		private void ShowEntityChoiceMenu()
 		{
 			Console.WriteLine("\n\n");
 			Console.WriteLine("---------------------");
@@ -94,7 +104,6 @@ namespace Generator.UI
 			Console.WriteLine("---------------------");
 			Console.WriteLine("\n\n");
 		}
-
 		
 
 	}
