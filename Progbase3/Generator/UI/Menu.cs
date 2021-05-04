@@ -1,12 +1,7 @@
 ﻿using Generator.EnityRandomProducers;
 using Generator.models;
 using Generator.Repostitories.implementations;
-using Generator.Repostitories.interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Generator.UI
 {
