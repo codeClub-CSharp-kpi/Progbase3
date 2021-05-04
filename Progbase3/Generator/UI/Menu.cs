@@ -11,7 +11,8 @@ namespace Generator.UI
 		{
 			Actor = 1,
 			Film,
-			Review
+			Review,
+			None
 		};
 		enum CRUD_Operations
 		{
@@ -54,6 +55,9 @@ namespace Generator.UI
 				case (int)Models.Review:
 					_repo = new ReviewRepository();
 					break;
+				case (int)Models.None:
+					IsExit = true;
+					break;
 				default:
 					throw new Exception("Invalid entity choice!");
 			}
@@ -68,15 +72,32 @@ namespace Generator.UI
 			_filmRepo = _repo as FilmRepository;
 			_revRepo = _repo as ReviewRepository;
 
+			RandomProducer rp = null;
+
+			if (_actRepo != null)
+			{
+				rp = new ActorProducer();
+			}
+			else if (_filmRepo != null)
+			{
+				rp = new FilmProducer();
+			}
+			else if(_revRepo != null)
+			{
+				rp = new ReviewProducer();
+			}
+
+			IEntity genEntity = null;
 			while ((ulong)i < count)
 			{
-				_actRepo?.Insert(new ActorProducer().Create() as Actor);
-				_filmRepo?.Insert(new FilmProducer().Create() as Film);
-				_revRepo?.Insert(new ReviewProducer().Create() as Review);
+				genEntity = rp.Create();
+				_actRepo?.Insert(genEntity as Actor);
+				_filmRepo?.Insert(genEntity as Film);
+				_revRepo?.Insert(genEntity as Review);
 				
 				i++;
 			}
-
+			Console.WriteLine("Success!");
 		}
 		
 		private int GetChoice()
@@ -103,8 +124,9 @@ namespace Generator.UI
 			Console.WriteLine("\n\n");
 			Console.WriteLine("---------------------");
 			Console.WriteLine("1.  Generate actors  ");
-			Console.WriteLine("2.  Generate films  ");
+			Console.WriteLine("2.  Generate films   ");
 			Console.WriteLine("3.  Generate review  ");
+			Console.WriteLine("4.  Exit             ");
 			Console.WriteLine("---------------------");
 			Console.WriteLine("\n\n");
 		}

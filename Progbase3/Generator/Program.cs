@@ -13,9 +13,13 @@ namespace Generator
 				do
 				{
 					m.GetEntityChoice();
+					if (m.IsExit)
+					{
+						break;
+					}
 					m.ProceedGeneration();
 				} 
-				while (m.IsExit);
+				while (true);
 			}
 			catch (Exception err)
 			{
