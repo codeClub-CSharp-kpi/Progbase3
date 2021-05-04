@@ -13,6 +13,31 @@ namespace Generator.EnityRandomProducers
 		private IList<string> _words; //for title
 		private IList<string> _sentences;
 
+		private static DateTime OffReleaseLowBound;
+		private static DateTime OffReleaseUpBound;
+		private static void GetOfficialReleaseBounds()
+		{
+			Console.Write("\n>Release date lowerbound (DD-MM-YYYY): ");
+			OffReleaseLowBound = DateTime.TryParse(Console.ReadLine(), out DateTime parsedLB) ? parsedLB : throw new Exception("Couldn't parse lowerbound");
+
+			Console.Write("\n>Release date upperbound (DD-MM-YYYY): ");
+			OffReleaseUpBound = DateTime.TryParse(Console.ReadLine(), out DateTime parsedUB) ? parsedUB : throw new Exception("Couldn't parse upperbound");
+
+			if (!(OffReleaseLowBound < OffReleaseUpBound))
+			{
+				throw new Exception("Lowerbound is greater than upperbound");
+			}
+
+			if (OffReleaseLowBound == OffReleaseUpBound)
+			{
+				throw new Exception("Lowerbound equals to upperbound");
+			}
+		}
+		
+		static FilmProducer()
+		{
+			GetOfficialReleaseBounds();
+		}
 		public FilmProducer()
 		{
 			_titleSource = _fakeDataSource + "titles";
@@ -38,26 +63,10 @@ namespace Generator.EnityRandomProducers
 
 		private DateTime GenerateOffRelease()
 		{
-			Console.Write("\n>Release date lowerbound (DD-MM-YYYY): ");
-			DateTime lowBound = DateTime.TryParse(Console.ReadLine(), out DateTime parsedLB) ? parsedLB : throw new Exception("Couldn't parse lowerbound");
-
-			Console.Write("\n>Release date upperbound (DD-MM-YYYY): ");
-			DateTime upBound = DateTime.TryParse(Console.ReadLine(), out DateTime parsedUB) ? parsedUB : throw new Exception("Couldn't parse upperbound");
-
-			if (!(lowBound < upBound))
-			{
-				throw new Exception("Lowerbound is greater than upperbound");
-			}
-
-			if (lowBound == upBound)
-			{
-				throw new Exception("Lowerbound equals to upperbound");
-			}
-
-			int daysBetween = (upBound - lowBound).Days;
+			int daysBetween = (OffReleaseUpBound - OffReleaseLowBound).Days;
 			int daysToAdd = _randProvider.Next(daysBetween); //from 0..to..daysCount
 
-			return lowBound.AddDays(daysToAdd);
+			return OffReleaseLowBound.AddDays(daysToAdd);
 		}
 
 		private string GenerateSlogan()
