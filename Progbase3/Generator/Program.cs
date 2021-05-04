@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Generator.UI;
+using System;
 
 namespace Generator
 {
@@ -6,7 +7,20 @@ namespace Generator
 	{
 		static void Main(string[] args)
 		{
-			Console.WriteLine("Hello World!");
+			Menu m = new Menu();
+			try
+			{
+				do
+				{
+					m.GetEntityChoice();
+					m.ProceedGeneration();
+				} 
+				while (m.IsExit);
+			}
+			catch (Exception err)
+			{
+				Console.WriteLine($"Error: {err.InnerException?.Message ?? err.Message}");
+			}
 		}
 	}
 }

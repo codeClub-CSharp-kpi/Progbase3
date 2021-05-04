@@ -30,7 +30,6 @@ namespace Generator.Repostitories.implementations
 		{
 			var parameters = new Dapper.DynamicParameters();
 			parameters.Add("@title", entityToInsert.Title);
-			parameters.Add("@rate", entityToInsert.Rate);
 			parameters.Add("@offRelease", entityToInsert.OfficialReleaseDate);
 			parameters.Add("@slogan", entityToInsert.Slogan);
 			parameters.Add("@storyline", entityToInsert.StoryLine);
@@ -43,7 +42,6 @@ namespace Generator.Repostitories.implementations
 			var parameters = new Dapper.DynamicParameters();
 			parameters.Add("@fid", entityToUpdate.Id);
 			parameters.Add("@title", entityToUpdate.Title);
-			parameters.Add("@rate", entityToUpdate.Rate);
 			parameters.Add("@offRelease", entityToUpdate.OfficialReleaseDate);
 			parameters.Add("@slogan", entityToUpdate.Slogan);
 			parameters.Add("@storyline", entityToUpdate.StoryLine);

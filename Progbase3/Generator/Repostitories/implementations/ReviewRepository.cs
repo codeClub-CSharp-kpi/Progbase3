@@ -37,6 +37,7 @@ namespace Generator.Repostitories.implementations
 			parameters.Add("@title", entityToInsert.Title);
 			parameters.Add("@isPos", entityToInsert.isPositive);
 			parameters.Add("@reviewText", entityToInsert.ReviewText);
+			parameters.Add("@rate", entityToInsert.Rate);
 			parameters.Add("@filmId", entityToInsert.FilmId);
 
 			DapperORM.QueryManager.ExecDML("AddReview", parameters);

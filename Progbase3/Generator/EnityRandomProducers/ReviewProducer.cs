@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Generator.EnityRandomProducers
 {
@@ -16,6 +15,41 @@ namespace Generator.EnityRandomProducers
 		private IList<string> _words; //for title
 		private IList<string> _sentences;
 
+		private static uint RatelowBound;
+		private static uint RateupBound;
+		private static void GetRateBounds()
+		{
+			Console.Write("\n>Rate lowerbound: ");
+			RatelowBound = uint.TryParse(Console.ReadLine(), out uint parsedLB) ? parsedLB : throw new Exception("Couldn't parse lowerbound");
+
+			Console.Write("\n>Rate upperbound: ");
+			RateupBound = uint.TryParse(Console.ReadLine(), out uint parsedUB) ? parsedUB : throw new Exception("Couldn't parse upperbound");
+
+			if (!(RatelowBound > 0 && RatelowBound <= 10))
+			{
+				throw new Exception("Lowerbound value is inappropriate");
+			}
+
+			if (!(RateupBound > 0 && RateupBound <= 10))
+			{
+				throw new Exception("Uppbound value is inappropriate");
+			}
+
+			if (!(RatelowBound < RateupBound))
+			{
+				throw new Exception("Lowerbound is greater than upperbound");
+			}
+
+			if (RatelowBound == RateupBound)
+			{
+				throw new Exception("Lowerbound equals to upperbound");
+			}
+		}
+
+		static ReviewProducer()
+		{
+			GetRateBounds();
+		}
 		public ReviewProducer()
 		{
 			_titleSource = _fakeDataSource + "titles";
@@ -70,36 +104,10 @@ namespace Generator.EnityRandomProducers
 
 		private double GenerateRate()
 		{
-			Console.Write("\n>Rate lowerbound: ");
-			uint lowBound = uint.TryParse(Console.ReadLine(), out uint parsedLB) ? parsedLB : throw new Exception("Couldn't parse lowerbound");
-
-			Console.Write("\n>Rate upperbound: ");
-			uint upBound = uint.TryParse(Console.ReadLine(), out uint parsedUB) ? parsedUB : throw new Exception("Couldn't parse upperbound");
-
-			if (lowBound > 0 && lowBound <= 10)
-			{
-				throw new Exception("Lowerbound value is inappropriate");
-			}
-
-			if (upBound > 0 && upBound <= 10)
-			{
-				throw new Exception("Uppbound value is inappropriate");
-			}
-
-			if (!(lowBound < upBound))
-			{
-				throw new Exception("Lowerbound is greater than upperbound");
-			}
-
-			if (lowBound == upBound)
-			{
-				throw new Exception("Lowerbound equals to upperbound");
-			}
-
 			int integerUnit;
 			double afterPointUnit;
 
-			integerUnit = _randProvider.Next((int)lowBound, (int)upBound);
+			integerUnit = _randProvider.Next((int)RatelowBound, (int)RateupBound);
 			afterPointUnit = _randProvider.NextDouble();
 
 			return integerUnit + afterPointUnit;

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Generator.EnityRandomProducers
 {
@@ -24,7 +22,7 @@ namespace Generator.EnityRandomProducers
 		{
 			List<string> lineStorage = new List<string>();
 
-			using (FileStream fs = new FileStream(fullPath, FileMode.Open, FileAccess.Read))
+			using (FileStream fs = new FileStream(fullPath+".txt", FileMode.Open, FileAccess.Read))
 			{
 				using (StreamReader sr = new StreamReader(fs))
 				{
@@ -48,7 +46,7 @@ namespace Generator.EnityRandomProducers
 		{
 			List<string> _sentences = new List<string>();
 
-			using (FileStream fs = new FileStream(fullPath, FileMode.Open, FileAccess.Read))
+			using (FileStream fs = new FileStream(fullPath + ".txt", FileMode.Open, FileAccess.Read))
 			{
 				using (StreamReader sr = new StreamReader(fs))
 				{
@@ -73,6 +71,6 @@ namespace Generator.EnityRandomProducers
 				}
 			}
 			return _sentences;
-		}
+		});
 	}
 }

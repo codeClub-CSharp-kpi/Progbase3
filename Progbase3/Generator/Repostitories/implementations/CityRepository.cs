@@ -35,7 +35,7 @@ namespace Generator.Repostitories.implementations
 		{
 			var parameters = new Dapper.DynamicParameters();
 			parameters.Add("@cityName", entityToInsert.Name);
-			parameters.Add("@countryId", entityToInsert.CounrtyId);
+			parameters.Add("@countryId", entityToInsert.CountryId);
 
 			DapperORM.QueryManager.ExecDML("AddCity", parameters);
 		}
@@ -45,7 +45,7 @@ namespace Generator.Repostitories.implementations
 			var parameters = new Dapper.DynamicParameters();
 			parameters.Add("@cid", entityToUpdate.Id);
 			parameters.Add("@cityName", entityToUpdate.Name);
-			parameters.Add("@countryId", entityToUpdate.CounrtyId);
+			parameters.Add("@countryId", entityToUpdate.CountryId);
 
 			DapperORM.QueryManager.ExecDML("UpdateCity", parameters);
 		}

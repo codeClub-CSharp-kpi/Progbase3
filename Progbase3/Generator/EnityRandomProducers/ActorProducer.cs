@@ -1,11 +1,8 @@
 ﻿using Generator.models;
-using System.IO;
-using System;
+using Generator.Repostitories.implementations;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Generator.Repostitories.implementations;
 
 namespace Generator.EnityRandomProducers
 {
@@ -59,10 +56,10 @@ namespace Generator.EnityRandomProducers
 		
 		private int GenerateCityId()
 		{
-			var cr = new CountryRepository();
-			List<Country> countries = cr.GetAll().ToList(); // defining, what IDs exist
+			var cr = new CityRepository();
+			List<City> cities = cr.GetAll().ToList(); // defining, what IDs exist
 
-			return countries[_randProvider.Next(countries.Count)].Id;
+			return cities[_randProvider.Next(cities.Count)].Id;
 		}
 		
 		private int GeneratePhotoId()

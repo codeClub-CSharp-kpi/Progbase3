@@ -26,7 +26,7 @@ namespace Generator.EnityRandomProducers
 				Title = GenerateTitle(),
 				OfficialReleaseDate = GenerateOffRelease(),
 				Slogan = GenerateSlogan(),
-				StoryLine = GenerateStoryLine(),
+				StoryLine = GenerateStoryLine()
 			};
 		}
 
@@ -57,7 +57,7 @@ namespace Generator.EnityRandomProducers
 			int daysBetween = (upBound - lowBound).Days;
 			int daysToAdd = _randProvider.Next(daysBetween); //from 0..to..daysCount
 
-			return lowBound.AddDays(daysBetween);
+			return lowBound.AddDays(daysToAdd);
 		}
 
 		private string GenerateSlogan()

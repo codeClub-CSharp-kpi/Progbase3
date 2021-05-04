@@ -28,8 +28,13 @@ namespace Generator.UI
 
 		private int _choice;
 
-		private IRepository<IEntity> _repo;
-		private RandomProducer _rp;
+		object _repo;
+
+		Repostitories.interfaces.IActorRepository _actRepo;
+		Repostitories.interfaces.IFilmRepository _filmRepo;
+		Repostitories.interfaces.IReviewRepository _revRepo;
+
+
 
 		public bool IsExit { get; set; }
 
@@ -46,16 +51,13 @@ namespace Generator.UI
 			switch (GetChoice())
 			{
 				case (int)Models.Actor:
-					_repo = (IRepository<IEntity>)new ActorRepository();
-					_rp = new ActorProducer();
+					_repo = new ActorRepository();
 					break;
 				case (int)Models.Film:
-					_repo = (IRepository<IEntity>)new FilmRepository();
-					_rp = new FilmProducer();
+					_repo = new FilmRepository();
 					break;
 				case (int)Models.Review:
-					_repo = (IRepository<IEntity>)new ReviewRepository();
-					_rp = new ReviewProducer();
+					_repo = new ReviewRepository();
 					break;
 				default:
 					throw new Exception("Invalid entity choice!");
@@ -67,9 +69,16 @@ namespace Generator.UI
 			ulong count = GetCountOfEntities();
 			int i = 0;
 
+			_actRepo = _repo as ActorRepository;
+			_filmRepo = _repo as FilmRepository;
+			_revRepo = _repo as ReviewRepository;
+
 			while ((ulong)i < count)
 			{
-				_repo.Insert(_rp.Create());
+				_actRepo?.Insert(new ActorProducer().Create() as Actor);
+				_filmRepo?.Insert(new FilmProducer().Create() as Film);
+				_revRepo?.Insert(new ReviewProducer().Create() as Review);
+				
 				i++;
 			}
 
@@ -83,7 +92,7 @@ namespace Generator.UI
 				parsedChoice : 
 				throw new Exception("Couldn't parse the choice!");
 
-			choice = _choice;
+			_choice = choice;
 
 			return choice;
 		}
