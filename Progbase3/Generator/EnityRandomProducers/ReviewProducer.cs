@@ -15,45 +15,42 @@ namespace Generator.EnityRandomProducers
 		private IList<string> _words; //for title
 		private IList<string> _sentences;
 
-		private static uint RatelowBound;
-		private static uint RateupBound;
-		private static void GetRateBounds()
+		private uint _ratelowBound;
+		private uint _rateupBound;
+		private void GetRateBounds()
 		{
 			Console.Write("\n>Rate lowerbound: ");
-			RatelowBound = uint.TryParse(Console.ReadLine(), out uint parsedLB) ? parsedLB : throw new Exception("Couldn't parse lowerbound");
+			_ratelowBound = uint.TryParse(Console.ReadLine(), out uint parsedLB) ? parsedLB : throw new Exception("Couldn't parse lowerbound");
 
 			Console.Write("\n>Rate upperbound: ");
-			RateupBound = uint.TryParse(Console.ReadLine(), out uint parsedUB) ? parsedUB : throw new Exception("Couldn't parse upperbound");
+			_rateupBound = uint.TryParse(Console.ReadLine(), out uint parsedUB) ? parsedUB : throw new Exception("Couldn't parse upperbound");
 
-			if (!(RatelowBound > 0 && RatelowBound <= 10))
+			if (!(_ratelowBound >= 0 && _ratelowBound <= 10))
 			{
 				throw new Exception("Lowerbound value is inappropriate");
 			}
 
-			if (!(RateupBound > 0 && RateupBound <= 10))
+			if (!(_rateupBound > 0 && _rateupBound <= 10))
 			{
 				throw new Exception("Uppbound value is inappropriate");
 			}
 
-			if (!(RatelowBound < RateupBound))
+			if (!(_ratelowBound < _rateupBound))
 			{
 				throw new Exception("Lowerbound is greater than upperbound");
 			}
 
-			if (RatelowBound == RateupBound)
+			if (_ratelowBound == _rateupBound)
 			{
 				throw new Exception("Lowerbound equals to upperbound");
 			}
 		}
 
-		static ReviewProducer()
-		{
-			GetRateBounds();
-		}
 		public ReviewProducer()
 		{
 			_titleSource = _fakeDataSource + "titles";
 			_sentenceSource = _fakeDataSource + "loremIpsum";
+			GetRateBounds();
 		}
 
 		public override IEntity Create() 
@@ -107,7 +104,7 @@ namespace Generator.EnityRandomProducers
 			int integerUnit;
 			double afterPointUnit;
 
-			integerUnit = _randProvider.Next((int)RatelowBound, (int)RateupBound);
+			integerUnit = _randProvider.Next((int)_ratelowBound, (int)_rateupBound);
 			afterPointUnit = _randProvider.NextDouble();
 
 			return integerUnit + afterPointUnit;
