@@ -57,5 +57,13 @@ namespace Generator.Repostitories.implementations
 			int filmOfReviewID = GetById(revId).FilmId;
 			return new FilmRepository().GetById(filmOfReviewID);
 		}
+
+		public IEnumerable<Review> GetPage(int countOfElemsOnPage, int elemsToSkip)
+		{
+			var parameters = new Dapper.DynamicParameters();
+			parameters.Add("@pageElems", countOfElemsOnPage);
+			parameters.Add("@skippedElems", elemsToSkip);
+			return DapperORM.QueryManager.ExecSelect<Review>("GetReviewsPage", parameters);
+		}
 	}
 }

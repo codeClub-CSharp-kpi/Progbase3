@@ -70,5 +70,13 @@ namespace Generator.Repostitories.implementations
 			int actorPhotoId = new ActorRepository().GetById(actId).PhotoId;
 			return new PhotoRepository().GetById(actorPhotoId);
 		}
+
+		public IEnumerable<Actor> GetPage(int countOfElemsOnPage, int elemsToSkip)
+		{
+			var parameters = new Dapper.DynamicParameters();
+			parameters.Add("@pageElems", countOfElemsOnPage);
+			parameters.Add("@skippedElems", elemsToSkip);
+			return DapperORM.QueryManager.ExecSelect<Actor>("GetActorsPage", parameters);
+		}
 	}
 }

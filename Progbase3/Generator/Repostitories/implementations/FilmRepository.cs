@@ -60,5 +60,13 @@ namespace Generator.Repostitories.implementations
 		{
 			return new FilmActorRepository().GetActorsByFilm(filmId);
 		}
+
+		public IEnumerable<Film> GetPage(int countOfElemsOnPage, int elemsToSkip)
+		{
+			var parameters = new Dapper.DynamicParameters();
+			parameters.Add("@pageElems", countOfElemsOnPage);
+			parameters.Add("@skippedElems", elemsToSkip);
+			return DapperORM.QueryManager.ExecSelect<Film>("GetFilmsPage", parameters);
+		}
 	}
 }
