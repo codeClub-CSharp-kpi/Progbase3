@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MoiveHubSystem.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -31,6 +32,8 @@ namespace MoiveHubSystem.Views
 				this.filmsImage.Source = new BitmapImage(new Uri(di.FullName + @"/pictures/filmsLogo.png", UriKind.Absolute));
 				this.actorsImage.Source = new BitmapImage(new Uri(di.FullName + @"/pictures/actorsLogo.png", UriKind.Absolute));
 				this.reviewsImage.Source = new BitmapImage(new Uri(di.FullName + @"/pictures/reviewsLogo.png", UriKind.Absolute));
+
+				this.DataContext = new NavigationViewModel(this);
 			}
 			catch (Exception err)
 			{
