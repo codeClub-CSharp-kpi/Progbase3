@@ -1,12 +1,11 @@
-﻿<Window x:Class="MovieHubManagmentSystem.Views.MainWindow"
+﻿<Window x:Class="MoiveHubSystem.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MovieHubManagmentSystem"
+        xmlns:local="clr-namespace:MoiveHubSystem"
         mc:Ignorable="d"
-        Title="Map Window" Height="450" Width="800">
-    
+        Title="MainWindow" Height="450" Width="800">
     <UniformGrid Columns="3">
         <Button >
             <DockPanel>
@@ -14,14 +13,14 @@
                 <Label HorizontalContentAlignment="Center" Content="Films"/>
             </DockPanel>
         </Button>
-        
+
         <Button>
             <DockPanel>
                 <Image DockPanel.Dock="Top" x:Name="actorsImage"/>
                 <Label HorizontalContentAlignment="Center" Content="Actors"/>
             </DockPanel>
         </Button>
-        
+
         <Button>
             <DockPanel>
                 <Image DockPanel.Dock="Top" x:Name="reviewsImage"/>

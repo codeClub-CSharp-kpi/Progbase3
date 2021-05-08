@@ -14,19 +14,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MovieHubManagmentSystem.Views
+namespace MoiveHubSystem.Views
 {
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		 
 		public MainWindow()
 		{
 			InitializeComponent();
-
-			
 			try
 			{
 				DirectoryInfo di = new("../../../../../images");
@@ -40,7 +37,6 @@ namespace MovieHubManagmentSystem.Views
 				MessageBox.Show(err.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 				this.Close();
 			}
-			
 		}
 	}
 }
