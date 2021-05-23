@@ -10,24 +10,51 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <ListView Grid.ColumnSpan="2" ItemsSource="{Binding}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="{Binding }"
-                </GridView>
-            </ListView.View>
-        </ListView>
 
-        <DockPanel Grid.Column="1">
-            <Label Content=""/>
+        <DockPanel Grid.RowSpan="2" Grid.Column="2" Grid.Row="1">
+            
+            <Label Content="Name:" DockPanel.Dock="Top" />
+            <TextBox DockPanel.Dock="Top" />
+            <Label DockPanel.Dock="Top" Content="Patronimic:" />
+            <TextBox DockPanel.Dock="Top" />
+            <Label DockPanel.Dock="Top" Content="Surname:" />
+            <TextBox DockPanel.Dock="Top" />
+            <Label DockPanel.Dock="Top" Content="Bio:" />
+            <TextBlock DockPanel.Dock="Top" Text=""/>
+                
+
+            <ScrollViewer Margin="10">
+                <StackPanel>
+                    <Button Margin="5" Content="Add"/>
+                    <Button Margin="5" Content="Delete"/>
+                    <Button Margin="5" Content="Save changes"/>
+                </StackPanel>
+            </ScrollViewer>
+        </DockPanel>
+
+
+
+        <ListBox Grid.Column="0" Grid.Row="1"  x:Name="actorsList" ItemsSource="{Binding Actors}"/>
+
+        <DockPanel Grid.Column="1" Grid.RowSpan="3" >
+            <Image />
         </DockPanel>
         
+
+        <WrapPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" Margin="10">
+            <Button Margin="5 0" Content="Previous" />
+            <Button Margin="5 0" Content="Next"/>
+        </WrapPanel>
+        
+
     </Grid>
 </Window>
