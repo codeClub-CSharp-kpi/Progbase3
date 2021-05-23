@@ -1,16 +1,77 @@
 ﻿using Generator.Repostitories.implementations;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Generator.models
 {
-	public class Actor: IEntity
+	public class Actor: IEntity, INotifyPropertyChanged
 	{
-		public int Id { get; set; } // primary key
-		public string Name { get; set; } // name of actor / 50 symbs
-		public string Patronimic { get; set; } // middle name / 50 symbs
-		public string Surname { get; set; } // last name / 50 symbs
-		public string Bio { get; set; } // actor biography / 250 symbs
-		
+		public int _id;
+		public int Id 
+		{
+			get
+			{
+				return _id;
+			}
+			set
+			{
+				_id = value;
+			}
+		} // primary key
+
+		private string _name;
+		public string Name 
+		{
+			get
+			{
+				return _name;
+			}
+			set
+			{
+				_name = value;
+			}
+		} // name of actor / 50 symbs
+
+		private string _patronimic;
+		public string Patronimic
+		{
+			get
+			{
+				return _patronimic;
+			}
+			set
+			{
+				_patronimic = value;
+			}
+		}// middle name / 50 symbs
+
+		private string _surname;
+		public string Surname
+		{
+			get
+			{
+				return _surname;
+			}
+			set
+			{
+				_surname = value;
+			}
+		}// last name / 50 symbs
+
+		private string _bio;
+		public string Bio
+		{
+			get
+			{
+				return _bio;
+			}
+			set
+			{
+				_bio = value;
+			}
+		}// actor biography / 250 symbs
+
 		public int PhotoId { get;set; } // apearence
 		public Photo Photo
 		{
@@ -37,6 +98,13 @@ namespace Generator.models
 				return new FilmActorRepository().GetFilmsByActor(Id);
 			}
 		}// featured films
+
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		public void OnPropertyChanged([CallerMemberName] string prop = "")
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+		}
 	}
 	
 }
