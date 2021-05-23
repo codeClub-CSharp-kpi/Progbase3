@@ -4,8 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MoiveHubSystem.Views"
+        xmlns:vmAct="clr-namespace:MoiveHubSystem.ViewModels"
         mc:Ignorable="d"
+        x:Name="actorWnd"
         Title="Actor Window" Height="450" Width="800">
+    <Window.DataContext>
+        <vmAct:ActorsViewModel/>
+    </Window.DataContext>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
@@ -19,40 +25,36 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
+        <GroupBox Grid.RowSpan="3" Grid.Column="2"   Header="Info">
+            <DockPanel VerticalAlignment="Center" DataContext="{Binding SelectedActor}">
+                <Label Content="Name:" DockPanel.Dock="Top" />
+                <TextBox DockPanel.Dock="Top"  Text="{Binding Name }"/>
+                <Label DockPanel.Dock="Top" Content="Patronimic:" />
+                <TextBox DockPanel.Dock="Top" Text="{Binding Patronimic}"/>
+                <Label DockPanel.Dock="Top" Content="Surname:" />
+                <TextBox DockPanel.Dock="Top" Text="{Binding Surname}"/>
+                <Label DockPanel.Dock="Top" Content="Bio:" />
+                <ScrollViewer>
+                    <TextBlock LineStackingStrategy="MaxHeight" Text="{Binding Bio}" TextWrapping="WrapWithOverflow"/>
+                </ScrollViewer>
+            </DockPanel>
 
-        <DockPanel VerticalAlignment="Center" Grid.RowSpan="3" Grid.Column="2" >
-            
-            <Label Content="Name:" DockPanel.Dock="Top" />
-            <TextBox DockPanel.Dock="Top" />
-            <Label DockPanel.Dock="Top" Content="Patronimic:" />
-            <TextBox DockPanel.Dock="Top" />
-            <Label DockPanel.Dock="Top" Content="Surname:" />
-            <TextBox DockPanel.Dock="Top" />
-            <Label DockPanel.Dock="Top" Content="Bio:" />
-            <TextBlock DockPanel.Dock="Top" Text=""/>
-                
-
-            
-        </DockPanel>
-
-
-
-        <ListBox x:Name="actorsList" ItemsSource="{Binding Actors}"/>
-
-        <DockPanel Grid.Column="1" Grid.RowSpan="3" >
-            <Image />
-        </DockPanel>
-
+        </GroupBox>
+        <GroupBox Grid.Column="1" Grid.RowSpan="3"  Header="Image">
+            <Image Source="{Binding SelectedActor.Photo.Path}"/>
+        </GroupBox>
+        <ListBox Margin="10" x:Name="actorsList" ItemsSource="{Binding Actors}" SelectedItem="{Binding SelectedActor}"/>
         <WrapPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" Margin="10">
-            <Button Margin="5 0" Content="Previous" />
-            <Button Margin="5 0" Content="Next"/>
+            <Button Margin="5 0" Content="Previous" Command="{Binding LoadPrevPage}"/>
+            <Button Margin="5 0" Content="Next" Command="{Binding LoadNextPage}"/>
         </WrapPanel>
         <ScrollViewer Margin="10" Grid.Column="0" Grid.Row="1" Width="auto">
             <StackPanel>
-                <Button Margin="5" Content="Add"/>
-                <Button Margin="5" Content="Delete"/>
-                <Button Margin="5" Content="Save changes"/>
+                <Button Margin="5" Content="Add" Command="{Binding AddActor}"/>
+                <Button Margin="5" Content="Delete" Command="{Binding DelActor}"/>
+                <Button Margin="5" Content="Save changes" Command="{Binding SaveActor}"/>
             </StackPanel>
         </ScrollViewer>
+        
     </Grid>
 </Window>

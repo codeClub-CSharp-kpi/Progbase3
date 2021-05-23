@@ -17,6 +17,7 @@ namespace Generator.models
 			set
 			{
 				_id = value;
+				OnPropertyChanged(nameof(Id));
 			}
 		} // primary key
 
@@ -30,6 +31,7 @@ namespace Generator.models
 			set
 			{
 				_name = value;
+				OnPropertyChanged(nameof(Name));
 			}
 		} // name of actor / 50 symbs
 
@@ -43,6 +45,7 @@ namespace Generator.models
 			set
 			{
 				_patronimic = value;
+				OnPropertyChanged(nameof(Patronimic));
 			}
 		}// middle name / 50 symbs
 
@@ -56,6 +59,7 @@ namespace Generator.models
 			set
 			{
 				_surname = value;
+				OnPropertyChanged(nameof(Surname));
 			}
 		}// last name / 50 symbs
 
@@ -69,6 +73,7 @@ namespace Generator.models
 			set
 			{
 				_bio = value;
+				OnPropertyChanged(nameof(Bio));
 			}
 		}// actor biography / 250 symbs
 
