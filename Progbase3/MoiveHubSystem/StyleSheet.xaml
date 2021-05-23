@@ -16,6 +16,7 @@
 
     <Style TargetType="TextBox" BasedOn="{StaticResource ResourceKey=BaseFont}">
         <Setter Property="Margin" Value="5 0"/>
+        <Setter Property="Padding" Value="5"/>
     </Style>
 
     <Style TargetType="TextBlock" BasedOn="{StaticResource ResourceKey=BaseFont}">

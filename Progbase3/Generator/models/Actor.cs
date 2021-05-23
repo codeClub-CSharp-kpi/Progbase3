@@ -99,7 +99,13 @@ namespace Generator.models
 			}
 		}// featured films
 
-		
+
+		public override string ToString()
+		{
+			return $"{Name} {Patronimic} {Surname}";
+		}
+
+		//
 		public event PropertyChangedEventHandler PropertyChanged;
 		public void OnPropertyChanged([CallerMemberName] string prop = "")
 		{

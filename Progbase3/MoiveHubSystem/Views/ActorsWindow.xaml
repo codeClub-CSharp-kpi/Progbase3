@@ -8,7 +8,7 @@
         Title="Actor Window" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
@@ -20,7 +20,7 @@
         </Grid.RowDefinitions>
 
 
-        <DockPanel Grid.RowSpan="2" Grid.Column="2" Grid.Row="1">
+        <DockPanel VerticalAlignment="Center" Grid.RowSpan="3" Grid.Column="2" >
             
             <Label Content="Name:" DockPanel.Dock="Top" />
             <TextBox DockPanel.Dock="Top" />
@@ -32,29 +32,27 @@
             <TextBlock DockPanel.Dock="Top" Text=""/>
                 
 
-            <ScrollViewer Margin="10">
-                <StackPanel>
-                    <Button Margin="5" Content="Add"/>
-                    <Button Margin="5" Content="Delete"/>
-                    <Button Margin="5" Content="Save changes"/>
-                </StackPanel>
-            </ScrollViewer>
+            
         </DockPanel>
 
 
 
-        <ListBox Grid.Column="0" Grid.Row="1"  x:Name="actorsList" ItemsSource="{Binding Actors}"/>
+        <ListBox x:Name="actorsList" ItemsSource="{Binding Actors}"/>
 
         <DockPanel Grid.Column="1" Grid.RowSpan="3" >
             <Image />
         </DockPanel>
-        
 
         <WrapPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" Margin="10">
             <Button Margin="5 0" Content="Previous" />
             <Button Margin="5 0" Content="Next"/>
         </WrapPanel>
-        
-
+        <ScrollViewer Margin="10" Grid.Column="0" Grid.Row="1" Width="auto">
+            <StackPanel>
+                <Button Margin="5" Content="Add"/>
+                <Button Margin="5" Content="Delete"/>
+                <Button Margin="5" Content="Save changes"/>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>
