@@ -7,7 +7,7 @@
         xmlns:vmAct="clr-namespace:MoiveHubSystem.ViewModels"
         mc:Ignorable="d"
         x:Name="actorWnd"
-        Title="Actor Window" Height="450" Width="800">
+        Title="Actor Window" MinHeight="560" Height="560" Width="800">
     <Window.DataContext>
         <vmAct:ActorsViewModel/>
     </Window.DataContext>
@@ -43,18 +43,25 @@
         <GroupBox Grid.Column="1" Grid.RowSpan="3"  Header="Image">
             <Image Source="{Binding SelectedActor.Photo.Path}"/>
         </GroupBox>
-        <ListBox Margin="10" x:Name="actorsList" ItemsSource="{Binding Actors}" SelectedItem="{Binding SelectedActor}"/>
-        <WrapPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" Margin="10">
-            <Button Margin="5 0" Content="Previous" Command="{Binding LoadPrevPage}"/>
-            <Button Margin="5 0" Content="Next" Command="{Binding LoadNextPage}"/>
-        </WrapPanel>
-        <ScrollViewer Margin="10" Grid.Column="0" Grid.Row="1" Width="auto">
-            <StackPanel>
-                <Button Margin="5" Content="Add" Command="{Binding AddActor}"/>
-                <Button Margin="5" Content="Delete" Command="{Binding DelActor}"/>
-                <Button Margin="5" Content="Save changes" Command="{Binding SaveActor}"/>
+
+        <GroupBox Grid.Column="0" Grid.RowSpan="3" Header="">
+            <StackPanel VerticalAlignment="Center">
+                <ListBox DockPanel.Dock="Top" Margin="10" x:Name="actorsList" ItemsSource="{Binding Actors}" SelectedItem="{Binding SelectedActor}"/>
+                
+                <ScrollViewer DockPanel.Dock="Top" Margin="10" Width="auto">
+                    <StackPanel>
+                        <Button Margin="5" Content="Add" Command="{Binding AddActor}"/>
+                        <Button Margin="5" Content="Delete" Command="{Binding DelActor}"/>
+                        <Button Margin="5" Content="Save changes" Command="{Binding SaveActor}"/>
+                    </StackPanel>
+                </ScrollViewer>
+                <WrapPanel  DockPanel.Dock="Top" Margin="10">
+                    <Button Margin="5 0" Content="Prev Page" Command="{Binding LoadPrevPage}"/>
+                    <Button Margin="5 0" Content="Next  Page" Command="{Binding LoadNextPage}"/>
+                </WrapPanel>
             </StackPanel>
-        </ScrollViewer>
+        </GroupBox>
+        
         
     </Grid>
 </Window>
