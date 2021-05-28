@@ -24,6 +24,11 @@ namespace Generator.models
 				return new ActorRepository().GetAll().Where(a => a.CityId == Id);
 			}
 		}
+
+		public override string ToString()
+		{
+			return $"{Name}";
+		}
 	}
 	
 }
