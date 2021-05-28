@@ -1,17 +1,6 @@
-﻿using MoiveHubSystem.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Generator.models;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace MoiveHubSystem.Views
 {
@@ -23,7 +12,24 @@ namespace MoiveHubSystem.Views
 		public ActorsWindow()
 		{
 			InitializeComponent();
-			this.DataContext = new ActorsViewModel();
+		}
+
+		private void actorsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (actorsList.SelectedItem is Actor selAct)
+			{
+				var actorCityId = selAct.CityId;
+				int counter = 0;
+				foreach (var a in cityField.ItemsSource)
+				{
+					if ((a as City).Id == actorCityId)
+					{
+						cityField.SelectedIndex = counter;
+						break;
+					}
+					counter++;
+				}
+			}
 		}
 	}
 }

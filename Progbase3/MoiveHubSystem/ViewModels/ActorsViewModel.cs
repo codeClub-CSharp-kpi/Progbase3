@@ -11,6 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace MoiveHubSystem.ViewModels
@@ -19,19 +20,32 @@ namespace MoiveHubSystem.ViewModels
 	{
 		const int AmountOfInPageElements = 5;
 		
-		private ActorRepository _repo;
+		private ActorRepository _actorRepo;
+		private CityRepository _cityRepo;
 
 		public ObservableCollection<Actor> Actors { get; set; }
+		public IEnumerable<City> Cities { get; set; }
 
 		public ActorsViewModel()
 		{
-			_repo = new ActorRepository();
+			_actorRepo = new ActorRepository();
+			_cityRepo = new CityRepository();
 			Actors = new ObservableCollection<Actor>();
+			Cities = new ObservableCollection<City>();
+			
 
 			foreach (var item in GetPageForList(_currentPageCounter))
 			{
 				Actors.Add(item);
 			}
+
+			Cities = _cityRepo.GetAll();
+			//var coll = _cityRepo.GetAll();
+			//foreach (var item in coll)
+			//{
+			//	Cities.Add(item);
+			//}
+
 		}
 
 		private Actor _selectedActor;
@@ -53,8 +67,8 @@ namespace MoiveHubSystem.ViewModels
 		{
 			get
 			{
-				int total = _repo.GetAll().Count() / AmountOfInPageElements;
-				if (_repo.GetAll().Count() % AmountOfInPageElements != 0)
+				int total = _actorRepo.GetAll().Count() / AmountOfInPageElements;
+				if (_actorRepo.GetAll().Count() % AmountOfInPageElements != 0)
 				{
 					return total + 1;
 				}
@@ -70,24 +84,59 @@ namespace MoiveHubSystem.ViewModels
 		{
 			get => new RelayCommand(obj =>
 			{
-				MessageBox.Show("Add");
-			});
+
+				//Adding default object
+				Actor defaultActor = new Actor()
+				{
+					Name = "New actor",
+					Bio = "Actors biography",
+					CityId = 0,
+					PhotoId = 1
+				};
+				
+				Actors.Add(defaultActor);
+				SelectedActor = defaultActor;
+
+			}, obj => (_currentPageCounter == TotalPages));
 		}
 
 		public ICommand DelActor
 		{
 			get => new RelayCommand(obj =>
 			{
-				MessageBox.Show("Del");
-			});
+				
+			}, obj => SelectedActor != null);
 		}
 
 		public ICommand SaveActor
 		{
 			get => new RelayCommand(obj =>
 			{
-				MessageBox.Show("Save");
-			});
+				foreach (var item in Actors)
+				{
+					if (item.Id == 0)
+					{
+						_actorRepo.Insert(item);
+					}
+					else
+					{
+						var actorWithSameId = _actorRepo.GetById(SelectedActor.Id);
+						_actorRepo.Update(new Actor()
+						{
+							Name = actorWithSameId.Name,
+							Patronimic = actorWithSameId.Patronimic,
+							Surname = actorWithSameId.Surname,
+							Bio = actorWithSameId.Bio,
+							CityId = actorWithSameId.CityId
+						});
+					}
+				}
+			}, obj => (SelectedActor != null) &&
+			 !String.IsNullOrWhiteSpace(SelectedActor.Name) &&
+			 !String.IsNullOrWhiteSpace(SelectedActor.Patronimic) &&
+			 !String.IsNullOrWhiteSpace(SelectedActor.Surname) &&
+			 !String.IsNullOrWhiteSpace(SelectedActor.Bio)
+			);
 		}
 
 		public ICommand LoadNextPage
@@ -124,7 +173,7 @@ namespace MoiveHubSystem.ViewModels
 		// supporting private methods
 		private IEnumerable<Actor> GetPageForList(int pageNumber)
 		{
-			return _repo.GetPage(AmountOfInPageElements, AmountOfInPageElements * (pageNumber - 1));
+			return _actorRepo.GetPage(AmountOfInPageElements, AmountOfInPageElements * (pageNumber - 1));
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;

@@ -26,19 +26,25 @@
         </Grid.RowDefinitions>
 
         <GroupBox Grid.RowSpan="3" Grid.Column="2"   Header="Info">
-            <DockPanel VerticalAlignment="Center" DataContext="{Binding SelectedActor}">
+            <DockPanel VerticalAlignment="Center" >
                 <Label Content="Name:" DockPanel.Dock="Top" />
-                <TextBox DockPanel.Dock="Top"  Text="{Binding Name }"/>
-                <Label DockPanel.Dock="Top" Content="Patronimic:" />
-                <TextBox DockPanel.Dock="Top" Text="{Binding Patronimic}"/>
+                <TextBox DockPanel.Dock="Top" DataContext="{Binding SelectedActor}" Text="{Binding Name }"/>
+                <Label DockPanel.Dock="Top"  Content="Patronimic:" />
+                <TextBox DockPanel.Dock="Top" DataContext="{Binding SelectedActor}" Text="{Binding Patronimic}"/>
                 <Label DockPanel.Dock="Top" Content="Surname:" />
-                <TextBox DockPanel.Dock="Top" Text="{Binding Surname}"/>
+                <TextBox DockPanel.Dock="Top" DataContext="{Binding SelectedActor}" Text="{Binding Surname}"/>
+                <Label DockPanel.Dock="Top" Content="City:" />
+                <ComboBox x:Name="cityField" DockPanel.Dock="Top" ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedActor.City.Name}"/>
+
+
                 <Label DockPanel.Dock="Top" Content="Bio:" />
                 <ScrollViewer>
-                    <TextBlock LineStackingStrategy="MaxHeight" Text="{Binding Bio}" TextWrapping="WrapWithOverflow"/>
+                    <TextBox x:Name="bioField" DataContext="{Binding SelectedActor}" Text="{Binding Bio}" TextWrapping="WrapWithOverflow"/>
                 </ScrollViewer>
+                
             </DockPanel>
 
+            
         </GroupBox>
         <GroupBox Grid.Column="1" Grid.RowSpan="3"  Header="Image">
             <Image Source="{Binding SelectedActor.Photo.Path}"/>
@@ -46,11 +52,11 @@
 
         <GroupBox Grid.Column="0" Grid.RowSpan="3" Header="">
             <StackPanel VerticalAlignment="Center">
-                <ListBox DockPanel.Dock="Top" Margin="10" x:Name="actorsList" ItemsSource="{Binding Actors}" SelectedItem="{Binding SelectedActor}"/>
+                <ListBox DockPanel.Dock="Top" Margin="10" x:Name="actorsList" ItemsSource="{Binding Actors}" SelectedItem="{Binding SelectedActor}" SelectionChanged="actorsList_SelectionChanged"/>
                 
                 <ScrollViewer DockPanel.Dock="Top" Margin="10" Width="auto">
-                    <StackPanel>
-                        <Button Margin="5" Content="Add" Command="{Binding AddActor}"/>
+                    <StackPanel >
+                        <Button Margin="5" Content="Add" CommandParameter="{Binding ElementName=cityField}" Command="{Binding AddActor}"/>
                         <Button Margin="5" Content="Delete" Command="{Binding DelActor}"/>
                         <Button Margin="5" Content="Save changes" Command="{Binding SaveActor}"/>
                     </StackPanel>
