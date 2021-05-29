@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MoiveHubSystem.Views"
         mc:Ignorable="d"
+        x:Name="editActWnd"
         Title="EditActorWindow" Height="450" Width="800">
     <Grid x:Name="mainGrid">
         <Grid.ColumnDefinitions>
@@ -67,7 +68,7 @@
             </StackPanel>
         </GroupBox>
         
-        <Button Margin="10" Grid.Row="1" Grid.ColumnSpan="2" Content="Accept" Command="{Binding AcceptEditActor}"/>
+        <Button Margin="10" Grid.Row="1" Grid.ColumnSpan="2" Content="Accept" CommandParameter="{Binding ElementName=editActWnd}" Command="{Binding AcceptEditActor}"/>
 
     </Grid>
 </Window>

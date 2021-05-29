@@ -44,6 +44,7 @@ namespace Generator.Repostitories.implementations
 		public void Update(Actor entityToUpdate)
 		{
 			var parameters = new Dapper.DynamicParameters();
+			parameters.Add("@aid", entityToUpdate.Id);
 			parameters.Add("@actName", entityToUpdate.Name);
 			parameters.Add("@actPatro", entityToUpdate.Patronimic);
 			parameters.Add("@actSur", entityToUpdate.Surname);

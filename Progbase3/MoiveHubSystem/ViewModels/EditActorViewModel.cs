@@ -1,6 +1,7 @@
 ﻿using Generator.models;
 using Generator.Repostitories.implementations;
 using MoiveHubSystem.Commands;
+using MoiveHubSystem.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -134,6 +135,7 @@ namespace MoiveHubSystem.ViewModels
 					int newCityId = SelectedCity?.Id ?? 0;
 					_updatedActor = new Actor()
 					{
+						Id = _preChnagedOriginal.Id,
 						Name = this.Name,
 						Patronimic = this.Patronimic,
 						Surname = this.Surname,
@@ -142,12 +144,17 @@ namespace MoiveHubSystem.ViewModels
 						PhotoId = _preChnagedOriginal.PhotoId
 					};
 					_actorRepository.Update(_updatedActor);
+					MessageBox.Show("Updated Successfully", "Info",
+						MessageBoxButton.OK, MessageBoxImage.Information);
 				}
 				catch (Exception err)
 				{
 					MessageBox.Show($"{err.Message}", "Error",
 						MessageBoxButton.OK, MessageBoxImage.Error);
 				}
+
+				(obj as EditActorWindow).Close();
+
 			}, obj => {
 				bool isChangedName = false;
 				if (_preChnagedOriginal.Name != Name)
