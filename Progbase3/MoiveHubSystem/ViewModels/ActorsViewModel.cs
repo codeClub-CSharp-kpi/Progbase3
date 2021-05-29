@@ -1,18 +1,13 @@
 ﻿using Generator.models;
 using Generator.Repostitories.implementations;
-using Generator.Repostitories.interfaces;
 using MoiveHubSystem.Commands;
 using MoiveHubSystem.Views;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace MoiveHubSystem.ViewModels
@@ -29,12 +24,7 @@ namespace MoiveHubSystem.ViewModels
 		{
 			_actorRepo = new ActorRepository();
 			Actors = new ObservableCollection<Actor>();
-
-			foreach (var item in GetPageForList(_currentPageCounter))
-			{
-				Actors.Add(item);
-			}
-
+			RefillObservedActors();
 		}
 
 		private Actor _selectedActor;
@@ -82,42 +72,22 @@ namespace MoiveHubSystem.ViewModels
 		{
 			get => new RelayCommand(obj =>
 			{
-				
+				MessageBoxResult userDecisionDelOrNotDel = MessageBox.Show("You're deleting the actor! Sure?", "Earasing actor", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+				if (userDecisionDelOrNotDel == MessageBoxResult.OK)
+				{
+					_actorRepo.Delete(SelectedActor.Id);
+					RefillObservedActors();
+				}
 			}, obj => SelectedActor != null);
 		}
 
-		public ICommand SaveActor
+		public ICommand EditActor
 		{
 			get => new RelayCommand(obj =>
 			{
-				foreach (var item in Actors)
-				{
-					if (item.Id == 0)
-					{
-						_actorRepo.Insert(item);
-					}
-					else
-					{
-						var actorWithSameId = _actorRepo.GetById(SelectedActor.Id);
-						_actorRepo.Update(new Actor()
-						{
-							Name = actorWithSameId.Name,
-							Patronimic = actorWithSameId.Patronimic,
-							Surname = actorWithSameId.Surname,
-							Bio = actorWithSameId.Bio,
-							CityId = actorWithSameId.CityId
-						});
-					}
-				}
-			}, obj =>
-			{
-				return (SelectedActor != null) &&
-				!String.IsNullOrWhiteSpace(SelectedActor.Name) &&
-				!String.IsNullOrWhiteSpace(SelectedActor.Patronimic) &&
-				!String.IsNullOrWhiteSpace(SelectedActor.Surname) &&
-				!String.IsNullOrWhiteSpace(SelectedActor.Bio);
-				}
-			);
+				EditActorWindow editActorWindow = new(SelectedActor);
+				editActorWindow.ShowDialog();
+			}, obj => SelectedActor != null);
 		}
 
 		public ICommand LoadNextPage
@@ -125,11 +95,7 @@ namespace MoiveHubSystem.ViewModels
 			get => new RelayCommand(obj =>
 			{
 				++_currentPageCounter;
-				Actors.Clear();
-				foreach (var item in GetPageForList(_currentPageCounter))
-				{
-					Actors.Add(item);
-				}
+				RefillObservedActors();
 
 			}, obj => (_currentPageCounter < TotalPages));
 		}
@@ -139,11 +105,7 @@ namespace MoiveHubSystem.ViewModels
 			get => new RelayCommand(obj =>
 			{
 				--_currentPageCounter;
-				Actors.Clear();
-				foreach (var item in GetPageForList(_currentPageCounter))
-				{
-					Actors.Add(item);
-				}
+				RefillObservedActors();
 
 			}, obj => (1 < _currentPageCounter));
 		}
@@ -156,7 +118,16 @@ namespace MoiveHubSystem.ViewModels
 		{
 			return _actorRepo.GetPage(AmountOfInPageElements, AmountOfInPageElements * (pageNumber - 1));
 		}
+		private void RefillObservedActors()
+		{
+			Actors.Clear();
+			foreach (var item in GetPageForList(_currentPageCounter))
+			{
+				Actors.Add(item);
+			}
+		}
 
+		//
 		public event PropertyChangedEventHandler PropertyChanged;
 		public void OnPropertyChanged([CallerMemberName] string prop = "")
 		{

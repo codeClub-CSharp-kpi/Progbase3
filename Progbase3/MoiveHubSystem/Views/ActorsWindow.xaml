@@ -58,7 +58,7 @@
                     <StackPanel >
                         <Button Margin="5" Content="Add" Command="{Binding AddActor}"/>
                         <Button Margin="5" Content="Delete" Command="{Binding DelActor}"/>
-                        <Button Margin="5" Content="Save changes" Command="{Binding SaveActor}"/>
+                        <Button Margin="5" Content="Edit" Command="{Binding EditActor}"/>
                     </StackPanel>
                 </ScrollViewer>
                 <WrapPanel  DockPanel.Dock="Top" Margin="10">

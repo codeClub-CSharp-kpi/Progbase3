@@ -1,31 +1,27 @@
 ﻿using Generator.models;
 using Generator.Repostitories.implementations;
 using MoiveHubSystem.Commands;
-using MoiveHubSystem.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace MoiveHubSystem.ViewModels
 {
-	class AddActorsViewModel: INotifyPropertyChanged
+	class EditActorViewModel: INotifyPropertyChanged
 	{
-		private CountryRepository _countryRepo = new();
-		private ActorRepository _actorRepo = new();
+		private CountryRepository _countryRepository = new();
+		private CityRepository _cityRepository = new();
+		private ActorRepository _actorRepository = new();
 
-
-		public AddActorsViewModel()
-		{
-			Countries = _countryRepo.GetAll().ToList();
-		}
+		private Actor _preChnagedOriginal;
 
 		public List<Country> Countries { get; set; }
+		public List<City> Cities { get; set; }
+
 
 		private string _name;
 		public string Name
@@ -83,6 +79,21 @@ namespace MoiveHubSystem.ViewModels
 			}
 		}
 
+		private City _city;
+		public City City
+		{
+			get
+			{
+				return _city;
+			}
+			set
+			{
+				_city = value;
+				OnPropertyChanged(nameof(City));
+			}
+		}
+
+
 		private Country _selectedCountry;
 		public Country SelectedCountry
 		{
@@ -96,7 +107,6 @@ namespace MoiveHubSystem.ViewModels
 				OnPropertyChanged(nameof(SelectedCountry));
 			}
 		}
-
 
 		private City _selectedCity;
 		public City SelectedCity
@@ -112,75 +122,84 @@ namespace MoiveHubSystem.ViewModels
 			}
 		}
 
+		Actor _updatedActor;
 
 		// Commands
-		public ICommand AcceptNewActor
+		public ICommand AcceptEditActor
 		{
 			get => new RelayCommand(obj =>
 			{
 				try
 				{
-					_actorRepo.Insert(new Actor()
+					int newCityId = SelectedCity?.Id ?? 0;
+					_updatedActor = new Actor()
 					{
 						Name = this.Name,
 						Patronimic = this.Patronimic,
 						Surname = this.Surname,
 						Bio = this.Bio,
-						CityId = this.SelectedCity.Id,
-						PhotoId = 1
-					});
-					MessageBox.Show("New actor has been added successfully!", "Info",
-							MessageBoxButton.OK, MessageBoxImage.Information);
+						CityId = newCityId != 0 ? newCityId : _preChnagedOriginal.CityId,
+						PhotoId = _preChnagedOriginal.PhotoId
+					};
+					_actorRepository.Update(_updatedActor);
 				}
-				catch (System.Exception err)
+				catch (Exception err)
 				{
 					MessageBox.Show($"{err.Message}", "Error",
 						MessageBoxButton.OK, MessageBoxImage.Error);
 				}
-				(obj as AddActorWindow).Close();
 			}, obj => {
-				bool isEmptyName = true;
-				if (!string.IsNullOrWhiteSpace(Name))
+				bool isChangedName = false;
+				if (_preChnagedOriginal.Name != Name)
 				{
-					isEmptyName = false;
+					isChangedName = true;
 				}
 
-				bool isEmptyPatronimic = true;
-				if (!string.IsNullOrWhiteSpace(Patronimic))
+				bool isChangedPatronimic = false;
+				if (_preChnagedOriginal.Patronimic != Patronimic)
 				{
-					isEmptyPatronimic = false;
+					isChangedPatronimic = true;
 				}
 
-				bool isEmptySurname = true;
-				if (!string.IsNullOrWhiteSpace(Surname))
+				bool isChangedSurname = false;
+				if (_preChnagedOriginal.Surname != Surname)
 				{
-					isEmptySurname = false;
+					isChangedSurname = true;
 				}
 
-				bool isEmptyBio = true;
-				if (!string.IsNullOrWhiteSpace(Bio))
+				bool isChangedBio = false;
+				if (_preChnagedOriginal.Bio != Bio)
 				{
-					isEmptyBio = false;
+					isChangedBio = true;
 				}
 
-				bool isUnSelectedCountry = true;
-				if (SelectedCountry != null)
+				bool isChangedCity = false;
+				if (SelectedCity != null && (SelectedCity.Id != _preChnagedOriginal.City.Id))
 				{
-					isUnSelectedCountry = false;
+					isChangedCity = true;
 				}
 
-				bool isUnSelectedCity = true;
-				if (SelectedCity != null)
-				{
-					isUnSelectedCity = false;
-				}
-
-				return !isEmptyName && !isEmptyPatronimic &&
-						!isEmptySurname && !isEmptyBio && !isUnSelectedCountry 
-						&& !isUnSelectedCity;
+				return isChangedName || isChangedPatronimic ||
+						isChangedSurname || isChangedBio || isChangedCity;
 			});
 		}
 
+		//
+		public EditActorViewModel(Actor actorToEdit)
+		{
+			_preChnagedOriginal = actorToEdit;
+
+			Name = actorToEdit.Name;
+			Patronimic = actorToEdit.Patronimic;
+			Surname = actorToEdit.Surname;
+			Bio = actorToEdit.Bio;
+			City = actorToEdit.City;
+
+			Countries = _countryRepository.GetAll().ToList();
+			Cities = _cityRepository.GetAll().ToList();
+		}
+		
+		//
 		public event PropertyChangedEventHandler PropertyChanged;
 		public void OnPropertyChanged([CallerMemberName] string prop = "")
 		{
