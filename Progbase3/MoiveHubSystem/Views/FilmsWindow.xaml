@@ -7,6 +7,61 @@
         mc:Ignorable="d"
         Title="Films Window" Height="450" Width="800">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <GroupBox Grid.RowSpan="3" Grid.Column="2"   Header="Info">
+            <DockPanel VerticalAlignment="Center" >
+                <Label Content="Name:" DockPanel.Dock="Top" />
+                <TextBox DockPanel.Dock="Top" DataContext="{Binding SelectedActor}" Text="{Binding Name }"/>
+                <Label DockPanel.Dock="Top"  Content="Patronimic:" />
+                <TextBox DockPanel.Dock="Top" DataContext="{Binding SelectedActor}" Text="{Binding Patronimic}"/>
+                <Label DockPanel.Dock="Top" Content="Surname:" />
+                <TextBox DockPanel.Dock="Top" DataContext="{Binding SelectedActor}" Text="{Binding Surname}"/>
+                <Label DockPanel.Dock="Top" Content="City:" />
+                <TextBox x:Name="cityField" DockPanel.Dock="Top" DataContext="{Binding SelectedActor}" Text="{Binding City.Name}"/>
+
+
+                <Label DockPanel.Dock="Top" Content="Bio:" />
+                <ScrollViewer>
+                    <TextBox x:Name="bioField" DataContext="{Binding SelectedActor}" Text="{Binding Bio}" TextWrapping="WrapWithOverflow"/>
+                </ScrollViewer>
+
+            </DockPanel>
+
+
+        </GroupBox>
+        <GroupBox Grid.Column="1" Grid.RowSpan="3"  Header="Image">
+            <Image Source="{Binding SelectedActor.Photo.Path}"/>
+        </GroupBox>
+
+        <GroupBox Grid.Column="0" Grid.RowSpan="3" Header="">
+            <StackPanel VerticalAlignment="Center">
+                <ListBox DockPanel.Dock="Top" Margin="10" x:Name="actorsList" ItemsSource="{Binding Actors}" SelectedItem="{Binding SelectedActor}"/>
+
+                <ScrollViewer DockPanel.Dock="Top" Margin="10" Width="auto">
+                    <StackPanel >
+                        <Button Margin="5" Content="Add" Command="{Binding AddActor}"/>
+                        <Button Margin="5" Content="Delete" Command="{Binding DelActor}"/>
+                        <Button Margin="5" Content="Edit" Command="{Binding EditActor}"/>
+                    </StackPanel>
+                </ScrollViewer>
+                <WrapPanel  DockPanel.Dock="Top" Margin="10">
+                    <Button Margin="5 0" Content="Prev Page" Command="{Binding LoadPrevPage}"/>
+                    <Button Margin="5 0" Content="Next  Page" Command="{Binding LoadNextPage}"/>
+                </WrapPanel>
+            </StackPanel>
+        </GroupBox>
+
+
     </Grid>
 </Window>
