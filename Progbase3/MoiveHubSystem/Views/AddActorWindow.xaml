@@ -1,0 +1,49 @@
+﻿<Window x:Class="MoiveHubSystem.Views.AddActorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        x:Name="addActorWnd"
+        Title="AddActorWindow" Height="450" Width="800">
+    
+    <Grid x:Name="mainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel x:Name="fieldPanel" Grid.Column="0">
+            <Label DockPanel.Dock="Top" Content="Name: "/>
+            <TextBox DockPanel.Dock="Top" x:Name="nameField" Text="{Binding Name}"/>
+
+            <Label DockPanel.Dock="Top" Content="Patronimic: "/>
+            <TextBox DockPanel.Dock="Top" x:Name="patronimicField" Text="{Binding Patronimic}"/>
+
+            <Label DockPanel.Dock="Top" Content="Surname: "/>
+            <TextBox DockPanel.Dock="Top" x:Name="surnameField" Text="{Binding Surname}"/>
+
+            <Label DockPanel.Dock="Top" Content="Bio: "/>
+            <ScrollViewer>
+                <TextBox x:Name="bioField" Text="{Binding Bio}" TextWrapping="WrapWithOverflow"/>
+            </ScrollViewer>
+
+            
+
+        </DockPanel  >
+        <StackPanel Grid.Column="1"   VerticalAlignment="Center">
+            <Label DockPanel.Dock="Top" Content="Country: "/>
+            <ComboBox DockPanel.Dock="Top" x:Name="countriesList" SelectedIndex="0" ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}" DisplayMemberPath="Name"/>
+
+            <Label DockPanel.Dock="Top" Content="City: "/>
+            <ComboBox DockPanel.Dock="Top" x:Name="citiesList" SelectedIndex="0" ItemsSource="{Binding SelectedCountry.Cities}" SelectedItem="{Binding SelectedCity}" DisplayMemberPath="Name"/>
+        </StackPanel>
+        <Button Margin="10" Grid.Row="1" Grid.ColumnSpan="2" Content="Accept" CommandParameter="{Binding ElementName=addActorWnd}" Command="{Binding AcceptNewActor}"/>
+
+    </Grid>
+</Window>

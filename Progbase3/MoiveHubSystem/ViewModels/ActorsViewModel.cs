@@ -2,6 +2,7 @@
 using Generator.Repostitories.implementations;
 using Generator.Repostitories.interfaces;
 using MoiveHubSystem.Commands;
+using MoiveHubSystem.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,30 +22,18 @@ namespace MoiveHubSystem.ViewModels
 		const int AmountOfInPageElements = 5;
 		
 		private ActorRepository _actorRepo;
-		private CityRepository _cityRepo;
 
 		public ObservableCollection<Actor> Actors { get; set; }
-		public IEnumerable<City> Cities { get; set; }
 
 		public ActorsViewModel()
 		{
 			_actorRepo = new ActorRepository();
-			_cityRepo = new CityRepository();
 			Actors = new ObservableCollection<Actor>();
-			Cities = new ObservableCollection<City>();
-			
 
 			foreach (var item in GetPageForList(_currentPageCounter))
 			{
 				Actors.Add(item);
 			}
-
-			Cities = _cityRepo.GetAll();
-			//var coll = _cityRepo.GetAll();
-			//foreach (var item in coll)
-			//{
-			//	Cities.Add(item);
-			//}
 
 		}
 
@@ -84,20 +73,9 @@ namespace MoiveHubSystem.ViewModels
 		{
 			get => new RelayCommand(obj =>
 			{
-
-				//Adding default object
-				Actor defaultActor = new Actor()
-				{
-					Name = "New actor",
-					Bio = "Actors biography",
-					CityId = 0,
-					PhotoId = 1
-				};
-				
-				Actors.Add(defaultActor);
-				SelectedActor = defaultActor;
-
-			}, obj => (_currentPageCounter == TotalPages));
+				var addWnd = new AddActorWindow();
+				addWnd.ShowDialog();
+			});
 		}
 
 		public ICommand DelActor
@@ -131,11 +109,14 @@ namespace MoiveHubSystem.ViewModels
 						});
 					}
 				}
-			}, obj => (SelectedActor != null) &&
-			 !String.IsNullOrWhiteSpace(SelectedActor.Name) &&
-			 !String.IsNullOrWhiteSpace(SelectedActor.Patronimic) &&
-			 !String.IsNullOrWhiteSpace(SelectedActor.Surname) &&
-			 !String.IsNullOrWhiteSpace(SelectedActor.Bio)
+			}, obj =>
+			{
+				return (SelectedActor != null) &&
+				!String.IsNullOrWhiteSpace(SelectedActor.Name) &&
+				!String.IsNullOrWhiteSpace(SelectedActor.Patronimic) &&
+				!String.IsNullOrWhiteSpace(SelectedActor.Surname) &&
+				!String.IsNullOrWhiteSpace(SelectedActor.Bio);
+				}
 			);
 		}
 

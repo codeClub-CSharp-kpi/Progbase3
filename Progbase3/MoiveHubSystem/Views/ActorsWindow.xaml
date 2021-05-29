@@ -56,7 +56,7 @@
                 
                 <ScrollViewer DockPanel.Dock="Top" Margin="10" Width="auto">
                     <StackPanel >
-                        <Button Margin="5" Content="Add" CommandParameter="{Binding ElementName=cityField}" Command="{Binding AddActor}"/>
+                        <Button Margin="5" Content="Add" Command="{Binding AddActor}"/>
                         <Button Margin="5" Content="Delete" Command="{Binding DelActor}"/>
                         <Button Margin="5" Content="Save changes" Command="{Binding SaveActor}"/>
                     </StackPanel>
