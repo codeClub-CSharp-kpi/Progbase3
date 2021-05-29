@@ -18,9 +18,9 @@ namespace MoiveHubSystem.ViewModels
 			{
 				return _openFilmsWindow ?? new Commands.RelayCommand(obj =>
 				{
-					_controledMapWin.Visibility = System.Windows.Visibility.Collapsed;
+					(obj as MainWindow).Visibility = System.Windows.Visibility.Collapsed;
 					new FilmsWindow().ShowDialog();
-					_controledMapWin.Visibility = System.Windows.Visibility.Visible;
+					(obj as MainWindow).Visibility = System.Windows.Visibility.Visible;
 				});
 			}
 		}
@@ -32,9 +32,9 @@ namespace MoiveHubSystem.ViewModels
 			{
 				return _openActorsWindow ?? new Commands.RelayCommand(obj =>
 				{
-					_controledMapWin.Visibility = System.Windows.Visibility.Collapsed;
+					(obj as MainWindow).Visibility = System.Windows.Visibility.Collapsed;
 					new ActorsWindow().ShowDialog();
-					_controledMapWin.Visibility = System.Windows.Visibility.Visible;
+					(obj as MainWindow).Visibility = System.Windows.Visibility.Visible;
 				});
 			}
 		}
@@ -46,18 +46,18 @@ namespace MoiveHubSystem.ViewModels
 			{
 				return _openReviewsWindow ?? new Commands.RelayCommand(obj =>
 				{
-					_controledMapWin.Visibility = System.Windows.Visibility.Collapsed;
+					(obj as MainWindow).Visibility = System.Windows.Visibility.Collapsed;
 					new ReviewsWindow().ShowDialog();
-					_controledMapWin.Visibility = System.Windows.Visibility.Visible;
+					(obj as MainWindow).Visibility = System.Windows.Visibility.Visible;
 				});
 			}
 		}
 
 		
-		private MainWindow _controledMapWin;
-		public NavigationViewModel(MainWindow mapWin)
+		
+		public NavigationViewModel()
 		{
-			_controledMapWin = mapWin;
+			
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
