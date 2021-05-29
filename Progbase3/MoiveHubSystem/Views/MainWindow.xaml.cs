@@ -33,7 +33,7 @@ namespace MoiveHubSystem.Views
 				this.actorsImage.Source = new BitmapImage(new Uri(di.FullName + @"/pictures/actorsLogo.png", UriKind.Absolute));
 				this.reviewsImage.Source = new BitmapImage(new Uri(di.FullName + @"/pictures/reviewsLogo.png", UriKind.Absolute));
 
-				this.DataContext = new NavigationViewModel(this);
+				this.DataContext = new NavigationViewModel();
 			}
 			catch (Exception err)
 			{

@@ -5,23 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MoiveHubSystem"
         mc:Ignorable="d"
+        x:Name="mapWnd"
         Title="Map Window" Height="450" Width="800">
     <UniformGrid Columns="3">
-        <Button Command="{Binding OpenFilmsWindow}">
+        <Button CommandParameter="{Binding ElementName=mapWnd}" Command="{Binding OpenFilmsWindow}">
             <DockPanel>
                 <Image DockPanel.Dock="Top" x:Name="filmsImage"/>
                 <Label HorizontalContentAlignment="Center" Content="Films"/>
             </DockPanel>
         </Button>
 
-        <Button Command="{Binding OpenActorsWindow}">
+        <Button CommandParameter="{Binding ElementName=mapWnd}" Command="{Binding OpenActorsWindow}">
             <DockPanel>
                 <Image DockPanel.Dock="Top" x:Name="actorsImage"/>
                 <Label HorizontalContentAlignment="Center" Content="Actors"/>
             </DockPanel>
         </Button>
 
-        <Button Command="{Binding OpenReviewsWindow}">
+        <Button CommandParameter="{Binding ElementName=mapWnd}" Command="{Binding OpenReviewsWindow}">
             <DockPanel>
                 <Image DockPanel.Dock="Top" x:Name="reviewsImage"/>
                 <Label  HorizontalContentAlignment="Center" Content="Reviews"/>
