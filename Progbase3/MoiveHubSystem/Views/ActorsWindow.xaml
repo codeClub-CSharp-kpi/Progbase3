@@ -34,7 +34,7 @@
                 <Label DockPanel.Dock="Top" Content="Surname:" />
                 <TextBox DockPanel.Dock="Top" DataContext="{Binding SelectedActor}" Text="{Binding Surname}"/>
                 <Label DockPanel.Dock="Top" Content="City:" />
-                <ComboBox x:Name="cityField" DockPanel.Dock="Top" ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedActor.City.Name}"/>
+                <TextBox x:Name="cityField" DockPanel.Dock="Top" DataContext="{Binding SelectedActor}" Text="{Binding City.Name}"/>
 
 
                 <Label DockPanel.Dock="Top" Content="Bio:" />
@@ -52,7 +52,7 @@
 
         <GroupBox Grid.Column="0" Grid.RowSpan="3" Header="">
             <StackPanel VerticalAlignment="Center">
-                <ListBox DockPanel.Dock="Top" Margin="10" x:Name="actorsList" ItemsSource="{Binding Actors}" SelectedItem="{Binding SelectedActor}" SelectionChanged="actorsList_SelectionChanged"/>
+                <ListBox DockPanel.Dock="Top" Margin="10" x:Name="actorsList" ItemsSource="{Binding Actors}" SelectedItem="{Binding SelectedActor}"/>
                 
                 <ScrollViewer DockPanel.Dock="Top" Margin="10" Width="auto">
                     <StackPanel >

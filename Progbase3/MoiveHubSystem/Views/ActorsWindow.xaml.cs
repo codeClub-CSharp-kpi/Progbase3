@@ -14,22 +14,5 @@ namespace MoiveHubSystem.Views
 			InitializeComponent();
 		}
 
-		private void actorsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if (actorsList.SelectedItem is Actor selAct)
-			{
-				var actorCityId = selAct.CityId;
-				int counter = 0;
-				foreach (var a in cityField.ItemsSource)
-				{
-					if ((a as City).Id == actorCityId)
-					{
-						cityField.SelectedIndex = counter;
-						break;
-					}
-					counter++;
-				}
-			}
-		}
 	}
 }
