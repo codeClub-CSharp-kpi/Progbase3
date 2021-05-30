@@ -4,8 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MoiveHubSystem.Views"
+        xmlns:vmF="clr-namespace:MoiveHubSystem.ViewModels"
         mc:Ignorable="d"
         Title="Films Window" Height="450" Width="800">
+    <Window.DataContext>
+        <vmF:FilmsViewModel/>
+    </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
@@ -21,38 +25,35 @@
 
         <GroupBox Grid.RowSpan="3" Grid.Column="2"   Header="Info">
             <DockPanel VerticalAlignment="Center" >
-                <Label Content="Name:" DockPanel.Dock="Top" />
-                <TextBox DockPanel.Dock="Top" DataContext="{Binding SelectedActor}" Text="{Binding Name }"/>
-                <Label DockPanel.Dock="Top"  Content="Patronimic:" />
-                <TextBox DockPanel.Dock="Top" DataContext="{Binding SelectedActor}" Text="{Binding Patronimic}"/>
-                <Label DockPanel.Dock="Top" Content="Surname:" />
-                <TextBox DockPanel.Dock="Top" DataContext="{Binding SelectedActor}" Text="{Binding Surname}"/>
-                <Label DockPanel.Dock="Top" Content="City:" />
-                <TextBox x:Name="cityField" DockPanel.Dock="Top" DataContext="{Binding SelectedActor}" Text="{Binding City.Name}"/>
-
-
-                <Label DockPanel.Dock="Top" Content="Bio:" />
-                <ScrollViewer>
-                    <TextBox x:Name="bioField" DataContext="{Binding SelectedActor}" Text="{Binding Bio}" TextWrapping="WrapWithOverflow"/>
+                <Label Content="Title:" DockPanel.Dock="Top" />
+                <TextBox DockPanel.Dock="Top" DataContext="{Binding SelectedFilm}" Text="{Binding Title}"/>
+                <Label DockPanel.Dock="Top"  Content="Release Date:" />
+                <DatePicker DockPanel.Dock="Top" DataContext="{Binding SelectedFilm}" SelectedDate="{Binding OfficialReleaseDate}"/>
+                <Label DockPanel.Dock="Top" Content="Slogan:" />
+                <ScrollViewer DockPanel.Dock="Top">
+                    <TextBox x:Name="bioField" DataContext="{Binding SelectedFilm}" Text="{Binding Slogan}" TextWrapping="WrapWithOverflow"/>
                 </ScrollViewer>
-
+                <Label DockPanel.Dock="Top" Content="Cast:" />
+                <ListBox Margin="10" x:Name="castList" ItemsSource="{Binding SelectedFilm.Actors}" DisplayMemberPath="Name" />
             </DockPanel>
 
 
         </GroupBox>
-        <GroupBox Grid.Column="1" Grid.RowSpan="3"  Header="Image">
-            <Image Source="{Binding SelectedActor.Photo.Path}"/>
+        <GroupBox Grid.Column="1" Grid.RowSpan="3"  Header="Story Line">
+            <ScrollViewer>
+                <TextBox x:Name="storyLineField" DataContext="{Binding SelectedFilm}" Text="{Binding StoryLine}" TextWrapping="WrapWithOverflow"/>
+            </ScrollViewer>
         </GroupBox>
 
         <GroupBox Grid.Column="0" Grid.RowSpan="3" Header="">
             <StackPanel VerticalAlignment="Center">
-                <ListBox DockPanel.Dock="Top" Margin="10" x:Name="actorsList" ItemsSource="{Binding Actors}" SelectedItem="{Binding SelectedActor}"/>
+                <ListBox DockPanel.Dock="Top" Margin="10" x:Name="filmsList" ItemsSource="{Binding Films}" SelectedItem="{Binding SelectedFilm}" DisplayMemberPath="Title"/>
 
                 <ScrollViewer DockPanel.Dock="Top" Margin="10" Width="auto">
                     <StackPanel >
-                        <Button Margin="5" Content="Add" Command="{Binding AddActor}"/>
-                        <Button Margin="5" Content="Delete" Command="{Binding DelActor}"/>
-                        <Button Margin="5" Content="Edit" Command="{Binding EditActor}"/>
+                        <Button Margin="5" Content="Add" Command="{Binding AddFilm}"/>
+                        <Button Margin="5" Content="Delete" Command="{Binding DelFilm}"/>
+                        <Button Margin="5" Content="Edit" Command="{Binding EditFilm}"/>
                     </StackPanel>
                 </ScrollViewer>
                 <WrapPanel  DockPanel.Dock="Top" Margin="10">
