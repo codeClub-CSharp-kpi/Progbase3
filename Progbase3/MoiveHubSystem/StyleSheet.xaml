@@ -23,4 +23,7 @@
         <Setter Property="Margin" Value="5 0"/>
     </Style>
 
+    <Style TargetType="DatePicker" BasedOn="{StaticResource ResourceKey=BaseFont}">
+        <Setter Property="Margin" Value="5 0"/>
+    </Style>
 </ResourceDictionary>

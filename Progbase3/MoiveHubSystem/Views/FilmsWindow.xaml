@@ -34,14 +34,14 @@
                     <TextBox x:Name="bioField" DataContext="{Binding SelectedFilm}" Text="{Binding Slogan}" TextWrapping="WrapWithOverflow"/>
                 </ScrollViewer>
                 <Label DockPanel.Dock="Top" Content="Cast:" />
-                <ListBox Margin="10" x:Name="castList" ItemsSource="{Binding SelectedFilm.Actors}" DisplayMemberPath="Name" />
+                <ListBox Margin="10" x:Name="castList" ItemsSource="{Binding SelectedFilm.Actors}" />
             </DockPanel>
 
 
         </GroupBox>
         <GroupBox Grid.Column="1" Grid.RowSpan="3"  Header="Story Line">
             <ScrollViewer>
-                <TextBox x:Name="storyLineField" DataContext="{Binding SelectedFilm}" Text="{Binding StoryLine}" TextWrapping="WrapWithOverflow"/>
+                <TextBox x:Name="storyLineField" DataContext="{Binding SelectedFilm}" Text="{Binding StoryLine}" VerticalContentAlignment="Center" TextWrapping="WrapWithOverflow"/>
             </ScrollViewer>
         </GroupBox>
 
