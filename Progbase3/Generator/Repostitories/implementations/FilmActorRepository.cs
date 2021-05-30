@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Generator.Repostitories.implementations
 {
-	class FilmActorRepository : IFilmActorRepository
+	public class FilmActorRepository : IFilmActorRepository
 	{
 		public void Delete(int idEntityToDelete)
 		{
