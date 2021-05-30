@@ -12,6 +12,7 @@ namespace Generator.UI
 			Actor = 1,
 			Film,
 			Review,
+			FilmActor,
 			None
 		};
 		enum CRUD_Operations
@@ -29,7 +30,7 @@ namespace Generator.UI
 		Repostitories.interfaces.IActorRepository _actRepo;
 		Repostitories.interfaces.IFilmRepository _filmRepo;
 		Repostitories.interfaces.IReviewRepository _revRepo;
-
+		Repostitories.interfaces.IFilmActorRepository _filmActRepo;
 
 
 		public bool IsExit { get; set; }
@@ -55,6 +56,9 @@ namespace Generator.UI
 				case (int)Models.Review:
 					_repo = new ReviewRepository();
 					break;
+				case (int)Models.FilmActor:
+					_repo = new FilmActorRepository();
+					break;
 				case (int)Models.None:
 					IsExit = true;
 					break;
@@ -71,6 +75,7 @@ namespace Generator.UI
 			_actRepo = _repo as ActorRepository;
 			_filmRepo = _repo as FilmRepository;
 			_revRepo = _repo as ReviewRepository;
+			_filmActRepo = _repo as FilmActorRepository;
 
 			RandomProducer rp = null;
 
@@ -86,6 +91,10 @@ namespace Generator.UI
 			{
 				rp = new ReviewProducer();
 			}
+			else if (_filmActRepo != null)
+			{
+				rp = new FilmActorProducer();
+			}
 
 			IEntity genEntity = null;
 			while ((ulong)i < count)
@@ -94,7 +103,8 @@ namespace Generator.UI
 				_actRepo?.Insert(genEntity as Actor);
 				_filmRepo?.Insert(genEntity as Film);
 				_revRepo?.Insert(genEntity as Review);
-				
+				_filmActRepo?.Insert(genEntity as FilmActor);
+
 				i++;
 			}
 			Console.WriteLine("Success!");
@@ -123,10 +133,11 @@ namespace Generator.UI
 		{
 			Console.WriteLine("\n\n");
 			Console.WriteLine("---------------------");
-			Console.WriteLine("1.  Generate actors  ");
-			Console.WriteLine("2.  Generate films   ");
-			Console.WriteLine("3.  Generate review  ");
-			Console.WriteLine("4.  Exit             ");
+			Console.WriteLine("{0}.  Generate actors  ", (int)Models.Actor);
+			Console.WriteLine("{0}.  Generate films   ", (int)Models.Film);
+			Console.WriteLine("{0}.  Generate review  ", (int)Models.Review);
+			Console.WriteLine("{0}.  Generate film-actor  ", (int)Models.FilmActor);
+			Console.WriteLine("{0}.  Exit             ", (int)Models.None);
 			Console.WriteLine("---------------------");
 			Console.WriteLine("\n\n");
 		}
