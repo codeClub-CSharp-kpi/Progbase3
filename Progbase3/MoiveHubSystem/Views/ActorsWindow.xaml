@@ -26,6 +26,7 @@
         </Grid.RowDefinitions>
 
         <GroupBox Grid.RowSpan="3" Grid.Column="2"   Header="Info">
+            <ScrollViewer>
             <DockPanel VerticalAlignment="Center" >
                 <Label Content="Name:" DockPanel.Dock="Top" />
                 <TextBox DockPanel.Dock="Top" DataContext="{Binding SelectedActor}" Text="{Binding Name }"/>
@@ -36,15 +37,19 @@
                 <Label DockPanel.Dock="Top" Content="City:" />
                 <TextBox x:Name="cityField" DockPanel.Dock="Top" DataContext="{Binding SelectedActor}" Text="{Binding City.Name}"/>
 
+                <Label DockPanel.Dock="Top" Content="Featured films:" />
+                <ListBox DockPanel.Dock="Top" Margin="10" x:Name="filmsList" ItemsSource="{Binding SelectedActor.Films}" DisplayMemberPath="Title"/>
 
                 <Label DockPanel.Dock="Top" Content="Bio:" />
                 <ScrollViewer>
                     <TextBox x:Name="bioField" DataContext="{Binding SelectedActor}" Text="{Binding Bio}" TextWrapping="WrapWithOverflow"/>
                 </ScrollViewer>
                 
+                
+
             </DockPanel>
 
-            
+            </ScrollViewer>
         </GroupBox>
         <GroupBox Grid.Column="1" Grid.RowSpan="3"  Header="Image">
             <Image Source="{Binding SelectedActor.Photo.Path}"/>
