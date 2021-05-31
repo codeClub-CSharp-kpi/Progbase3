@@ -17,6 +17,7 @@ namespace MoiveHubSystem.ViewModels
 		const int AmountOfInPageElements = 5;
 		
 		private ActorRepository _actorRepo;
+		private FilmActorRepository _filmActorRepository = new();
 
 		public ObservableCollection<Actor> Actors { get; set; }
 
@@ -75,6 +76,10 @@ namespace MoiveHubSystem.ViewModels
 				MessageBoxResult userDecisionDelOrNotDel = MessageBox.Show("You're deleting the actor! Sure?", "Earasing actor", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
 				if (userDecisionDelOrNotDel == MessageBoxResult.OK)
 				{
+					foreach (var item in _filmActorRepository.GetAll().Where(obj => obj.ActorId == SelectedActor.Id))
+					{
+						_filmActorRepository.Delete(item.Id);
+					}
 					_actorRepo.Delete(SelectedActor.Id);
 					RefillObservedActors();
 				}
