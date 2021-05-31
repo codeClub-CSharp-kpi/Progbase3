@@ -5,8 +5,63 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MoiveHubSystem.Views"
         mc:Ignorable="d"
+        xmlns:vmR="clr-namespace:MoiveHubSystem.ViewModels" 
         Title="Reviews Window" Height="450" Width="800">
-    <Grid>
+    <Window.DataContext>
+        <vmR:ReviewsViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
         
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <GroupBox Grid.RowSpan="3" Grid.Column="2"   Header="Info">
+            <DockPanel VerticalAlignment="Center" >
+                <Label Content="Title:" DockPanel.Dock="Top" />
+                <TextBox DockPanel.Dock="Top" DataContext="{Binding SelectedReview}" Text="{Binding Title}"/>
+                <Label DockPanel.Dock="Top"  Content="Rate:" />
+                <TextBox DockPanel.Dock="Top" DataContext="{Binding SelectedReview}" Text="{Binding Rate}"/>
+                <Label DockPanel.Dock="Top"  Content="Film:" />
+                <ListBox Margin="10" x:Name="castList" ItemsSource="{Binding SelectedReview.Film}" />
+            </DockPanel>
+
+
+        </GroupBox>
+        <GroupBox Grid.Column="1" Grid.RowSpan="3"  Header="Review Text">
+            <ScrollViewer>
+                <TextBox x:Name="storyLineField" Style="{StaticResource isPos}" Text="{Binding SelectedReview.ReviewText}" VerticalContentAlignment="Center" TextWrapping="WrapWithOverflow" />
+            </ScrollViewer>
+        </GroupBox>
+
+        <GroupBox Grid.Column="0" Grid.RowSpan="3" Header="">
+            <StackPanel VerticalAlignment="Center">
+                <ListBox DockPanel.Dock="Top" Margin="10" x:Name="reviewsList" ItemsSource="{Binding Reviews}" SelectedItem="{Binding SelectedReview}" DisplayMemberPath="Title"/>
+
+                <ScrollViewer DockPanel.Dock="Top" Margin="10" Width="auto">
+                    <StackPanel >
+                        <Button Margin="5" Content="Add" Command="{Binding AddReview}"/>
+                        <Button Margin="5" Content="Delete" Command="{Binding DelReview}"/>
+                        <Button Margin="5" Content="Edit" Command="{Binding EditReview}"/>
+                    </StackPanel>
+                </ScrollViewer>
+                <WrapPanel  DockPanel.Dock="Top" Margin="10">
+                    <Button Margin="5 0" Content="Prev Page" Command="{Binding LoadPrevPage}"/>
+                    <Button Margin="5 0" Content="Next  Page" Command="{Binding LoadNextPage}"/>
+                </WrapPanel>
+            </StackPanel>
+        </GroupBox>
+
+
     </Grid>
 </Window>
