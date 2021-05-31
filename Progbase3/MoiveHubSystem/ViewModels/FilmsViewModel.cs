@@ -21,6 +21,7 @@ namespace MoiveHubSystem.ViewModels
 
 		private FilmRepository _filmRepository = new();
 		private ActorRepository _actorRepository = new();
+		private FilmActorRepository _filmActorRepository = new();
 
 		public ObservableCollection<Film> Films { get; set; } = new ObservableCollection<Film>();
 
@@ -74,10 +75,15 @@ namespace MoiveHubSystem.ViewModels
 		{
 			get => new RelayCommand(obj =>
 			{
-				MessageBoxResult userDecisionDelOrNotDel = MessageBox.Show("You're deleting the actor! Sure?", "Earasing actor", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+				MessageBoxResult userDecisionDelOrNotDel = MessageBox.Show("You're deleting the film! Sure?", "Earasing film", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
 				if (userDecisionDelOrNotDel == MessageBoxResult.OK)
 				{
+					foreach (var item in _filmActorRepository.GetAll().Where(obj=> obj.FilmId == SelectedFilm.Id))
+					{
+						_filmActorRepository.Delete(item.Id);
+					}
 					_filmRepository.Delete(SelectedFilm.Id);
+
 					RefillObservedActors();
 				}
 			}, obj => SelectedFilm != null);
