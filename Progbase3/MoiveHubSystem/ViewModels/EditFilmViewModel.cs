@@ -39,6 +39,7 @@ namespace MoiveHubSystem.ViewModels
 			OfficialReleaseDate = filmToEdit.OfficialReleaseDate;
 			Slogan = filmToEdit.Slogan;
 			StoryLine = filmToEdit.StoryLine;
+			Cast = filmToEdit.Actors.ToList();
 
 			RefillObservedActors();
 		}
@@ -71,7 +72,7 @@ namespace MoiveHubSystem.ViewModels
 			}
 		} // name of actor / 50 symbs
 
-		private DateTime _officialReleaseDate;
+		private DateTime _officialReleaseDate = DateTime.Now;
 		public DateTime OfficialReleaseDate
 		{
 			get
@@ -110,6 +111,20 @@ namespace MoiveHubSystem.ViewModels
 			{
 				_storyLine = value;
 				OnPropertyChanged(nameof(StoryLine));
+			}
+		}
+		
+		private List<Actor> _cast;
+		public List<Actor> Cast
+		{
+			get
+			{
+				return _cast;
+			}
+			set
+			{
+				_cast = value;
+				OnPropertyChanged(nameof(Cast));
 			}
 		}
 
