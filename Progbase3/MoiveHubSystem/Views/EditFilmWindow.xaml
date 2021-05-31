@@ -41,7 +41,7 @@
                         <TextBlock Text="{Binding}">
                             <TextBlock.InputBindings>
                                 <MouseBinding MouseAction="LeftDoubleClick"
-                                  Command="{Binding DataContext.ShiftFromAddedCast, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
+                                  Command="{Binding DataContext.ShiftFromCast, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
                                   CommandParameter="{Binding Id}" />
                             </TextBlock.InputBindings>
                         </TextBlock>
@@ -59,7 +59,7 @@
                         <TextBlock Text="{Binding}">
                             <TextBlock.InputBindings>
                                 <MouseBinding MouseAction="LeftDoubleClick"
-                                  Command="{Binding DataContext.ShiftToAddedCast, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
+                                  Command="{Binding DataContext.ShiftToCast, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
                                   CommandParameter="{Binding Id}" />
                             </TextBlock.InputBindings>
                         </TextBlock>

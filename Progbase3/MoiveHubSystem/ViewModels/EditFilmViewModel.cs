@@ -29,7 +29,7 @@ namespace MoiveHubSystem.ViewModels
 		private FilmActorRepository _filmActRepo = new();
 
 		public ObservableCollection<Actor> PickList { get; set; } = new();
-		public ObservableCollection<Actor> AddedCast { get; set; } = new();
+		public ObservableCollection<Actor> Cast { get; set; } = new();
 
 		public EditFilmViewModel(Film filmToEdit)
 		{
@@ -39,7 +39,11 @@ namespace MoiveHubSystem.ViewModels
 			OfficialReleaseDate = filmToEdit.OfficialReleaseDate;
 			Slogan = filmToEdit.Slogan;
 			StoryLine = filmToEdit.StoryLine;
-			Cast = filmToEdit.Actors.ToList();
+			
+			foreach (var item in filmToEdit.Actors)
+			{
+				Cast.Add(item);
+			}
 
 			RefillObservedActors();
 		}
@@ -113,20 +117,7 @@ namespace MoiveHubSystem.ViewModels
 				OnPropertyChanged(nameof(StoryLine));
 			}
 		}
-		
-		private List<Actor> _cast;
-		public List<Actor> Cast
-		{
-			get
-			{
-				return _cast;
-			}
-			set
-			{
-				_cast = value;
-				OnPropertyChanged(nameof(Cast));
-			}
-		}
+	
 
 		private Film _updatedFilm;
 
@@ -189,9 +180,28 @@ namespace MoiveHubSystem.ViewModels
 						isChangedSlogan || isChangedStoryLine || isChangedCast;
 			});
 		}
-
+		public ICommand ShiftToCast
+		{
+			get => new RelayCommand(obj =>
+			{
+				var actorInPickList = PickList.Where(obj => obj.Id == SelectedActor.Id).FirstOrDefault();
+				PickList.Remove(actorInPickList);
+				Cast.Add(actorInPickList);
+			}, obj =>
+			{
+				return Cast.Where(obj => obj.Id == SelectedActor.Id).FirstOrDefault() == null;
+			});
+		}
+		public ICommand ShiftFromCast
+		{
+			get => new RelayCommand(obj =>
+			{
+				var actorInCast = Cast.Where(obj => obj.Id == SelectedActor.Id).FirstOrDefault();
+				Cast.Remove(actorInCast);
+			});
+		}
 		//
-		
+
 
 		// pagination commands
 		public ICommand LoadNextPage
