@@ -59,7 +59,7 @@ namespace MoiveHubSystem.ViewModels
 			}
 		} // name of actor / 50 symbs
 
-		private DateTime _officialReleaseDate;
+		private DateTime _officialReleaseDate = DateTime.Now;
 		public DateTime OfficialReleaseDate
 		{
 			get
