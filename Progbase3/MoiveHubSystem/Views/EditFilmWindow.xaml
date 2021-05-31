@@ -71,7 +71,7 @@
                 <Button Margin="5 0" Content="Next  Page" Command="{Binding LoadNextPage}"/>
             </WrapPanel>
         </StackPanel>
-        <Button Margin="10" Grid.Row="1" Grid.ColumnSpan="2" Content="Accept" CommandParameter="{Binding ElementName=addFilmWnd}" Command="{Binding AcceptNewFilm}"/>
+        <Button Margin="10" Grid.Row="1" Grid.ColumnSpan="2" Content="Accept" CommandParameter="{Binding ElementName=editFilmWnd}" Command="{Binding AcceptEditActor}"/>
 
     </Grid>
 </Window>

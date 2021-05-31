@@ -137,6 +137,34 @@ namespace MoiveHubSystem.ViewModels
 						StoryLine = this.StoryLine
 					};
 					_filmRepo.Update(_updatedFilm);
+
+					var q = Cast.Select(obj => obj.Id).Intersect(_preChnagedOriginal.Actors.Select(obj => obj.Id));
+
+					//comparing q with pre pick collection
+					//and deleting elems which are not in q
+					foreach (int aid in _preChnagedOriginal.Actors.Select(obj => obj.Id))
+					{
+						if (!q.Contains(aid))
+						{
+							var FilmActor_ToDelId = _filmActRepo.GetAll().Where(obj => obj.FilmId == _updatedFilm.Id && obj.ActorId == aid).Select(obj=> obj.Id).FirstOrDefault();
+							_filmActRepo.Delete(FilmActor_ToDelId);
+						}
+					}
+
+					//comparing q with current cast collection
+					//and add elems which are not in q
+					foreach (int aid in Cast.Select(obj => obj.Id))
+					{
+						if (!q.Contains(aid))
+						{
+							_filmActRepo.Insert(new FilmActor()
+							{
+								ActorId = aid,
+								FilmId = _updatedFilm.Id
+							});
+						}
+					}
+
 					MessageBox.Show("Updated Successfully", "Info",
 						MessageBoxButton.OK, MessageBoxImage.Information);
 				}
@@ -173,9 +201,12 @@ namespace MoiveHubSystem.ViewModels
 					isChangedStoryLine = true;
 				}
 
+				// Implementing if changed cast equals to original cast
 				bool isChangedCast = false;
-				// TODO if changed cast equals to original cast
-
+				isChangedCast = _preChnagedOriginal.Actors.Count() > Cast.Count ?
+					_preChnagedOriginal.Actors.Select(obj => obj.Id).Except(Cast.Select(obj => obj.Id)).Any():
+					Cast.Select(obj => obj.Id).Except(_preChnagedOriginal.Actors.Select(obj => obj.Id)).Any();
+				
 				return isChangedTitle || isChangedOfficialReleaseDate ||
 						isChangedSlogan || isChangedStoryLine || isChangedCast;
 			});
