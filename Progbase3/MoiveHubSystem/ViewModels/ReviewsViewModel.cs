@@ -34,6 +34,8 @@ namespace MoiveHubSystem.ViewModels
 		{
 			get
 			{
+				RevsFilm.Clear();
+				RevsFilm.Add(_selectedReview?.Film);
 				return _selectedReview;
 			}
 			set
@@ -43,7 +45,9 @@ namespace MoiveHubSystem.ViewModels
 			}
 		}
 
-		
+
+		public ObservableCollection<Film> RevsFilm { get; set; } = new();
+
 		//
 		private int TotalPages
 		{

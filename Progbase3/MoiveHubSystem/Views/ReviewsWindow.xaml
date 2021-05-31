@@ -33,7 +33,7 @@
                 <Label DockPanel.Dock="Top"  Content="Rate:" />
                 <TextBox DockPanel.Dock="Top" DataContext="{Binding SelectedReview}" Text="{Binding Rate}"/>
                 <Label DockPanel.Dock="Top"  Content="Film:" />
-                <ListBox Margin="10" x:Name="castList" ItemsSource="{Binding SelectedReview.Film}" />
+                <ListBox Margin="10" x:Name="castList" ItemsSource="{Binding RevsFilm}" DisplayMemberPath="Title"/>
             </DockPanel>
 
 
