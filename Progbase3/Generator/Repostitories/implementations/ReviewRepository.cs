@@ -47,6 +47,7 @@ namespace Generator.Repostitories.implementations
 			parameters.Add("@title", entityToUpdate.Title);
 			parameters.Add("@isPos", entityToUpdate.isPositive);
 			parameters.Add("@reviewText", entityToUpdate.ReviewText);
+			parameters.Add("@rate", entityToUpdate.Rate);
 			parameters.Add("@filmId", entityToUpdate.FilmId);
 
 			DapperORM.QueryManager.ExecDML("UpdateReview", parameters);

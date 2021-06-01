@@ -139,6 +139,7 @@ namespace MoiveHubSystem.ViewModels
 				{
 					_updatedReview = new()
 					{
+						Id = _preChnagedOriginal.Id,
 						Title = this.Title,
 						Rate = this.Rate,
 						isPositive = Convert.ToBoolean((int)RevStatus),
@@ -147,8 +148,8 @@ namespace MoiveHubSystem.ViewModels
 					};
 					_reviewRepo.Update(_updatedReview);
 
-					MessageBox.Show("New reivew has been added successfully!", "Info",
-							MessageBoxButton.OK, MessageBoxImage.Information);
+					MessageBox.Show("Updated Successfully", "Info",
+						MessageBoxButton.OK, MessageBoxImage.Information);
 				}
 				catch (Exception err)
 				{
