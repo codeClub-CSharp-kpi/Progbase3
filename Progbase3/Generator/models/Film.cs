@@ -29,5 +29,10 @@ namespace Generator.models
 				return new FilmActorRepository().GetActorsByFilm(Id);
 			}
 		}// Cast(by other words)
+
+		public override string ToString()
+		{
+			return $"{Title}";
+		}
 	}
 }

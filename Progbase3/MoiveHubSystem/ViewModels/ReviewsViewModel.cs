@@ -70,7 +70,7 @@ namespace MoiveHubSystem.ViewModels
 		{
 			get => new RelayCommand(obj =>
 			{
-				var addWnd = new AddFilmWindow();
+				var addWnd = new AddReviewWindow();
 				addWnd.ShowDialog();
 			});
 		}

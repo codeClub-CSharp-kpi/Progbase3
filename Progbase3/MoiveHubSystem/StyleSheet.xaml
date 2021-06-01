@@ -41,4 +41,9 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
+
+
+    <Style TargetType="Slider" BasedOn="{StaticResource ResourceKey=BaseFont}">
+        <Setter Property="Margin" Value="10 0"/>
+    </Style>
 </ResourceDictionary>

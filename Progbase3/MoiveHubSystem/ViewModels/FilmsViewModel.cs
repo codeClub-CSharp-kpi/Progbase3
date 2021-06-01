@@ -20,7 +20,6 @@ namespace MoiveHubSystem.ViewModels
 		const int AmountOfInPageElements = 5;
 
 		private FilmRepository _filmRepository = new();
-		private ActorRepository _actorRepository = new();
 		private FilmActorRepository _filmActorRepository = new();
 
 		public ObservableCollection<Film> Films { get; set; } = new ObservableCollection<Film>();

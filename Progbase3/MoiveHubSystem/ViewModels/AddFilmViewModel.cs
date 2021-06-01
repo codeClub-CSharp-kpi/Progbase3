@@ -15,6 +15,7 @@ using System.Windows.Input;
 
 namespace MoiveHubSystem.ViewModels
 {
+	
 	class AddFilmViewModel: INotifyPropertyChanged
 	{
 		private ActorRepository _actorRepo = new();
