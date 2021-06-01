@@ -136,7 +136,11 @@ namespace MoiveHubSystem.ViewModels
 				{
 					Review newReview = new()
 					{
-						
+						Title = this.Title,
+						Rate = this.Rate,
+						isPositive = Convert.ToBoolean((int)ReviewStatus),
+						FilmId = FilmOnReview.First().Id,
+						ReviewText = this.ReviewText
 					};
 					_reviewRepo.Insert(newReview);
 
