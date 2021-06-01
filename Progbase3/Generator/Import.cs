@@ -12,38 +12,38 @@ namespace Generator
 	{
 		private static XmlSerializer _XMLserializer;
 		private static IFilmRepository _filmsRepo;
-		// window with imported enitites...: add 'report'list where saved only imported films
 
 		static Import()
 		{
-			_XMLserializer = new XmlSerializer(typeof(IEnumerable<Film>));
+			_XMLserializer = new XmlSerializer(typeof(List<Film>));
 			_filmsRepo = new FilmRepository();
 		}
 
-		public static void ImportExportedFilms(string sourceFilmsXMLFile)
+		public static List<Film> ImportExportedFilms(string sourceFilmsXMLFile)
 		{
-			var filmsFromXML = GetFilmsFromFile(sourceFilmsXMLFile);
+			List<Film> newImportedFilms = new();
 
+			var filmsFromXML = GetFilmsFromFile(sourceFilmsXMLFile);
+			var allFilms = _filmsRepo.GetAll();
+			
 			foreach (var item in filmsFromXML)
 			{
-				try
+				if (allFilms.Where(obj => obj.Id == item.Id).FirstOrDefault() == null)
 				{
-					_filmsRepo.GetById(item.Id);
-				}
-				catch (System.Exception)
-				{
+					newImportedFilms.Add(item);
 					_filmsRepo.Insert(item);
-					// can be added a dialog window with imported enitites
 				}
 			}
+
+			return newImportedFilms;
 		}
 
-		private static IEnumerable<Film> GetFilmsFromFile(string sourceFilmsXMLFile)
+		private static List<Film> GetFilmsFromFile(string sourceFilmsXMLFile)
 		{
-			IEnumerable<Film> _filmsFromFile;
+			List<Film> _filmsFromFile;
 			using (FileStream fs = new FileStream(sourceFilmsXMLFile, FileMode.Open, FileAccess.Read))
 			{
-				_filmsFromFile = (IEnumerable<Film>)_XMLserializer.Deserialize(fs);
+				_filmsFromFile = (List<Film>)_XMLserializer.Deserialize(fs);
 			}
 			return _filmsFromFile;
 		}
