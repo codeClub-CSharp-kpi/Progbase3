@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace MoiveHubSystem.ViewModels
 {
@@ -53,8 +54,30 @@ namespace MoiveHubSystem.ViewModels
 			}
 		}
 
+		public ICommand ExecExit
+		{
+			get => new Commands.RelayCommand(obj =>
+			{
+				(obj as MainWindow).Close();
+			});
+		}
 		
-		
+		public ICommand ExecExportFilms
+		{
+			get => new Commands.RelayCommand(obj => 
+			{
+				new ExportFilmsWindow().ShowDialog();
+			});
+		}
+
+		public ICommand ExecImportFilms
+		{
+			get => new Commands.RelayCommand(obj =>
+			{
+				new ImportFilmsWindow().ShowDialog();
+			});
+		}
+
 		public NavigationViewModel()
 		{
 			
