@@ -163,8 +163,14 @@ namespace MoiveHubSystem.ViewModels
 					isEmptyReviewText = false;
 				}
 
+				bool isNotSetReviewFilm= true;
+				if (FilmOnReview.Count > 0)
+				{
+					isNotSetReviewFilm = false;
+				}
 
-				return !isEmptyTitle && !isEmptyReviewText;
+
+				return !isEmptyTitle && !isEmptyReviewText && !isNotSetReviewFilm;
 			});
 		}
 
