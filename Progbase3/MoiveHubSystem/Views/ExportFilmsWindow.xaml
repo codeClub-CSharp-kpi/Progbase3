@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:MoiveHubSystem.Views" 
         xmlns:vm="clr-namespace:MoiveHubSystem.ViewModels"
         mc:Ignorable="d"
+        x:Name="exportWnd"
         Title="ExportFilmsWindow" Height="450" Width="800">
     <Window.DataContext>
         <vm:ExportViewModel />
@@ -27,14 +28,14 @@
                 <Button Margin="5 0" Content="Prev Page" Command="{Binding LoadPrevPage}"/>
                 <Button Margin="5 0" Content="Next  Page" Command="{Binding LoadNextPage}"/>
             </WrapPanel>
-            <Label Content="Export to: (pick file or directory)"/>
-            <TextBox IsEnabled="False" Text="{Binding Path}"/>
-            <Button Content="Pick Destination Path" Margin="10" />
+            <Label Content="Export to:"/>
+            <TextBox IsEnabled="False" Text="{Binding PathToDirectory}"/>
+            <Button Content="Pick ZIP Destination " Margin="10" Command="{Binding PickDirectory}" />
 
         </StackPanel>
 
         <StackPanel Grid.RowSpan="2" Grid.Column="1" VerticalAlignment="Center">
-            <Button Content="Submit" Margin="10" Command="{Binding ExecExport}"/>
+            <Button Content="Submit" Margin="10" Command="{Binding ExecExport}" CommandParameter="{Binding ElementName=exportWnd}"/>
         </StackPanel>
         
     </Grid>

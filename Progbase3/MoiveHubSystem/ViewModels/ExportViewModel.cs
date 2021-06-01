@@ -1,11 +1,14 @@
-﻿using Generator.models;
+﻿using Generator;
+using Generator.models;
 using Generator.Repostitories.implementations;
+using Microsoft.Win32;
 using MoiveHubSystem.Commands;
 using MoiveHubSystem.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -41,29 +44,50 @@ namespace MoiveHubSystem.ViewModels
 			}
 		}
 
-		private string _path;
-		public string Path
+		private string _pathToDirectory;
+		public string PathToDirectory
 		{
 			get
 			{
-				return _path;
+				return _pathToDirectory;
 			}
 			set
 			{
-				_path = value;
-				OnPropertyChanged(nameof(Path));
+				_pathToDirectory = value;
+				OnPropertyChanged(nameof(PathToDirectory));
 			}
 		}
 
 
 		// Commands
+		public ICommand PickDirectory
+		{
+			get => new RelayCommand(obj =>
+			{
+				try
+				{
+					OpenFileDialog ofd = new();
+
+					if (ofd.ShowDialog() == true)
+					{
+						DirectoryInfo di = new(ofd.FileName);
+						PathToDirectory = di.Parent.FullName;
+					}
+				}
+				catch (Exception err)
+				{
+					MessageBox.Show($"{err.Message}", "Error",
+						MessageBoxButton.OK, MessageBoxImage.Error);
+				}
+			});
+		}
 		public ICommand ExecExport
 		{
 			get => new RelayCommand(obj =>
 			{
 				try
 				{
-					Generator.Export.ExportFilmsByActor()
+					Export.ExportFilmsByActor(SelectedActor, PathToDirectory);
 
 					MessageBox.Show("Exported Successfully", "Info",
 						MessageBoxButton.OK, MessageBoxImage.Information);
@@ -75,7 +99,7 @@ namespace MoiveHubSystem.ViewModels
 				}
 
 				(obj as ExportFilmsWindow).Close();
-			});
+			}, obj=> { return !string.IsNullOrWhiteSpace(PathToDirectory) && SelectedActor != null; });
 		}
 
 		// pagination commands
