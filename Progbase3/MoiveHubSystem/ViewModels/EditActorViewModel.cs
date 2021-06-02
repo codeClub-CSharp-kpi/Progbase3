@@ -1,5 +1,4 @@
-﻿using Generator.models;
-using Generator.Repostitories.implementations;
+﻿using EntitiesLibrary;
 using MoiveHubSystem.Commands;
 using MoiveHubSystem.Views;
 using System;

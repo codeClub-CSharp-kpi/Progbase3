@@ -1,6 +1,4 @@
-﻿using Generator.models;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 
 namespace MoiveHubSystem.Views
 {

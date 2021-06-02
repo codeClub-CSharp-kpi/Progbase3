@@ -1,6 +1,6 @@
-﻿using Generator.EnityRandomProducers;
-using Generator.models;
-using Generator.Repostitories.implementations;
+﻿
+using DataGeneratorsLibrary;
+using EntitiesLibrary;
 using System;
 
 namespace Generator.UI
@@ -27,10 +27,10 @@ namespace Generator.UI
 
 		object _repo;
 
-		Repostitories.interfaces.IActorRepository _actRepo;
-		Repostitories.interfaces.IFilmRepository _filmRepo;
-		Repostitories.interfaces.IReviewRepository _revRepo;
-		Repostitories.interfaces.IFilmActorRepository _filmActRepo;
+		IActorRepository _actRepo;
+		IFilmRepository _filmRepo;
+		IReviewRepository _revRepo;
+		IFilmActorRepository _filmActRepo;
 
 
 		public bool IsExit { get; set; }

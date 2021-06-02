@@ -1,4 +1,4 @@
-﻿using Generator.models;
+﻿using EntitiesLibrary;
 using MoiveHubSystem.ViewModels;
 using System.Windows;
 
