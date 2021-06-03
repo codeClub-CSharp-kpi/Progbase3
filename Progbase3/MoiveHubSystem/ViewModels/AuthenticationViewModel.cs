@@ -124,7 +124,6 @@ namespace MoiveHubSystem.ViewModels
                         {
                             case (int)Role_Id.Moderator:
                                 MessageBox.Show($"Welcome {entryRole.Name}!", "Admin", MessageBoxButton.OK, MessageBoxImage.Information);
-                                mapWnd.gotoReviews.IsEnabled = false;
                                 break;
                             case (int)Role_Id.User:
                                 MessageBox.Show($"Welcome {entryRole.Name}!", "Client", MessageBoxButton.OK, MessageBoxImage.Information);

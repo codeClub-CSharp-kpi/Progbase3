@@ -16,7 +16,7 @@ namespace MoiveHubSystem.ViewModels
 	{
 		const int AmountOfInPageElements = 5;
 
-		private int _currentAccountId;
+		
 
 		private ReviewRepository _reviewRepository = new();
 		private ReviewAccountRepository _reviewAccountRepository = new();
@@ -73,12 +73,20 @@ namespace MoiveHubSystem.ViewModels
 				var addWnd = new AddReviewWindow();
 				addWnd.ShowDialog();
 
-				var recentlyAddedRev = _reviewRepository.GetAll().Where(obj => obj.Title == addWnd.titleField.Text).FirstOrDefault();
-				_reviewAccountRepository.Insert(new ReviewAccount()
+				int _currentAccountId = default;
+
+				string authorOfReviewLogin = (obj as ReviewsWindow).userName.Text;
+				if (!String.IsNullOrEmpty(authorOfReviewLogin))
 				{
-					AccountId = _currentAccountId,
-					ReviewId = recentlyAddedRev.Id
-				});
+					_currentAccountId = _accountRepository.GetAll().Where(obj => obj.Login == authorOfReviewLogin).FirstOrDefault().Id;
+
+					var recentlyAddedRev = _reviewRepository.GetAll().Where(obj => obj.Title == addWnd.titleField.Text).FirstOrDefault();
+					_reviewAccountRepository.Insert(new ReviewAccount()
+					{
+						AccountId = _currentAccountId,
+						ReviewId = recentlyAddedRev.Id
+					});
+				}
 			});
 		}
 
@@ -89,11 +97,21 @@ namespace MoiveHubSystem.ViewModels
 				MessageBoxResult userDecisionDelOrNotDel = MessageBox.Show("You're deleting the review! Sure?", "Earasing review", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
 				if (userDecisionDelOrNotDel == MessageBoxResult.OK)
 				{
+					var relationsToDel = _reviewAccountRepository.GetAll().Where(obj => obj.ReviewId == SelectedReview.Id);
+
+					foreach (var item in relationsToDel)
+					{
+						_reviewAccountRepository.Delete(item.Id);
+					}
+					
+					
 					_reviewRepository.Delete(SelectedReview.Id);
 
 					RefillObservedReviews();
 				}
 			}, obj => {
+
+				int _currentAccountId = default;
 
 				string authorOfReviewLogin = (obj as ReviewsWindow).userName.Text;
 				if (!String.IsNullOrEmpty(authorOfReviewLogin))
@@ -108,7 +126,22 @@ namespace MoiveHubSystem.ViewModels
 					reviewIsSelected = true;
 				}
 
-				return reviewIsSelected && CheckIsAccountsReview();
+				var reviewIDsOfCurrentAccount = _reviewAccountRepository.GetAll().Where(obj => obj.AccountId == _currentAccountId).Select(obj => obj.ReviewId);
+
+				bool isAccountsReview = false;
+				if (SelectedReview != null && reviewIDsOfCurrentAccount.Contains(SelectedReview.Id))
+				{
+					isAccountsReview = true;
+				}
+
+
+				var currAccount = _accountRepository.GetAll().Where(obj => obj.Id == _currentAccountId).FirstOrDefault();
+				if (currAccount?.RoleId == (int)Role_Id.Moderator)
+				{
+					isAccountsReview = true;
+				}
+
+				return reviewIsSelected && isAccountsReview;
 			});
 		}
 
@@ -120,6 +153,8 @@ namespace MoiveHubSystem.ViewModels
 				editActorWindow.ShowDialog();
 			},obj => {
 
+				int _currentAccountId = default;
+
 				string authorOfReviewLogin = (obj as ReviewsWindow).userName.Text;
 				if (!String.IsNullOrEmpty(authorOfReviewLogin))
 				{
@@ -133,7 +168,21 @@ namespace MoiveHubSystem.ViewModels
 					reviewIsSelected = true;
 				}
 
-				return reviewIsSelected && CheckIsAccountsReview();
+				var reviewIDsOfCurrentAccount = _reviewAccountRepository.GetAll().Where(obj => obj.AccountId == _currentAccountId).Select(obj => obj.ReviewId);
+
+				bool isAccountsReview = false;
+				if (SelectedReview != null && reviewIDsOfCurrentAccount.Contains(SelectedReview.Id))
+				{
+					isAccountsReview = true;
+				}
+
+				var currAccount = _accountRepository.GetAll().Where(obj => obj.Id == _currentAccountId).FirstOrDefault();
+				if (currAccount?.RoleId == (int)Role_Id.Moderator)
+				{
+					isAccountsReview = true;
+				}
+
+				return reviewIsSelected && isAccountsReview;
 			});
 		}
 
@@ -172,17 +221,6 @@ namespace MoiveHubSystem.ViewModels
 			{
 				Reviews.Add(item);
 			}
-		}
-		private bool CheckIsAccountsReview()
-		{
-			var reviewIDsOfCurrentAccount = _reviewAccountRepository.GetAll().Where(obj => obj.AccountId == _currentAccountId).Select(obj => obj.ReviewId);
-
-			bool isAccountsReview = false;
-			if (SelectedReview != null && reviewIDsOfCurrentAccount.Contains(SelectedReview.Id))
-			{
-				isAccountsReview = true;
-			}
-			return isAccountsReview;
 		}
 
 		//

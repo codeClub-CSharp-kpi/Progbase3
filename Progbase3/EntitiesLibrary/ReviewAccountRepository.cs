@@ -6,7 +6,10 @@ namespace EntitiesLibrary
 	{
 		public void Delete(int idEntityToDelete)
 		{
-			throw new System.NotImplementedException();
+			var parameters = new Dapper.DynamicParameters();
+			parameters.Add("@revAccId", idEntityToDelete);
+
+			QueryManager.ExecDML("DelReviewAccount", parameters);
 		}
 
 		public IEnumerable<ReviewAccount> GetAll()
