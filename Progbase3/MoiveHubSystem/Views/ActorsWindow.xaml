@@ -58,12 +58,12 @@
         <GroupBox Grid.Column="0" Grid.RowSpan="3" Header="">
             <StackPanel VerticalAlignment="Center">
                 <ListBox DockPanel.Dock="Top" Margin="10" x:Name="actorsList" ItemsSource="{Binding Actors}" SelectedItem="{Binding SelectedActor}"/>
-                
-                <ScrollViewer DockPanel.Dock="Top" Margin="10" Width="auto">
+
+                <ScrollViewer x:Name="crudBox" DockPanel.Dock="Top" Margin="10" Width="auto">
                     <StackPanel >
-                        <Button Margin="5" Content="Add" Command="{Binding AddActor}"/>
-                        <Button Margin="5" Content="Delete" Command="{Binding DelActor}"/>
-                        <Button Margin="5" Content="Edit" Command="{Binding EditActor}"/>
+                        <Button x:Name="Add" Margin="5" Content="Add" Command="{Binding AddActor}"/>
+                        <Button x:Name="Del" Margin="5" Content="Delete" Command="{Binding DelActor}"/>
+                        <Button x:Name="Edit" Margin="5" Content="Edit" Command="{Binding EditActor}"/>
                     </StackPanel>
                 </ScrollViewer>
                 <WrapPanel  DockPanel.Dock="Top" Margin="10">

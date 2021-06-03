@@ -25,11 +25,7 @@ namespace MoiveHubSystem.ViewModels
             
         }
 
-        enum Role_Id
-        {
-            Moderator = 1,
-            User = 2
-        };
+        
 
 
         private string _login;
@@ -130,23 +126,24 @@ namespace MoiveHubSystem.ViewModels
                                 MessageBox.Show($"Welcome {entryRole.Name}!", "Admin", MessageBoxButton.OK, MessageBoxImage.Information);
                                 break;
                             case (int)Role_Id.User:
-                                mapWnd
                                 MessageBox.Show($"Welcome {entryRole.Name}!", "Client", MessageBoxButton.OK, MessageBoxImage.Information);
                                 break;
                             default:
                                 throw new Exception("Cannot proccess user with invalid role! Please add such role.");
                         }
+                        
 
+                        mapWnd.userName.Text = $"{accountByLogin.Login}";
                         mapWnd.ShowDialog();
-						
-
-                        // unhiding login/registration window
-                        (obj as AuthenticationWindow).Visibility = Visibility.Visible;
                     }
                     catch (Exception err)
                     {
                         MessageBox.Show($"{err.InnerException?.Message ?? err.Message}", "Error",
                             MessageBoxButton.OK, MessageBoxImage.Error);
+					}
+					finally
+					{
+                        (obj as AuthenticationWindow).Close();
                     }
                 }, obj => !string.IsNullOrWhiteSpace(Login) && !string.IsNullOrWhiteSpace(Password));
             }

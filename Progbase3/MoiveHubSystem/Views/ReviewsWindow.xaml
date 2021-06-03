@@ -45,14 +45,14 @@
         </GroupBox>
 
         <GroupBox Grid.Column="0" Grid.RowSpan="3" Header="">
-            <StackPanel VerticalAlignment="Center">
+            <StackPanel VerticalAlignment="Top">
                 <ListBox DockPanel.Dock="Top" Margin="10" x:Name="reviewsList" ItemsSource="{Binding Reviews}" SelectedItem="{Binding SelectedReview}" DisplayMemberPath="Title"/>
 
-                <ScrollViewer DockPanel.Dock="Top" Margin="10" Width="auto">
+                <ScrollViewer x:Name="crudBox" DockPanel.Dock="Top" Margin="10" Width="auto">
                     <StackPanel >
-                        <Button Margin="5" Content="Add" Command="{Binding AddReview}"/>
-                        <Button Margin="5" Content="Delete" Command="{Binding DelReview}"/>
-                        <Button Margin="5" Content="Edit" Command="{Binding EditReview}"/>
+                        <Button x:Name="Add" Margin="5" Content="Add" Command="{Binding AddReview}"/>
+                        <Button x:Name="Del" Margin="5" Content="Delete" Command="{Binding DelReview}"/>
+                        <Button x:Name="Edit" Margin="5" Content="Edit" Command="{Binding EditReview}"/>
                     </StackPanel>
                 </ScrollViewer>
                 <WrapPanel  DockPanel.Dock="Top" Margin="10">

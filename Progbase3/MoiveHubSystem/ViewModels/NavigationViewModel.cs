@@ -1,17 +1,25 @@
-﻿using MoiveHubSystem.Views;
+﻿using EntitiesLibrary;
+using MoiveHubSystem.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace MoiveHubSystem.ViewModels
 {
 	public class NavigationViewModel : INotifyPropertyChanged
 	{
+		IAccountRepository _accountRepository = new AccountRepository();
+		IRoleRepository _roleRepository = new RoleRepository();
+
+		private string _roleName;
+
 		private Commands.RelayCommand _openFilmsWindow;
 		public Commands.RelayCommand OpenFilmsWindow
 		{
@@ -19,9 +27,23 @@ namespace MoiveHubSystem.ViewModels
 			{
 				return _openFilmsWindow ?? new Commands.RelayCommand(obj =>
 				{
-					(obj as MainWindow).Visibility = System.Windows.Visibility.Collapsed;
-					new FilmsWindow().ShowDialog();
-					(obj as MainWindow).Visibility = System.Windows.Visibility.Visible;
+					var mapWnd = obj as MainWindow;
+
+					mapWnd.Visibility = System.Windows.Visibility.Collapsed;
+					FilmsWindow fw = new FilmsWindow();
+
+					switch (IdentifyRoleId(mapWnd))
+					{
+						case (int)Role_Id.Moderator:
+							fw.crudBox.Visibility = System.Windows.Visibility.Visible;
+							break;
+						case (int)Role_Id.User:
+							fw.crudBox.Visibility = System.Windows.Visibility.Collapsed;
+							break;
+					}
+					fw.ShowDialog();
+
+					mapWnd.Visibility = System.Windows.Visibility.Visible;
 				});
 			}
 		}
@@ -33,9 +55,25 @@ namespace MoiveHubSystem.ViewModels
 			{
 				return _openActorsWindow ?? new Commands.RelayCommand(obj =>
 				{
-					(obj as MainWindow).Visibility = System.Windows.Visibility.Collapsed;
-					new ActorsWindow().ShowDialog();
-					(obj as MainWindow).Visibility = System.Windows.Visibility.Visible;
+					
+					var mapWnd = obj as MainWindow;
+
+					mapWnd.Visibility = System.Windows.Visibility.Collapsed;
+					ActorsWindow aw = new ActorsWindow();
+
+					switch (IdentifyRoleId(mapWnd))
+					{
+						case (int)Role_Id.Moderator:
+							aw.crudBox.Visibility = System.Windows.Visibility.Visible;
+							break;
+						case (int)Role_Id.User:
+							aw.crudBox.Visibility = System.Windows.Visibility.Collapsed;
+							break;
+					}
+
+
+					aw.ShowDialog();
+					mapWnd.Visibility = System.Windows.Visibility.Visible;
 				});
 			}
 		}
@@ -47,9 +85,23 @@ namespace MoiveHubSystem.ViewModels
 			{
 				return _openReviewsWindow ?? new Commands.RelayCommand(obj =>
 				{
-					(obj as MainWindow).Visibility = System.Windows.Visibility.Collapsed;
-					new ReviewsWindow().ShowDialog();
-					(obj as MainWindow).Visibility = System.Windows.Visibility.Visible;
+					var mapWnd = obj as MainWindow;
+
+					mapWnd.Visibility = System.Windows.Visibility.Collapsed;
+					ReviewsWindow rw = new ReviewsWindow();
+
+					switch (IdentifyRoleId(mapWnd))
+					{
+						case (int)Role_Id.Moderator:
+							rw.crudBox.Visibility = System.Windows.Visibility.Visible;
+							break;
+						case (int)Role_Id.User:
+							rw.crudBox.Visibility = System.Windows.Visibility.Collapsed;
+							break;
+					}
+
+					rw.ShowDialog();
+					mapWnd.Visibility = System.Windows.Visibility.Visible;
 				});
 			}
 		}
@@ -77,6 +129,16 @@ namespace MoiveHubSystem.ViewModels
 				new ImportFilmsWindow().ShowDialog();
 			});
 		}
+
+
+		private int IdentifyRoleId(MainWindow mapWnd)
+		{
+			var allAccs = _accountRepository.GetAll();
+			var acc = allAccs.Where(obj => obj.Login == mapWnd.userName.Text).FirstOrDefault();
+
+			return acc.RoleId;
+		}
+
 
 		public NavigationViewModel()
 		{

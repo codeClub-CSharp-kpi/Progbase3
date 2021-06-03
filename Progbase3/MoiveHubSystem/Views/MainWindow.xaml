@@ -11,6 +11,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -23,7 +24,9 @@
             <MenuItem Header="Help">
             </MenuItem>
         </Menu>
-        <UniformGrid Columns="3" Grid.Row="1">
+        <TextBlock x:Name="userName" Grid.Row="1" Margin="10" HorizontalAlignment="Right"/>
+        
+        <UniformGrid Columns="3" Grid.Row="2">
             <Button CommandParameter="{Binding ElementName=mapWnd}" Command="{Binding OpenFilmsWindow}">
                 <DockPanel>
                     <Image DockPanel.Dock="Top" x:Name="filmsImage"/>
