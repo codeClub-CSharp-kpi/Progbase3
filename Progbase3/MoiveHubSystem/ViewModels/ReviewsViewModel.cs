@@ -1,6 +1,7 @@
 ﻿using EntitiesLibrary;
 using MoiveHubSystem.Commands;
 using MoiveHubSystem.Views;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -15,7 +16,11 @@ namespace MoiveHubSystem.ViewModels
 	{
 		const int AmountOfInPageElements = 5;
 
+		private int _currentAccountId;
+
 		private ReviewRepository _reviewRepository = new();
+		private ReviewAccountRepository _reviewAccountRepository = new();
+		private AccountRepository _accountRepository = new();
 
 		public ObservableCollection<Review> Reviews { get; set; } = new ObservableCollection<Review>();
 
@@ -67,6 +72,13 @@ namespace MoiveHubSystem.ViewModels
 			{
 				var addWnd = new AddReviewWindow();
 				addWnd.ShowDialog();
+
+				var recentlyAddedRev = _reviewRepository.GetAll().Where(obj => obj.Title == addWnd.titleField.Text).FirstOrDefault();
+				_reviewAccountRepository.Insert(new ReviewAccount()
+				{
+					AccountId = _currentAccountId,
+					ReviewId = recentlyAddedRev.Id
+				});
 			});
 		}
 
@@ -81,7 +93,23 @@ namespace MoiveHubSystem.ViewModels
 
 					RefillObservedReviews();
 				}
-			}, obj => SelectedReview != null);
+			}, obj => {
+
+				string authorOfReviewLogin = (obj as ReviewsWindow).userName.Text;
+				if (!String.IsNullOrEmpty(authorOfReviewLogin))
+				{
+					_currentAccountId = _accountRepository.GetAll().Where(obj => obj.Login == authorOfReviewLogin).FirstOrDefault().Id;
+				}
+
+
+				bool reviewIsSelected = false;
+				if (SelectedReview != null)
+				{
+					reviewIsSelected = true;
+				}
+
+				return reviewIsSelected && CheckIsAccountsReview();
+			});
 		}
 
 		public ICommand EditReview
@@ -90,7 +118,23 @@ namespace MoiveHubSystem.ViewModels
 			{
 				EditReviewsWindow editActorWindow = new(SelectedReview);
 				editActorWindow.ShowDialog();
-			}, obj => SelectedReview != null);
+			},obj => {
+
+				string authorOfReviewLogin = (obj as ReviewsWindow).userName.Text;
+				if (!String.IsNullOrEmpty(authorOfReviewLogin))
+				{
+					_currentAccountId = _accountRepository.GetAll().Where(obj => obj.Login == authorOfReviewLogin).FirstOrDefault().Id;
+				}
+
+
+				bool reviewIsSelected = false;
+				if (SelectedReview != null)
+				{
+					reviewIsSelected = true;
+				}
+
+				return reviewIsSelected && CheckIsAccountsReview();
+			});
 		}
 
 		public ICommand LoadNextPage
@@ -128,6 +172,17 @@ namespace MoiveHubSystem.ViewModels
 			{
 				Reviews.Add(item);
 			}
+		}
+		private bool CheckIsAccountsReview()
+		{
+			var reviewIDsOfCurrentAccount = _reviewAccountRepository.GetAll().Where(obj => obj.AccountId == _currentAccountId).Select(obj => obj.ReviewId);
+
+			bool isAccountsReview = false;
+			if (SelectedReview != null && reviewIDsOfCurrentAccount.Contains(SelectedReview.Id))
+			{
+				isAccountsReview = true;
+			}
+			return isAccountsReview;
 		}
 
 		//

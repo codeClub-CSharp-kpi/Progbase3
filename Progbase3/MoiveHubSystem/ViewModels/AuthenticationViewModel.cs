@@ -124,6 +124,7 @@ namespace MoiveHubSystem.ViewModels
                         {
                             case (int)Role_Id.Moderator:
                                 MessageBox.Show($"Welcome {entryRole.Name}!", "Admin", MessageBoxButton.OK, MessageBoxImage.Information);
+                                mapWnd.gotoReviews.IsEnabled = false;
                                 break;
                             case (int)Role_Id.User:
                                 MessageBox.Show($"Welcome {entryRole.Name}!", "Client", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -135,6 +136,8 @@ namespace MoiveHubSystem.ViewModels
 
                         mapWnd.userName.Text = $"{accountByLogin.Login}";
                         mapWnd.ShowDialog();
+
+                        (obj as AuthenticationWindow).Close();
                     }
                     catch (Exception err)
                     {
@@ -143,7 +146,7 @@ namespace MoiveHubSystem.ViewModels
 					}
 					finally
 					{
-                        (obj as AuthenticationWindow).Close();
+                        
                     }
                 }, obj => !string.IsNullOrWhiteSpace(Login) && !string.IsNullOrWhiteSpace(Password));
             }

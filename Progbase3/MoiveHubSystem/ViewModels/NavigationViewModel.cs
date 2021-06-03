@@ -16,7 +16,6 @@ namespace MoiveHubSystem.ViewModels
 	public class NavigationViewModel : INotifyPropertyChanged
 	{
 		IAccountRepository _accountRepository = new AccountRepository();
-		IRoleRepository _roleRepository = new RoleRepository();
 
 		private string _roleName;
 
@@ -89,16 +88,7 @@ namespace MoiveHubSystem.ViewModels
 
 					mapWnd.Visibility = System.Windows.Visibility.Collapsed;
 					ReviewsWindow rw = new ReviewsWindow();
-
-					switch (IdentifyRoleId(mapWnd))
-					{
-						case (int)Role_Id.Moderator:
-							rw.crudBox.Visibility = System.Windows.Visibility.Visible;
-							break;
-						case (int)Role_Id.User:
-							rw.crudBox.Visibility = System.Windows.Visibility.Collapsed;
-							break;
-					}
+					rw.userName.Text = mapWnd.userName.Text;
 
 					rw.ShowDialog();
 					mapWnd.Visibility = System.Windows.Visibility.Visible;
@@ -138,7 +128,6 @@ namespace MoiveHubSystem.ViewModels
 
 			return acc.RoleId;
 		}
-
 
 		public NavigationViewModel()
 		{

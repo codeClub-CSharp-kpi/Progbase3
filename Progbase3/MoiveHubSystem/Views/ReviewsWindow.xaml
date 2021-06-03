@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:MoiveHubSystem.Views"
         mc:Ignorable="d"
         xmlns:vmR="clr-namespace:MoiveHubSystem.ViewModels" 
+        x:Name="revWnd"
         Title="Reviews Window" Height="450" Width="800">
     <Window.DataContext>
         <vmR:ReviewsViewModel/>
@@ -22,11 +23,14 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <GroupBox Grid.RowSpan="3" Grid.Column="2"   Header="Info">
+        <TextBlock x:Name="userName" Text="" HorizontalAlignment="Right" />
+
+        <GroupBox Grid.RowSpan="3" Grid.Column="2"  Grid.Row="1"  Header="Info">
             <DockPanel VerticalAlignment="Center" >
                 <Label Content="Title:" DockPanel.Dock="Top" />
                 <TextBox DockPanel.Dock="Top" DataContext="{Binding SelectedReview}" Text="{Binding Title}"/>
@@ -38,21 +42,21 @@
 
 
         </GroupBox>
-        <GroupBox Grid.Column="1" Grid.RowSpan="3"  Header="Review Text">
+        <GroupBox Grid.Column="1" Grid.RowSpan="3"  Header="Review Text" Grid.Row="1">
             <ScrollViewer>
                 <TextBox x:Name="storyLineField" Style="{StaticResource isPos}" Text="{Binding SelectedReview.ReviewText}" VerticalContentAlignment="Center" TextWrapping="WrapWithOverflow" />
             </ScrollViewer>
         </GroupBox>
 
-        <GroupBox Grid.Column="0" Grid.RowSpan="3" Header="">
+        <GroupBox Grid.Column="0" Grid.RowSpan="3" Header="" Grid.Row="1">
             <StackPanel VerticalAlignment="Top">
                 <ListBox DockPanel.Dock="Top" Margin="10" x:Name="reviewsList" ItemsSource="{Binding Reviews}" SelectedItem="{Binding SelectedReview}" DisplayMemberPath="Title"/>
 
                 <ScrollViewer x:Name="crudBox" DockPanel.Dock="Top" Margin="10" Width="auto">
                     <StackPanel >
-                        <Button x:Name="Add" Margin="5" Content="Add" Command="{Binding AddReview}"/>
-                        <Button x:Name="Del" Margin="5" Content="Delete" Command="{Binding DelReview}"/>
-                        <Button x:Name="Edit" Margin="5" Content="Edit" Command="{Binding EditReview}"/>
+                        <Button x:Name="Add" Margin="5" Content="Add" CommandParameter="{Binding ElementName=revWnd}" Command="{Binding AddReview}"/>
+                        <Button x:Name="Del" Margin="5" Content="Delete" CommandParameter="{Binding ElementName=revWnd}" Command="{Binding DelReview}"/>
+                        <Button x:Name="Edit" Margin="5" Content="Edit" CommandParameter="{Binding ElementName=revWnd}" Command="{Binding EditReview}"/>
                     </StackPanel>
                 </ScrollViewer>
                 <WrapPanel  DockPanel.Dock="Top" Margin="10">
