@@ -17,6 +17,7 @@ namespace MoiveHubSystem.ViewModels
 
 		private FilmRepository _filmRepository = new();
 		private FilmActorRepository _filmActorRepository = new();
+		private ReviewRepository _reviewRepository = new();
 
 		public ObservableCollection<Film> Films { get; set; } = new ObservableCollection<Film>();
 
@@ -76,6 +77,11 @@ namespace MoiveHubSystem.ViewModels
 					foreach (var item in _filmActorRepository.GetAll().Where(obj=> obj.FilmId == SelectedFilm.Id))
 					{
 						_filmActorRepository.Delete(item.Id);
+					}
+
+					foreach (var item in _reviewRepository.GetAll().Where(obj => obj.FilmId == SelectedFilm.Id))
+					{
+						_reviewRepository.Delete(item.Id);
 					}
 					_filmRepository.Delete(SelectedFilm.Id);
 

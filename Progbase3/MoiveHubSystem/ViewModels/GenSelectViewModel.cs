@@ -1,4 +1,5 @@
 ﻿using EntitiesLibrary;
+using ImageGenratorLib;
 using Microsoft.Win32;
 using MoiveHubSystem.Commands;
 using MoiveHubSystem.Views;
@@ -11,6 +12,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using WordGeneratorLib;
 
@@ -61,6 +63,11 @@ namespace MoiveHubSystem.ViewModels
 			get => new RelayCommand(obj =>
 			{
 				WordGenerator.GenerateWithActorData(PathToPlace, SelectedActor);
+				MessageBox.Show("The report has been generated successfully!", "Success!",
+							MessageBoxButton.OK, MessageBoxImage.Information);
+				
+				DiagramGenerator.CompileStatisticsAccordingToActor(PathToPlace, SelectedActor);
+
 				(obj as GenSelectWindow).Close();
 			}, obj => !string.IsNullOrEmpty(PathToPlace) && SelectedActor != null);
 		}

@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EntitiesLibrary\EntitiesLibrary.csproj" />
+    <ProjectReference Include="..\ImageGenratorLib\ImageGenratorLib.csproj" />
     <ProjectReference Include="..\WordGeneratorLib\WordGeneratorLib.csproj" />
   </ItemGroup>
 

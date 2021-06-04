@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntitiesLibrary", "Entities
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataGeneratorsLibrary", "DataGeneratorsLibrary\DataGeneratorsLibrary.csproj", "{EDD3853F-EA39-4F83-8EB4-787208B671EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordGeneratorLib", "WordGeneratorLib\WordGeneratorLib.csproj", "{B2EB663E-383E-47E5-BBDE-5A3306BC0FA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WordGeneratorLib", "WordGeneratorLib\WordGeneratorLib.csproj", "{B2EB663E-383E-47E5-BBDE-5A3306BC0FA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageGenratorLib", "ImageGenratorLib\ImageGenratorLib.csproj", "{DD306DBB-53DC-457E-BA65-76AC1FF38461}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{B2EB663E-383E-47E5-BBDE-5A3306BC0FA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2EB663E-383E-47E5-BBDE-5A3306BC0FA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2EB663E-383E-47E5-BBDE-5A3306BC0FA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD306DBB-53DC-457E-BA65-76AC1FF38461}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD306DBB-53DC-457E-BA65-76AC1FF38461}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD306DBB-53DC-457E-BA65-76AC1FF38461}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD306DBB-53DC-457E-BA65-76AC1FF38461}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
