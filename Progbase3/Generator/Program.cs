@@ -1,5 +1,6 @@
 ﻿using Generator.UI;
 using System;
+using System.Threading.Tasks;
 
 namespace Generator
 {
@@ -17,7 +18,9 @@ namespace Generator
 					{
 						break;
 					}
-					m.ProceedGeneration();
+					Task t1 = new(() => m.ProceedGeneration());
+					t1.Start();
+					t1.Wait();
 				} 
 				while (true);
 			}
