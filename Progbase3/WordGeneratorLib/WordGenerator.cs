@@ -2,21 +2,30 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Xceed.Words.NET;
-
+using Syncfusion.DocIO.DLS;
+using Syncfusion.DocIO;
 
 namespace WordGeneratorLib
 {
 	public static class WordGenerator
 	{
+		private static IWParagraph paragraph;
+
 		public static void GenerateWithActorData(string destinationDirectory, Actor sourceActor)
 		{
-			using (FileStream fs = new($@"{destinationDirectory}\report.docx", FileMode.OpenOrCreate, FileAccess.Write))
+			using (FileStream fs = new($"{destinationDirectory}/report.docx", FileMode.OpenOrCreate))
 			{
-				DocX theDoc = DocX.Create(fs, Xceed.Document.NET.DocumentTypes.Document);
 
-				theDoc.InsertParagraph(sourceActor.ToString());
-				theDoc.InsertParagraph($"Total featured films: {sourceActor.Films.Count()}");
+				WordDocument newWd = new WordDocument();
+
+				IWSection section = newWd.AddSection();
+
+				paragraph = section.AddParagraph();
+
+				paragraph.AppendText(sourceActor.ToString());
+
+				paragraph = section.AddParagraph();
+				paragraph.AppendText($"Total featured films: {sourceActor.Films.Count()}");
 
 				Dictionary<Film, double> eachFilmAvg = new();
 				foreach (var f in sourceActor.Films)
@@ -46,26 +55,29 @@ namespace WordGeneratorLib
 					filmWithMinRating = eachFilmAvg.Where(obj => obj.Value == eachFilmAvg.Min(obj => obj.Value)).Select(obj => obj.Key).First();
 				}
 
-				theDoc.InsertParagraph($"Film with max rating: ");
-				WriteFilmToDoc(filmWithMaxRating, theDoc);
+				paragraph = section.AddParagraph();
+				paragraph.AppendText($"Film with max rating: ");
+				WriteFilmToDoc(filmWithMaxRating);
 
-				theDoc.InsertParagraph($"Film with min rating: ");
-				WriteFilmToDoc(filmWithMinRating, theDoc);
+				paragraph = section.AddParagraph();
+				paragraph.AppendText($"\nFilm with min rating: ");
+				WriteFilmToDoc(filmWithMinRating);
 
-				theDoc.InsertParagraph($"Average rating of featured films: {filmsAvgRating}");
-
-
-				theDoc.Save();
+				paragraph = section.AddParagraph();
+				paragraph.AppendText($"\nAverage rating of featured films: {filmsAvgRating}");
+				newWd.Save(fs, FormatType.Docx);
 			}
+			
+
 		}
 
-		private static void WriteFilmToDoc(Film f, DocX docToWtireIn)
+		private static void WriteFilmToDoc(Film f)
 		{
-			docToWtireIn.InsertParagraph($"Title: {f.Title}");
-			docToWtireIn.InsertParagraph($"Official Release: {f.OfficialReleaseDate}");
-			docToWtireIn.InsertParagraph($"Slogan: {f.Slogan}");
-			docToWtireIn.InsertParagraph($"Story Line: {f.StoryLine}");
-			docToWtireIn.InsertParagraph($"\r\n");
+			paragraph.AppendText($"\nTitle: {f.Title}");
+			paragraph.AppendText($"\nOfficial Release: {f.OfficialReleaseDate}");
+			paragraph.AppendText($"\nSlogan: {f.Slogan}");
+			paragraph.AppendText($"\nStory Line: {f.StoryLine}");
+			paragraph.AppendText($"\r\n");
 		}
 	}
 }
