@@ -27,6 +27,25 @@ namespace MoiveHubSystem.ViewModels
 			RefillObservedActors();
 		}
 
+		private string _searchField;
+		public string SearchField
+		{
+			get
+			{
+				return _searchField;
+			}
+			set
+			{
+				if (string.IsNullOrEmpty(value))
+				{
+					RefillObservedActors();
+				}
+				_searchField = value;
+				OnPropertyChanged(nameof(SearchField));
+			}
+		}
+
+
 		private Actor _selectedActor;
 		public Actor SelectedActor
 		{
@@ -92,6 +111,19 @@ namespace MoiveHubSystem.ViewModels
 				EditActorWindow editActorWindow = new(SelectedActor);
 				editActorWindow.ShowDialog();
 			}, obj => SelectedActor != null);
+		}
+
+		public ICommand FindActor
+		{
+			get => new RelayCommand(obj =>
+			{
+				Actors.Clear();
+				foreach (var item in _actorRepo.GetAll().Where(obj => obj.ToString() == SearchField))
+				{
+					Actors.Add(item);
+				}
+
+			}, obj => !string.IsNullOrEmpty(SearchField));
 		}
 
 		public ICommand LoadNextPage
