@@ -9,16 +9,16 @@ namespace ImageGenratorLib
 {
 	public static class DiagramGenerator
 	{
-		public static void CompileStatisticsAccordingToActor(string destinationDirectory, Actor sourceActor)
+		public static string CompileStatisticsAccordingToActor(string destinationDirectory, Actor sourceActor)
 		{
 			var plt = new Plot(600, 400);
+
+			string savePath = null;
 
 			Dictionary<Film, double> eachFilmAvg = new();
 
 			if (sourceActor.Films.Any())
 			{
-
-
 				var featuredFilms = sourceActor.Films.OrderBy(obj => obj.OfficialReleaseDate);
 
 				if (featuredFilms.Count() % 2 != 0)
@@ -54,21 +54,11 @@ namespace ImageGenratorLib
 				bar.ValueOffsets = offsets;
 				bar.FillColorNegative = Color.Red;
 				bar.FillColor = Color.Green;
-
-				plt.SaveFig($@"{destinationDirectory}\Compiled_Stat_Pic.png");
+				
+				savePath = plt.SaveFig($@"{destinationDirectory}\Compiled_Stat_Pic.png");
 			}
 
-			//var plt = new ScottPlot.Plot(600, 400);
-
-			//double[] values = DataGen.RandomNormal(0, 12, 5, 10);
-			//double[] offsets = Enumerable.Range(0, values.Length).Select(x => values.Take(x).Sum()).ToArray();
-
-			//var bar = plt.AddBar(values);
-			//bar.ValueOffsets = offsets;
-			//bar.FillColorNegative = Color.Red;
-			//bar.FillColor = Color.Green;
-
-			//plt.SaveFig("bar_waterfall.png");
+			return savePath;
 		}
 	}
 

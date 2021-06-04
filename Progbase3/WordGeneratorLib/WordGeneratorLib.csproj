@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EntitiesLibrary\EntitiesLibrary.csproj" />
+    <ProjectReference Include="..\ImageGenratorLib\ImageGenratorLib.csproj" />
   </ItemGroup>
 
 </Project>

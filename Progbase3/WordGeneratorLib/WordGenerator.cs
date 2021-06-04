@@ -4,6 +4,9 @@ using System.IO;
 using System.Linq;
 using Syncfusion.DocIO.DLS;
 using Syncfusion.DocIO;
+using System.Drawing;
+using ImageGenratorLib;
+using System.Drawing.Imaging;
 
 namespace WordGeneratorLib
 {
@@ -65,6 +68,19 @@ namespace WordGeneratorLib
 
 				paragraph = section.AddParagraph();
 				paragraph.AppendText($"\nAverage rating of featured films: {filmsAvgRating}");
+
+				paragraph = section.AddParagraph();
+
+				Image savedPicture = new Bitmap(DiagramGenerator.CompileStatisticsAccordingToActor("./", sourceActor));
+
+				byte[] imageBytes = null;
+				using (MemoryStream ms = new())
+				{
+					savedPicture.Save(ms, savedPicture.RawFormat);
+					imageBytes = ms.ToArray();
+				}
+				paragraph.AppendPicture(imageBytes);
+				
 				newWd.Save(fs, FormatType.Docx);
 			}
 			

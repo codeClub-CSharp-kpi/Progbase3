@@ -1,5 +1,4 @@
 ﻿using EntitiesLibrary;
-using ImageGenratorLib;
 using Microsoft.Win32;
 using MoiveHubSystem.Commands;
 using MoiveHubSystem.Views;
@@ -65,9 +64,6 @@ namespace MoiveHubSystem.ViewModels
 				WordGenerator.GenerateWithActorData(PathToPlace, SelectedActor);
 				MessageBox.Show("The report has been generated successfully!", "Success!",
 							MessageBoxButton.OK, MessageBoxImage.Information);
-				
-				DiagramGenerator.CompileStatisticsAccordingToActor(PathToPlace, SelectedActor);
-
 				(obj as GenSelectWindow).Close();
 			}, obj => !string.IsNullOrEmpty(PathToPlace) && SelectedActor != null);
 		}
