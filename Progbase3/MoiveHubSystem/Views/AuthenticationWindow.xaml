@@ -18,7 +18,7 @@
             <Label Content="Login:"/>
             <TextBox x:Name="loginField" Text="{Binding Login}"/>
             <Label Content="Password:"/>
-            <TextBox x:Name="passwordField" Text="{Binding Password}"/>
+            <TextBox x:Name="passwordField" Text="{Binding Password}" />
             <WrapPanel HorizontalAlignment="Center" Margin="10">
                 <Button  Content="Login" Margin="10 0" CommandParameter="{Binding ElementName=authWnd}" Command="{Binding ExecLoginization}"/>
                 <Button Content="Register" Margin="10 0" Command="{Binding ExecRegistation}"/>

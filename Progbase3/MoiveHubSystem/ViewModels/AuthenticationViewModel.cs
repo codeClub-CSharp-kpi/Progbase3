@@ -25,7 +25,7 @@ namespace MoiveHubSystem.ViewModels
             
         }
 
-        
+        string _passwordBuffer = "";
 
 
         private string _login;
@@ -45,7 +45,18 @@ namespace MoiveHubSystem.ViewModels
             get { return _password; }
             set
             {
-                _password = value;
+                _passwordBuffer = String.Empty;
+                _passwordBuffer = value;
+
+
+                string buff = String.Empty;
+				for (int i = 0; i < _passwordBuffer.Length; i++)
+				{
+                    buff += '*';
+				}
+
+
+                _password = buff;
                 OnPropertyChanged("Password");
             }
         }
@@ -68,7 +79,7 @@ namespace MoiveHubSystem.ViewModels
                         Account newAcc = new()
                         {
                             Login = this.Login,
-                            Password = SHA256Generator.ProduceSHA256Hash(Password),
+                            Password = SHA256Generator.ProduceSHA256Hash(_passwordBuffer),
                             RoleId = (int)Role_Id.User
                         };
                         
@@ -96,7 +107,7 @@ namespace MoiveHubSystem.ViewModels
                 {
                     try
                     {
-                        string hashedPasswordToCheck = SHA256Generator.ProduceSHA256Hash(_password);
+                        string hashedPasswordToCheck = SHA256Generator.ProduceSHA256Hash(_passwordBuffer);
 
                         Account accountByLogin = _accountRepo.GetAll().Where(acc => acc.Login == _login).FirstOrDefault();
                         if (accountByLogin == null)
@@ -170,7 +181,7 @@ namespace MoiveHubSystem.ViewModels
         private bool ValidatePassword()
         {
             Regex regExp = new(@"^(?=.*[A-Z])(?=.*\d)(?!.*(.)\1\1)[a-zA-Z0-9@]{6,12}$");
-            if (!regExp.IsMatch(Password))
+            if (!regExp.IsMatch(_passwordBuffer))
             {
                 return false;
             }
