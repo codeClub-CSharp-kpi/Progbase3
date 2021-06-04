@@ -81,11 +81,14 @@ namespace MoiveHubSystem.ViewModels
 					_currentAccountId = _accountRepository.GetAll().Where(obj => obj.Login == authorOfReviewLogin).FirstOrDefault().Id;
 
 					var recentlyAddedRev = _reviewRepository.GetAll().Where(obj => obj.Title == addWnd.titleField.Text).FirstOrDefault();
-					_reviewAccountRepository.Insert(new ReviewAccount()
+					if (recentlyAddedRev != null)
 					{
-						AccountId = _currentAccountId,
-						ReviewId = recentlyAddedRev.Id
-					});
+						_reviewAccountRepository.Insert(new ReviewAccount()
+						{
+							AccountId = _currentAccountId,
+							ReviewId = recentlyAddedRev.Id
+						});
+					}
 				}
 			});
 		}
