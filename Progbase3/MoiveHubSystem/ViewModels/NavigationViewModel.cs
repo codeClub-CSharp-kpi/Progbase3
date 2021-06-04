@@ -120,7 +120,17 @@ namespace MoiveHubSystem.ViewModels
 			});
 		}
 
+		public ICommand ExecGenReport
+		{
+			get => new Commands.RelayCommand(obj =>
+			{
+				GenSelectWindow gsw = new();
+				if (gsw.ShowDialog() == true)
+				{
 
+				}
+			});
+		}
 		private int IdentifyRoleId(MainWindow mapWnd)
 		{
 			var allAccs = _accountRepository.GetAll();
