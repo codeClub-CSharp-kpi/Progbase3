@@ -15,13 +15,10 @@ namespace EntitiesLibrary
 
 		static QueryManager()
 		{
-			_connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;
-			Initial Catalog=FilmManagmentDB;
-			Integrated Security=True;
-			Connect Timeout=30;Encrypt=False;
-			TrustServerCertificate=False;
-			ApplicationIntent=ReadWrite;
-			MultiSubnetFailover=False"; // insecure(?) how to create app.config in .net core&
+			_connectionString = @"Data Source=SQL5080.site4now.net;
+			Initial Catalog=db_a76153_filmmanagmentdb;
+			User ID=db_a76153_filmmanagmentdb_admin;
+			Password=filmDb753"; // insecure(?) how to create app.config in .net core&
 
 
 			DbProviderFactories.RegisterFactory("System.Data.SqlClient", SqlClientFactory.Instance);
