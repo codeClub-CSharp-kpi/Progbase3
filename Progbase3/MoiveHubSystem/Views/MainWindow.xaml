@@ -7,14 +7,9 @@
         xmlns:vm="clr-namespace:MoiveHubSystem.ViewModels"
         mc:Ignorable="d"
         x:Name="mapWnd"
-        Title="Map Window" Height="450" Width="800" Icon="{StaticResource ResourceKey=mapIcon}">
+        Title="Map Window" Height="450" Width="800">
 
-    <Window.Icon>
-        <BitmapImage>
-            
-        </BitmapImage>
-    </Window.Icon>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
