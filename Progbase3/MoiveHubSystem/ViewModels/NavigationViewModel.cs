@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Ookii.Dialogs.Wpf;
 
 namespace MoiveHubSystem.ViewModels
 {
@@ -117,6 +118,18 @@ namespace MoiveHubSystem.ViewModels
 			get => new Commands.RelayCommand(obj =>
 			{
 				new ImportFilmsWindow().ShowDialog();
+			});
+		}
+
+		public ICommand ExecImportCountriesAndCities
+		{
+			get => new Commands.RelayCommand(obj =>
+			{
+				VistaFolderBrowserDialog dialog = new VistaFolderBrowserDialog();
+				if (dialog.ShowDialog() == true)
+				{
+
+				}
 			});
 		}
 

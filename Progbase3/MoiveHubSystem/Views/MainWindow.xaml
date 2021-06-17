@@ -21,6 +21,7 @@
             <MenuItem Header="File">
                 <MenuItem Header="Export Films" CommandParameter="{Binding ElementName=mapWnd}" Command="{Binding ExecExportFilms}" />
                 <MenuItem Header="Import Films" CommandParameter="{Binding ElementName=mapWnd}" Command="{Binding ExecImportFilms}" />
+                <MenuItem Header="Import Import countries and cities" CommandParameter="{Binding ElementName=mapWnd}" Command="{Binding ExecImportCountriesAndCities}" />
                 <MenuItem Header="Exit" CommandParameter="{Binding ElementName=mapWnd}" Command="{Binding ExecExit}"/>
             </MenuItem>
             <MenuItem Header="Help">
