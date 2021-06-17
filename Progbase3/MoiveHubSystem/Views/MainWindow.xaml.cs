@@ -28,7 +28,7 @@ namespace MoiveHubSystem.Views
 			try
 			{
 				DirectoryInfo di = new("../../../../../images");
-				Icon = new BitmapImage(new Uri(di.FullName + @"/icons/favicon.ico", UriKind.Absolute));
+				//Icon = new BitmapImage(new Uri(di.FullName + @"/icons/favicon.ico", UriKind.Absolute));
 				this.filmsImage.Source = new BitmapImage(new Uri(di.FullName + @"/pictures/filmsLogo.png", UriKind.Absolute));
 				this.actorsImage.Source = new BitmapImage(new Uri(di.FullName + @"/pictures/actorsLogo.png", UriKind.Absolute));
 				this.reviewsImage.Source = new BitmapImage(new Uri(di.FullName + @"/pictures/reviewsLogo.png", UriKind.Absolute));

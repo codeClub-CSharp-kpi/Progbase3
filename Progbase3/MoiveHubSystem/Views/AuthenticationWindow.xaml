@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MoiveHubSystem.Views"
-        xmlns:vm="clr-namespace:MoiveHubSystem.ViewModels"
+        xmlns:vm="clr-namespace:MoiveHubSystem.ViewModels" xmlns:resources="clr-namespace:MoiveHubSystem.Resources"
         mc:Ignorable="d"
         x:Name="authWnd"
         Title="AuthenticationWindow" Height="450" Width="800">
@@ -16,9 +16,9 @@
         <StackPanel VerticalAlignment="Center" Margin="70 0" >
 
             <Label Content="Login:"/>
-            <TextBox x:Name="loginField" Text="{Binding Login}"/>
+            <TextBox x:Name="loginField" Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}"/>
             <Label Content="Password:"/>
-            <TextBox x:Name="passwordField" Text="{Binding Password}" />
+            <resources:BindablePasswordBox x:Name="passwordField" Password="{Binding Password}" FontFamily="Trebuchet MS" FontSize="24"  Margin="5 0" Padding="5 20"/>
             <WrapPanel HorizontalAlignment="Center" Margin="10">
                 <Button  Content="Login" Margin="10 0" CommandParameter="{Binding ElementName=authWnd}" Command="{Binding ExecLoginization}"/>
                 <Button Content="Register" Margin="10 0" Command="{Binding ExecRegistation}"/>

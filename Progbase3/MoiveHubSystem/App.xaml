@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:MoiveHubSystem"
              StartupUri="Views/AuthenticationWindow.xaml">
     <Application.Resources>
-        <ResourceDictionary Source="StyleSheet.xaml"/>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="StyleSheet.xaml"/>
+                <ResourceDictionary Source="Icons.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

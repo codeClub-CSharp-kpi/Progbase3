@@ -128,7 +128,7 @@ namespace MoiveHubSystem.ViewModels
 				VistaFolderBrowserDialog dialog = new VistaFolderBrowserDialog();
 				if (dialog.ShowDialog() == true)
 				{
-
+					
 				}
 			});
 		}
