@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DataManagersLibrary;
+using System.Collections.Generic;
 
 namespace EntitiesLibrary
 {
