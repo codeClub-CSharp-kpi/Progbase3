@@ -1,4 +1,5 @@
 ﻿using EntitiesLibrary;
+using HashersLibrary;
 using MoiveHubSystem.Commands;
 using MoiveHubSystem.Views;
 using System;
