@@ -7,9 +7,9 @@
         xmlns:vm="clr-namespace:MoiveHubSystem.ViewModels"
         mc:Ignorable="d"
         x:Name="mapWnd"
-        Title="Map Window" Height="450" Width="800">
-
-
+        Title="Map Window" 
+        Height="450" 
+        Width="800" MinHeight="350" MinWidth="500">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -17,37 +17,73 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Menu Grid.Row="0">
-            <MenuItem Header="File">
-                <MenuItem Header="Export Films" CommandParameter="{Binding ElementName=mapWnd}" Command="{Binding ExecExportFilms}" />
-                <MenuItem Header="Import Films" CommandParameter="{Binding ElementName=mapWnd}" Command="{Binding ExecImportFilms}" />
-                <MenuItem Header="Import Import countries and cities" CommandParameter="{Binding ElementName=mapWnd}" Command="{Binding ExecImportCountriesAndCities}" />
-                <MenuItem Header="Exit" CommandParameter="{Binding ElementName=mapWnd}" Command="{Binding ExecExit}"/>
+        <Menu Grid.Row="0" Background="White" Margin="10">
+            <MenuItem x:Name="tabFile" Background="White" >
+                <MenuItem.Header>
+                    <StackPanel>
+                        <Image  Source="pack://application:,,,/images/icons/file.ico" Height="50" Stretch="UniformToFill"/>
+                        <ContentPresenter Content="File" />
+                    </StackPanel>
+                </MenuItem.Header>
+                <MenuItem Header="Export Films" CommandParameter="{Binding ElementName=mapWnd}" Command="{Binding ExecExportFilms}">
+                    <MenuItem.Icon>
+                        <Image  Source="pack://application:,,,/images/icons/exportIco.png"  Stretch="UniformToFill"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <!--Moderator-1-->
+                <MenuItem Header="Import Films" CommandParameter="{Binding ElementName=mapWnd}" Command="{Binding ExecImportFilms}">
+                    <MenuItem.Icon>
+                        <Image  Source="pack://application:,,,/images/icons/importIco.png"  Stretch="UniformToFill"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Import countries and cities" CommandParameter="{Binding ElementName=mapWnd}" Command="{Binding ExecImportCountriesAndCities}" >
+                    <MenuItem.Icon>
+                        <Image  Source="pack://application:,,,/images/icons/countriesImport.png"  Stretch="UniformToFill"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Exit" CommandParameter="{Binding ElementName=mapWnd}" Command="{Binding ExecExit}">
+                    <MenuItem.Icon>
+                        <Image  Source="pack://application:,,,/images/icons/exitIcon.png"  Stretch="UniformToFill"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
-            <MenuItem Header="Help">
+            <MenuItem x:Name="tabHelp">
+                <MenuItem.Header>
+                    <StackPanel>
+                        <Image  Source="../images/icons/help.ico" Height="50"/>
+                        <ContentPresenter Content="Help" />
+                    </StackPanel>
+                </MenuItem.Header>
             </MenuItem>
-            <MenuItem Header="Generate Report" Command="{Binding ExecGenReport}"/>
+            <MenuItem x:Name="tabGenreport" Command="{Binding ExecGenReport}">
+                <MenuItem.Header>
+                    <StackPanel>
+                        <Image  Source="../images/icons/genReport.ico" Height="50"/>
+                        <ContentPresenter Content="Generate Report" />
+                    </StackPanel>
+                </MenuItem.Header>
+            </MenuItem>
         </Menu>
         <TextBlock x:Name="userName" Grid.Row="1" Margin="10" HorizontalAlignment="Right"/>
         
         <UniformGrid Columns="3" Grid.Row="2">
-            <Button x:Name="gotoFilms" CommandParameter="{Binding ElementName=mapWnd}" Command="{Binding OpenFilmsWindow}">
+            <Button x:Name="gotoFilms" Style="{StaticResource ColoredButtonTemplate}" CommandParameter="{Binding ElementName=mapWnd}" Command="{Binding OpenFilmsWindow}">
                 <DockPanel>
-                    <Image DockPanel.Dock="Top" x:Name="filmsImage"/>
+                    <Image DockPanel.Dock="Top" x:Name="filmsImage" Source="../images/pictures/filmsLogo.png"/>
                     <Label HorizontalContentAlignment="Center" Content="Films"/>
                 </DockPanel>
             </Button>
 
-            <Button x:Name="gotoActors" CommandParameter="{Binding ElementName=mapWnd}" Command="{Binding OpenActorsWindow}">
+            <Button x:Name="gotoActors" Style="{StaticResource ColoredButtonTemplate}" CommandParameter="{Binding ElementName=mapWnd}" Command="{Binding OpenActorsWindow}">
                 <DockPanel>
-                    <Image DockPanel.Dock="Top" x:Name="actorsImage"/>
+                    <Image DockPanel.Dock="Top" x:Name="actorsImage" Source="../images/pictures/actorsLogo.png"/>
                     <Label HorizontalContentAlignment="Center" Content="Actors"/>
                 </DockPanel>
             </Button>
 
-            <Button x:Name="gotoReviews" CommandParameter="{Binding ElementName=mapWnd}" Command="{Binding OpenReviewsWindow}">
+            <Button x:Name="gotoReviews" Style="{StaticResource ColoredButtonTemplate}" CommandParameter="{Binding ElementName=mapWnd}" Command="{Binding OpenReviewsWindow}">
                 <DockPanel>
-                    <Image DockPanel.Dock="Top" x:Name="reviewsImage"/>
+                    <Image DockPanel.Dock="Top" x:Name="reviewsImage" Source="../images/pictures/reviewsLogo.png"/>
                     <Label  HorizontalContentAlignment="Center" Content="Reviews"/>
                 </DockPanel>
             </Button>

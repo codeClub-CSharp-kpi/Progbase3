@@ -1,6 +1,7 @@
 ﻿using MoiveHubSystem.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -37,8 +38,9 @@ namespace MoiveHubSystem.Views
 			}
 			catch (Exception err)
 			{
-				MessageBox.Show(err.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-				this.Close();
+				throw new Exception(err.Message);
+				//MessageBox.Show(err.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				//Process.GetCurrentProcess().Kill();
 			}
 		}
 	}

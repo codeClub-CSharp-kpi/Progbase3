@@ -4,7 +4,23 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+    <Win32Resource />
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="images\icons\countriesImport.png" />
+    <None Remove="images\icons\exitIcon.png" />
+    <None Remove="images\icons\exportIco.png" />
+    <None Remove="images\icons\favicon.ico" />
+    <None Remove="images\icons\file.ico" />
+    <None Remove="images\icons\genReport.ico" />
+    <None Remove="images\icons\help.ico" />
+    <None Remove="images\icons\importIco.png" />
+    <None Remove="images\pictures\actorsLogo.png" />
+    <None Remove="images\pictures\filmsLogo.png" />
+    <None Remove="images\pictures\reviewsLogo.png" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Ookii.Dialogs.Wpf" Version="3.1.0" />
@@ -14,6 +30,42 @@
     <ProjectReference Include="..\EntitiesLibrary\EntitiesLibrary.csproj" />
     <ProjectReference Include="..\HashersLibrary\HashersLibrary.csproj" />
     <ProjectReference Include="..\WordGeneratorLib\WordGeneratorLib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\icons\countriesImport.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\icons\exitIcon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\icons\exportIco.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\icons\favicon.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\icons\file.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\icons\genReport.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\icons\help.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\icons\importIco.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\pictures\actorsLogo.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\pictures\filmsLogo.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\pictures\reviewsLogo.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

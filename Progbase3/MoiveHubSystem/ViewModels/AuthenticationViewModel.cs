@@ -147,8 +147,6 @@ namespace MoiveHubSystem.ViewModels
 
                         mapWnd.userName.Text = $"{accountByLogin.Login}";
                         mapWnd.ShowDialog();
-
-                        (obj as AuthenticationWindow).Close();
                     }
                     catch (Exception err)
                     {
@@ -157,7 +155,7 @@ namespace MoiveHubSystem.ViewModels
 					}
 					finally
 					{
-                        
+                        (obj as AuthenticationWindow).Close();
                     }
                 }, obj => !string.IsNullOrWhiteSpace(Login) && !string.IsNullOrWhiteSpace(Password));
             }

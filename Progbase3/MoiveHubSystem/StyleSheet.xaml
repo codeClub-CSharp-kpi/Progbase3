@@ -5,10 +5,10 @@
         <Setter Property="Control.FontSize" Value="24"/>
     </Style>
 
-    <Style TargetType="Button" BasedOn="{StaticResource ResourceKey=BaseFont}">
+    <!--<Style TargetType="Button" BasedOn="{StaticResource ResourceKey=BaseFont}">
         <Setter Property="Background" Value="White"/>
         <Setter Property="Padding" Value="15"/>
-    </Style>
+    </Style>-->
 
     <Style TargetType="Label" BasedOn="{StaticResource ResourceKey=BaseFont}">
         <Setter Property="Margin" Value="5 0"/>
@@ -41,13 +41,49 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
-
-
     <Style TargetType="Slider" BasedOn="{StaticResource ResourceKey=BaseFont}">
         <Setter Property="Margin" Value="10 0"/>
     </Style>
 
-    
-
+    <Style x:Key="RoundButton" TargetType="Button" BasedOn="{StaticResource BaseFont}">
+        <Style.Resources>
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="20" />
+            </Style>
+        </Style.Resources>
+    </Style>
+    <Style TargetType="Button" BasedOn="{StaticResource RoundButton}">
+        <Setter Property="Padding" Value="15"/>
+        <Setter Property="Background" Value="White"/>
+    </Style>
+    <Style x:Key="ColoredButtonTemplate" TargetType="Button" BasedOn="{StaticResource RoundButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="20" BorderThickness="1" Name="border">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush>
+                                        <GradientStop Color="#faaca8" Offset="0.0"/>
+                                        <GradientStop Color="#ddd6f3" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="#FF416C"></Setter>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="BorderThickness" Value="8"></Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     
 </ResourceDictionary>
