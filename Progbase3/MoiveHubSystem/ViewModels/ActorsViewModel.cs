@@ -1,6 +1,7 @@
 ﻿using EntitiesLibrary;
 using MoiveHubSystem.Commands;
 using MoiveHubSystem.Views;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -56,10 +57,31 @@ namespace MoiveHubSystem.ViewModels
 			set
 			{
 				_selectedActor = value;
+				if (_selectedActor != null)
+				{
+					ImageOfActor = Convert.FromBase64String(_selectedActor.Photo.Path);
+				}
+				else
+				{
+					ImageOfActor = null;
+				}
 				OnPropertyChanged(nameof(SelectedActor));
 			}
 		}
 
+		private byte[] _imageOfActor;
+		public byte[] ImageOfActor
+		{
+			get
+			{
+				return _imageOfActor;
+			}
+			set
+			{
+				_imageOfActor = value;
+				OnPropertyChanged(nameof(ImageOfActor));
+			}
+		}
 		//
 		private int TotalPages
 		{

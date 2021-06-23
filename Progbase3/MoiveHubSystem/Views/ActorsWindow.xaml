@@ -52,7 +52,7 @@
             </ScrollViewer>
         </GroupBox>
         <GroupBox Grid.Column="1" Grid.RowSpan="3"  Header="Image">
-            <Image Source="{Binding SelectedActor.Photo.Path}"/>
+            <Image Source="{Binding ImageOfActor}"/>
         </GroupBox>
 
         <GroupBox Grid.Column="0" Grid.RowSpan="3" Header="">

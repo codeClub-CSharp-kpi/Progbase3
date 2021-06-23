@@ -123,7 +123,7 @@ namespace MoiveHubSystem.ViewModels
 						Surname = this.Surname,
 						Bio = this.Bio,
 						CityId = this.SelectedCity.Id,
-						PhotoId = 1
+						PhotoId = (int)StandartPhoto_Ids.Default
 					});
 					MessageBox.Show("New actor has been added successfully!", "Info",
 							MessageBoxButton.OK, MessageBoxImage.Information);

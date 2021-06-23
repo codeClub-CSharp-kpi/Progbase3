@@ -65,6 +65,15 @@
 
                 <Label DockPanel.Dock="Top" Content="City: "/>
                 <ComboBox DockPanel.Dock="Top" x:Name="citiesList" ItemsSource="{Binding SelectedCountry.Cities}" SelectedItem="{Binding SelectedCity}" DisplayMemberPath="Name"/>
+
+                <GroupBox Header="Change Image" Margin="10">
+                    <StackPanel>
+                        <TextBox Margin="10 10 10 0" IsReadOnly="True" Text="Selected Image"/>
+                        <Button Margin="10" Content="New image" />
+                    </StackPanel>
+                    
+                    
+                </GroupBox>
             </StackPanel>
         </GroupBox>
         
