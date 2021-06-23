@@ -30,7 +30,7 @@ namespace EntitiesLibrary
 		public void Insert(Photo entityToInsert)
 		{
 			var parameters = new Dapper.DynamicParameters();
-			parameters.Add("@pName", entityToInsert.Path);
+			parameters.Add("@path", entityToInsert.Path);
 
 			QueryManager.ExecDML("AddPhoto", parameters);
 		}
