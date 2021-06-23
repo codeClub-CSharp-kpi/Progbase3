@@ -1,9 +1,13 @@
 ﻿using EntitiesLibrary;
+using Microsoft.Win32;
 using MoiveHubSystem.Commands;
 using MoiveHubSystem.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -11,11 +15,12 @@ using System.Windows.Input;
 
 namespace MoiveHubSystem.ViewModels
 {
-	class EditActorViewModel: INotifyPropertyChanged
+	class EditActorViewModel : INotifyPropertyChanged
 	{
 		private CountryRepository _countryRepository = new();
 		private CityRepository _cityRepository = new();
 		private ActorRepository _actorRepository = new();
+		private PhotoRepository _photoRepository = new();
 
 		private Actor _preChnagedOriginal;
 
@@ -93,6 +98,19 @@ namespace MoiveHubSystem.ViewModels
 			}
 		}
 
+		private string _newImagePath = "Your new selected image";
+		public string NewImagePath
+		{
+			get
+			{
+				return _newImagePath;
+			}
+			set
+			{
+				_newImagePath = value;
+				OnPropertyChanged(nameof(NewImagePath));
+			}
+		}
 
 		private Country _selectedCountry;
 		public Country SelectedCountry
@@ -131,7 +149,22 @@ namespace MoiveHubSystem.ViewModels
 			{
 				try
 				{
+					//
 					int newCityId = SelectedCity?.Id ?? 0;
+
+					//
+					byte[] buff = null;
+					using (var ms = new MemoryStream())
+					{
+						new Bitmap(NewImagePath).Save(ms, ImageFormat.Png);
+						buff = ms.ToArray();
+					}
+					
+					string imageInBase64 = Convert.ToBase64String(buff);
+					_photoRepository.Insert(new Photo() { Path = imageInBase64 });
+
+					int newImage_InBaseId = _photoRepository.GetAll().FirstOrDefault(obj => obj.Path == imageInBase64).Id;
+
 					_updatedActor = new Actor()
 					{
 						Id = _preChnagedOriginal.Id,
@@ -140,9 +173,16 @@ namespace MoiveHubSystem.ViewModels
 						Surname = this.Surname,
 						Bio = this.Bio,
 						CityId = newCityId != 0 ? newCityId : _preChnagedOriginal.CityId,
-						PhotoId = _preChnagedOriginal.PhotoId
+						PhotoId = newImage_InBaseId
 					};
 					_actorRepository.Update(_updatedActor);
+
+					// Deleting old photo of actor
+					if (_preChnagedOriginal.PhotoId != (int)StandartPhoto_Ids.Default)
+					{
+						_photoRepository.Delete(_preChnagedOriginal.PhotoId);
+					}
+
 					MessageBox.Show("Updated Successfully", "Info",
 						MessageBoxButton.OK, MessageBoxImage.Information);
 				}
@@ -185,11 +225,28 @@ namespace MoiveHubSystem.ViewModels
 					isChangedCity = true;
 				}
 
+				bool isChangedPhoto = false;
+				if (NewImagePath != "Your new selected image")
+				{
+					isChangedPhoto = true;
+				}
+
 				return isChangedName || isChangedPatronimic ||
-						isChangedSurname || isChangedBio || isChangedCity;
+						isChangedSurname || isChangedBio || isChangedCity || isChangedPhoto;
 			});
 		}
 
+		public ICommand SelectNewImage
+		{
+			get => new RelayCommand(obj =>
+			{
+				OpenFileDialog ofd = new OpenFileDialog();
+				if (ofd.ShowDialog() == true)
+				{
+					NewImagePath = ofd.FileName;
+				}
+			});
+		}
 		//
 		public EditActorViewModel(Actor actorToEdit)
 		{

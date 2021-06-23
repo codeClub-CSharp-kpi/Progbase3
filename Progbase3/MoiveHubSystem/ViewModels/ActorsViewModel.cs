@@ -18,6 +18,7 @@ namespace MoiveHubSystem.ViewModels
 		
 		private ActorRepository _actorRepo;
 		private FilmActorRepository _filmActorRepository = new();
+		private PhotoRepository _photoRepository = new();
 
 		public ObservableCollection<Actor> Actors { get; set; }
 
@@ -121,6 +122,12 @@ namespace MoiveHubSystem.ViewModels
 						_filmActorRepository.Delete(item.Id);
 					}
 					_actorRepo.Delete(SelectedActor.Id);
+
+					if (_selectedActor.PhotoId != (int)StandartPhoto_Ids.Default)
+					{
+						_photoRepository.Delete(_selectedActor.PhotoId);
+					}
+
 					RefillObservedActors();
 				}
 			}, obj => SelectedActor != null);
