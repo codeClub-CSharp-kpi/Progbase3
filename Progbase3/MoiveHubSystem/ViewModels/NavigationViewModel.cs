@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Ookii.Dialogs.Wpf;
+using Microsoft.Win32;
+using System.Windows;
 
 namespace MoiveHubSystem.ViewModels
 {
@@ -125,10 +127,28 @@ namespace MoiveHubSystem.ViewModels
 		{
 			get => new Commands.RelayCommand(obj =>
 			{
-				VistaFolderBrowserDialog dialog = new VistaFolderBrowserDialog();
-				if (dialog.ShowDialog() == true)
+				OpenFileDialog fileDialog = new OpenFileDialog();
+				fileDialog.Filter = "xml file|*.xml";
+				if (fileDialog.ShowDialog() == true)
 				{
+					Task t1 = new Task(delegate() 
+						{
+							try
+							{
+								Import.ImportCountries(fileDialog.FileName);
+								MessageBox.Show("The Country and City Import has been completed!", "Success!",
+									MessageBoxButton.OK, MessageBoxImage.Information);
+							}
+							catch (Exception)
+							{
+								MessageBox.Show("Sorry, some troubles occured while importing!", "Oops...",
+								MessageBoxButton.OK, MessageBoxImage.Warning);
+							}
+						});
+					t1.Start();
 					
+					MessageBox.Show("It may take some time to complete the country import...", "Please, stay here",
+							MessageBoxButton.OK, MessageBoxImage.Information);
 				}
 			});
 		}
@@ -137,10 +157,18 @@ namespace MoiveHubSystem.ViewModels
 		{
 			get => new Commands.RelayCommand(obj =>
 			{
-				GenSelectWindow gsw = new();
-				if (gsw.ShowDialog() == true)
+				try
 				{
+					GenSelectWindow gsw = new();
+					if (gsw.ShowDialog() == true)
+					{
 
+					}
+				}
+				catch (Exception err)
+				{
+					MessageBox.Show(err.Message, "Error", 
+						MessageBoxButton.OK, MessageBoxImage.Error);
 				}
 			});
 		}

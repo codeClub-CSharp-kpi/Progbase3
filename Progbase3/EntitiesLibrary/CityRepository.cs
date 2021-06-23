@@ -30,8 +30,8 @@ namespace EntitiesLibrary
 		public void Insert(City entityToInsert)
 		{
 			var parameters = new Dapper.DynamicParameters();
-			parameters.Add("@cityName", entityToInsert.Name);
-			parameters.Add("@countryId", entityToInsert.CountryId);
+			parameters.Add("@cName", entityToInsert.Name);
+			parameters.Add("@cid ", entityToInsert.CountryId);
 
 			QueryManager.ExecDML("AddCity", parameters);
 		}
@@ -39,9 +39,9 @@ namespace EntitiesLibrary
 		public void Update(City entityToUpdate)
 		{
 			var parameters = new Dapper.DynamicParameters();
-			parameters.Add("@cid", entityToUpdate.Id);
-			parameters.Add("@cityName", entityToUpdate.Name);
-			parameters.Add("@countryId", entityToUpdate.CountryId);
+			parameters.Add("@id", entityToUpdate.Id);
+			parameters.Add("@cName", entityToUpdate.Name);
+			parameters.Add("@cid", entityToUpdate.CountryId);
 
 			QueryManager.ExecDML("UpdateCity", parameters);
 		}
