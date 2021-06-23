@@ -2,7 +2,7 @@
 {
 	public enum Role_Id
     {
-        Moderator = 5,
-        User = 6
+        Moderator = 1,
+        User = 2
     };
 }
