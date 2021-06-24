@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using EntitiesLibrary;
+using System;
+using System.Collections.Generic;
 
-namespace EntitiesLibrary
+namespace RepositoryLibrary
 {
 	public interface IRepository<T>
 		where T : IEntity
@@ -11,5 +13,4 @@ namespace EntitiesLibrary
 		void Insert(T entityToInsert);
 		void Update(T entityToUpdate);
 	}
-
 }

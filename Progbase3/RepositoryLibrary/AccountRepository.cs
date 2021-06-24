@@ -1,10 +1,10 @@
 ﻿using DataManagersLibrary;
+using EntitiesLibrary;
 using System;
 using System.Collections.Generic;
 
-namespace EntitiesLibrary
+namespace RepositoryLibrary
 {
-
 	public class AccountRepository : IAccountRepository
 	{
 		public void Delete(int idEntityToDelete)

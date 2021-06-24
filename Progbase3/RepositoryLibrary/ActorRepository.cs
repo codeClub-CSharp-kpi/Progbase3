@@ -1,9 +1,10 @@
 ﻿using Dapper;
 using DataManagersLibrary;
+using EntitiesLibrary;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EntitiesLibrary
+namespace RepositoryLibrary
 {
 	public class ActorRepository : IActorRepository
 	{

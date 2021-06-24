@@ -1,8 +1,9 @@
 ﻿using DataManagersLibrary;
+using EntitiesLibrary;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EntitiesLibrary
+namespace RepositoryLibrary
 {
 	public class CityRepository : ICityRepository
 	{
@@ -57,7 +58,4 @@ namespace EntitiesLibrary
 			return new ActorRepository().GetAll().Where(a => a.CityId == cityId);
 		}
 	}
-
-
-
 }

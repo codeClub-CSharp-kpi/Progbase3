@@ -1,8 +1,9 @@
 ﻿using DataManagersLibrary;
+using EntitiesLibrary;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EntitiesLibrary
+namespace RepositoryLibrary
 {
 	public class CountryRepository : ICountryRepository
 	{
@@ -49,9 +50,4 @@ namespace EntitiesLibrary
 			return new CityRepository().GetAll().Where(c => c.CountryId == countryId);
 		}
 	}
-
-
-
-
-
 }

@@ -1,7 +1,8 @@
-﻿namespace EntitiesLibrary
+﻿using EntitiesLibrary;
+
+namespace RepositoryLibrary
 {
 	public interface ICountryRepository : IRepository<Country>
 	{
 	}
-
 }

@@ -1,8 +1,9 @@
 ﻿using DataManagersLibrary;
+using EntitiesLibrary;
 using System;
 using System.Collections.Generic;
 
-namespace EntitiesLibrary
+namespace RepositoryLibrary
 {
 	public class RoleRepository : IRoleRepository
 	{

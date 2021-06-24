@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using EntitiesLibrary;
+using System.Collections.Generic;
 
-namespace EntitiesLibrary
+namespace RepositoryLibrary
 {
 	public interface IFilmActorRepository : IRepository<FilmActor>
 	{
