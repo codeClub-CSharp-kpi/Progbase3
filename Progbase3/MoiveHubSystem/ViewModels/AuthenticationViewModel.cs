@@ -2,6 +2,7 @@
 using HashersLibrary;
 using MoiveHubSystem.Commands;
 using MoiveHubSystem.Views;
+using NetManagers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,9 +19,6 @@ namespace MoiveHubSystem.ViewModels
 {
 	class AuthenticationViewModel: INotifyPropertyChanged
     {
-        IAccountRepository _accountRepo = new AccountRepository();
-        IRoleRepository _roleRepo = new RoleRepository();
-
         public AuthenticationViewModel()
         {
             
@@ -71,7 +69,7 @@ namespace MoiveHubSystem.ViewModels
                 {
                     try
                     {
-                        var isSuchLogin = _accountRepo.GetAll().Where(a => a.Login == Login).FirstOrDefault();
+                        var isSuchLogin = (TcpQueryManager.ExecQuery("GetAllAccounts") as IEnumerable<Account>).Where(a => a.Login == Login).FirstOrDefault();
                         if (isSuchLogin != null)
                         {
                             throw new Exception("Such Login Already Exist");
@@ -83,9 +81,9 @@ namespace MoiveHubSystem.ViewModels
                             Password = SHA256Generator.ProduceSHA256Hash(_passwordBuffer),
                             RoleId = (int)Role_Id.User
                         };
-                        
 
-                        _accountRepo.Insert(newAcc);
+
+                        TcpQueryManager.ExecQuery("AddAccount", newAcc);
                         ClearFields();
 
                         MessageBox.Show($"Your account has been registered!", "Success",
@@ -110,7 +108,7 @@ namespace MoiveHubSystem.ViewModels
                     {
                         string hashedPasswordToCheck = SHA256Generator.ProduceSHA256Hash(_passwordBuffer);
 
-                        Account accountByLogin = _accountRepo.GetAll().Where(acc => acc.Login == _login).FirstOrDefault();
+                        Account accountByLogin = (TcpQueryManager.ExecQuery("GetAllAccounts") as IEnumerable<Account>).Where(acc => acc.Login == _login).FirstOrDefault();
                         if (accountByLogin == null)
                         {
                             throw new Exception("User with this login has not been found!");
@@ -121,7 +119,7 @@ namespace MoiveHubSystem.ViewModels
                         }
 
 
-                        var entryRole = _roleRepo.GetAll().Where(role => role.Id == accountByLogin.RoleId).FirstOrDefault();
+                        var entryRole =(TcpQueryManager.ExecQuery("GetAllRoles") as IEnumerable<Role>).Where(role => role.Id == accountByLogin.RoleId).FirstOrDefault();
                         if (entryRole == null)
                         {
                             throw new Exception("Cannot proccess user with invalid role! Please add such role.");

@@ -14,16 +14,8 @@ namespace MoiveHubSystem.ViewModels
 {
 	class EditFilmViewModel : INotifyPropertyChanged
 	{
-		private CountryRepository _countryRepository = new();
-		private CityRepository _cityRepository = new();
-		private ActorRepository _actorRepository = new();
-
 		private Film _preChnagedOriginal;
 
-
-		private ActorRepository _actorRepo = new();
-		private FilmRepository _filmRepo = new();
-		private FilmActorRepository _filmActRepo = new();
 
 		public ObservableCollection<Actor> PickList { get; set; } = new();
 		public ObservableCollection<Actor> Cast { get; set; } = new();
@@ -133,7 +125,7 @@ namespace MoiveHubSystem.ViewModels
 						Slogan = this.Slogan,
 						StoryLine = this.StoryLine
 					};
-					_filmRepo.Update(_updatedFilm);
+					TcpQueryManager.ExecQuery("UpdateFilm", _updatedFilm);
 
 					var q = Cast.Select(obj => obj.Id).Intersect(_preChnagedOriginal.Actors.Select(obj => obj.Id));
 
@@ -143,8 +135,8 @@ namespace MoiveHubSystem.ViewModels
 					{
 						if (!q.Contains(aid))
 						{
-							var FilmActor_ToDelId = _filmActRepo.GetAll().Where(obj => obj.FilmId == _updatedFilm.Id && obj.ActorId == aid).Select(obj=> obj.Id).FirstOrDefault();
-							_filmActRepo.Delete(FilmActor_ToDelId);
+							var FilmActor_ToDelId = (TcpQueryManager.ExecQuery("GetAllFilmsActors") as IEnumerable<FilmActor>).Where(obj => obj.FilmId == _updatedFilm.Id && obj.ActorId == aid).Select(obj=> obj.Id).FirstOrDefault();
+							TcpQueryManager.ExecQuery("DelFilmActor", FilmActor_ToDelId);
 						}
 					}
 
@@ -154,7 +146,7 @@ namespace MoiveHubSystem.ViewModels
 					{
 						if (!q.Contains(aid))
 						{
-							_filmActRepo.Insert(new FilmActor()
+							TcpQueryManager.ExecQuery("AddFilmActor", new FilmActor()
 							{
 								ActorId = aid,
 								FilmId = _updatedFilm.Id
@@ -258,8 +250,8 @@ namespace MoiveHubSystem.ViewModels
 		{
 			get
 			{
-				int total = _actorRepo.GetAll().Count() / AmountOfInPageElements;
-				if (_actorRepo.GetAll().Count() % AmountOfInPageElements != 0)
+				int total = (TcpQueryManager.ExecQuery("GetAllActors") as IEnumerable<Actor>).Count() / AmountOfInPageElements;
+				if ((TcpQueryManager.ExecQuery("GetAllActors") as IEnumerable<Actor>).Count() % AmountOfInPageElements != 0)
 				{
 					return total + 1;
 				}
@@ -274,7 +266,7 @@ namespace MoiveHubSystem.ViewModels
 		// supporting private methods
 		private IEnumerable<Actor> GetPageForList(int pageNumber)
 		{
-			return _actorRepo.GetPage(AmountOfInPageElements, AmountOfInPageElements * (pageNumber - 1));
+			return (TcpQueryManager.ExecQuery("GetActorsPage", AmountOfInPageElements, AmountOfInPageElements * (pageNumber - 1)) as IEnumerable<Actor>);
 		}
 		private void RefillObservedActors()
 		{

@@ -17,11 +17,6 @@ namespace MoiveHubSystem.ViewModels
 {
 	class EditActorViewModel : INotifyPropertyChanged
 	{
-		private CountryRepository _countryRepository = new();
-		private CityRepository _cityRepository = new();
-		private ActorRepository _actorRepository = new();
-		private PhotoRepository _photoRepository = new();
-
 		private Actor _preChnagedOriginal;
 
 		public List<Country> Countries { get; set; }
@@ -161,9 +156,9 @@ namespace MoiveHubSystem.ViewModels
 					}
 					
 					string imageInBase64 = Convert.ToBase64String(buff);
-					_photoRepository.Insert(new Photo() { Path = imageInBase64 });
+					TcpQueryManager.ExecQuery("AddPhoto", new Photo() { Path = imageInBase64 });
 
-					int newImage_InBaseId = _photoRepository.GetAll().FirstOrDefault(obj => obj.Path == imageInBase64).Id;
+					int newImage_InBaseId = (TcpQueryManager.ExecQuery("GetAllPhotos") as IEnumerable<Photo>).FirstOrDefault(obj => obj.Path == imageInBase64).Id;
 
 					_updatedActor = new Actor()
 					{
@@ -175,12 +170,12 @@ namespace MoiveHubSystem.ViewModels
 						CityId = newCityId != 0 ? newCityId : _preChnagedOriginal.CityId,
 						PhotoId = newImage_InBaseId
 					};
-					_actorRepository.Update(_updatedActor);
+					TcpQueryManager.ExecQuery("UpdateActor", _updatedActor);
 
 					// Deleting old photo of actor
 					if (_preChnagedOriginal.PhotoId != (int)StandartPhoto_Ids.Default)
 					{
-						_photoRepository.Delete(_preChnagedOriginal.PhotoId);
+						TcpQueryManager.ExecQuery("DeletePhoto", _preChnagedOriginal.PhotoId);
 					}
 
 					MessageBox.Show("Updated Successfully", "Info",
@@ -258,8 +253,8 @@ namespace MoiveHubSystem.ViewModels
 			Bio = actorToEdit.Bio;
 			City = actorToEdit.City;
 
-			Countries = _countryRepository.GetAll().ToList();
-			Cities = _cityRepository.GetAll().ToList();
+			Countries = (TcpQueryManager.ExecQuery("GetAllCountries") as IEnumerable<Country>).ToList();
+			Cities = (TcpQueryManager.ExecQuery("GetAllCities") as IEnumerable<City>).ToList();
 		}
 		
 		//

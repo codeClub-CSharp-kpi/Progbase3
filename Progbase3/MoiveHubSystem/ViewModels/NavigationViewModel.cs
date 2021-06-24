@@ -13,13 +13,12 @@ using System.Windows.Input;
 using Ookii.Dialogs.Wpf;
 using Microsoft.Win32;
 using System.Windows;
+using NetManagers;
 
 namespace MoiveHubSystem.ViewModels
 {
 	public class NavigationViewModel : INotifyPropertyChanged
 	{
-		IAccountRepository _accountRepository = new AccountRepository();
-
 		private string _roleName;
 
 		private Commands.RelayCommand _openFilmsWindow;
@@ -174,7 +173,7 @@ namespace MoiveHubSystem.ViewModels
 		}
 		private int IdentifyRoleId(MainWindow mapWnd)
 		{
-			var allAccs = _accountRepository.GetAll();
+			var allAccs = TcpQueryManager.ExecQuery("GetAllAccounts") as IEnumerable<Account>;
 			var acc = allAccs.Where(obj => obj.Login == mapWnd.userName.Text).FirstOrDefault();
 
 			return acc.RoleId;

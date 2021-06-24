@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using NetManagers;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace EntitiesLibrary
 {
@@ -11,7 +13,7 @@ namespace EntitiesLibrary
 		{
 			get
 			{
-				return new ActorRepository().GetAll().Where(a => a.PhotoId == Id).FirstOrDefault();
+				return (TcpQueryManager.ExecQuery("GetAllActors") as IEnumerable<Actor>).GetAll().Where(a => a.PhotoId == Id).FirstOrDefault();
 			}
 		}
 	}

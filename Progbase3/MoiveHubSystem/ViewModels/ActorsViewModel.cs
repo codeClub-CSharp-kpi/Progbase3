@@ -1,5 +1,7 @@
-﻿using MoiveHubSystem.Commands;
+﻿using EntitiesLibrary;
+using MoiveHubSystem.Commands;
 using MoiveHubSystem.Views;
+using NetManagers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,15 +17,10 @@ namespace MoiveHubSystem.ViewModels
 	{
 		const int AmountOfInPageElements = 5;
 		
-		private ActorRepository _actorRepo;
-		private FilmActorRepository _filmActorRepository = new();
-		private PhotoRepository _photoRepository = new();
-
 		public ObservableCollection<Actor> Actors { get; set; }
 
 		public ActorsViewModel()
 		{
-			_actorRepo = new ActorRepository();
 			Actors = new ObservableCollection<Actor>();
 			RefillObservedActors();
 		}
@@ -87,8 +84,8 @@ namespace MoiveHubSystem.ViewModels
 		{
 			get
 			{
-				int total = _actorRepo.GetAll().Count() / AmountOfInPageElements;
-				if (_actorRepo.GetAll().Count() % AmountOfInPageElements != 0)
+				int total = (TcpQueryManager.ExecQuery("GetAllActors") as IEnumerable<Actor>).Count() / AmountOfInPageElements;
+				if ((TcpQueryManager.ExecQuery("GetAllActors") as IEnumerable<Actor>).Count() % AmountOfInPageElements != 0)
 				{
 					return total + 1;
 				}
@@ -116,15 +113,15 @@ namespace MoiveHubSystem.ViewModels
 				MessageBoxResult userDecisionDelOrNotDel = MessageBox.Show("You're deleting the actor! Sure?", "Earasing actor", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
 				if (userDecisionDelOrNotDel == MessageBoxResult.OK)
 				{
-					foreach (var item in _filmActorRepository.GetAll().Where(obj => obj.ActorId == SelectedActor.Id))
+					foreach (var item in (TcpQueryManager.ExecQuery("GetAllFilmsActors") as IEnumerable<FilmActor>).Where(obj => obj.ActorId == SelectedActor.Id))
 					{
-						_filmActorRepository.Delete(item.Id);
+						TcpQueryManager.ExecQuery("DelFilmActor", item.Id);
 					}
-					_actorRepo.Delete(SelectedActor.Id);
+					TcpQueryManager.ExecQuery("DelActor", SelectedActor.Id);
 
 					if (_selectedActor.PhotoId != (int)StandartPhoto_Ids.Default)
 					{
-						_photoRepository.Delete(_selectedActor.PhotoId);
+						TcpQueryManager.ExecQuery("DeletePhoto", _selectedActor.PhotoId);
 					}
 
 					RefillObservedActors();
@@ -146,7 +143,7 @@ namespace MoiveHubSystem.ViewModels
 			get => new RelayCommand(obj =>
 			{
 				Actors.Clear();
-				foreach (var item in _actorRepo.GetAll().Where(obj => obj.ToString() == SearchField))
+				foreach (var item in (TcpQueryManager.ExecQuery("GetAllActors") as IEnumerable<Actor>).Where(obj => obj.ToString() == SearchField))
 				{
 					Actors.Add(item);
 				}
@@ -180,7 +177,7 @@ namespace MoiveHubSystem.ViewModels
 		// supporting private methods
 		private IEnumerable<Actor> GetPageForList(int pageNumber)
 		{
-			return _actorRepo.GetPage(AmountOfInPageElements, AmountOfInPageElements * (pageNumber - 1));
+			return (TcpQueryManager.ExecQuery("GetActorsPage", AmountOfInPageElements, AmountOfInPageElements * (pageNumber - 1)) as IEnumerable<Actor>);
 		}
 		private void RefillObservedActors()
 		{

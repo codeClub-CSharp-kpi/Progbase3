@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using MoiveHubSystem.Commands;
 using MoiveHubSystem.Views;
+using NetManagers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,9 +17,6 @@ namespace MoiveHubSystem.ViewModels
 {
 	class ExportViewModel : INotifyPropertyChanged
 	{
-		private ActorRepository _actorRepo = new();
-		private FilmActorRepository _filmActorRepository = new();
-
 		public ObservableCollection<Actor> Actors { get; set; } = new();
 
 		public ExportViewModel()
@@ -125,8 +123,8 @@ namespace MoiveHubSystem.ViewModels
 		{
 			get
 			{
-				int total = _actorRepo.GetAll().Count() / AmountOfInPageElements;
-				if (_actorRepo.GetAll().Count() % AmountOfInPageElements != 0)
+				int total = (TcpQueryManager.ExecQuery("GetAllActors") as IEnumerable<Actor>).Count() / AmountOfInPageElements;
+				if ((TcpQueryManager.ExecQuery("GetAllActors") as IEnumerable<Actor>).Count() % AmountOfInPageElements != 0)
 				{
 					return total + 1;
 				}
@@ -141,7 +139,7 @@ namespace MoiveHubSystem.ViewModels
 		// supporting private methods
 		private IEnumerable<Actor> GetPageForList(int pageNumber)
 		{
-			return _actorRepo.GetPage(AmountOfInPageElements, AmountOfInPageElements * (pageNumber - 1));
+			return TcpQueryManager.ExecQuery("GetActorsPage", AmountOfInPageElements, AmountOfInPageElements * (pageNumber - 1)) as IEnumerable<Actor>;
 		}
 		private void RefillObservedActors()
 		{

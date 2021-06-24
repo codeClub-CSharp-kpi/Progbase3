@@ -1,6 +1,7 @@
 ﻿using EntitiesLibrary;
 using MoiveHubSystem.Commands;
 using MoiveHubSystem.Views;
+using NetManagers;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -12,13 +13,9 @@ namespace MoiveHubSystem.ViewModels
 {
 	class AddActorsViewModel: INotifyPropertyChanged
 	{
-		private CountryRepository _countryRepo = new();
-		private ActorRepository _actorRepo = new();
-
-
 		public AddActorsViewModel()
 		{
-			Countries = _countryRepo.GetAll().ToList();
+			Countries = (TcpQueryManager.ExecQuery("GetAllCountries") as IEnumerable<Country>).ToList();
 		}
 
 		public List<Country> Countries { get; set; }
@@ -116,7 +113,7 @@ namespace MoiveHubSystem.ViewModels
 			{
 				try
 				{
-					_actorRepo.Insert(new Actor()
+					TcpQueryManager.ExecQuery("AddActor", new Actor()
 					{
 						Name = this.Name,
 						Patronimic = this.Patronimic,

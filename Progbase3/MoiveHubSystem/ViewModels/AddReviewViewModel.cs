@@ -1,6 +1,7 @@
 ﻿using EntitiesLibrary;
 using MoiveHubSystem.Commands;
 using MoiveHubSystem.Views;
+using NetManagers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,9 +20,6 @@ namespace MoiveHubSystem.ViewModels
 	}
 	class AddReviewViewModel: INotifyPropertyChanged
 	{
-		private FilmRepository _filmRepo = new();
-		private ReviewRepository _reviewRepo = new();
-
 		public ObservableCollection<Film> PickList { get; set; } = new();
 		public ObservableCollection<Film> FilmOnReview { get; set; } = new();
 
@@ -139,7 +137,7 @@ namespace MoiveHubSystem.ViewModels
 						FilmId = FilmOnReview.First().Id,
 						ReviewText = this.ReviewText
 					};
-					_reviewRepo.Insert(newReview);
+					TcpQueryManager.ExecQuery("AddReview", newReview);
 
 					MessageBox.Show("New reivew has been added successfully!", "Info",
 							MessageBoxButton.OK, MessageBoxImage.Information);
@@ -202,8 +200,8 @@ namespace MoiveHubSystem.ViewModels
 		{
 			get
 			{
-				int total = _filmRepo.GetAll().Count() / AmountOfInPageElements;
-				if (_filmRepo.GetAll().Count() % AmountOfInPageElements != 0)
+				int total = (TcpQueryManager.ExecQuery("GetAllFilms") as IEnumerable<Film>).Count() / AmountOfInPageElements;
+				if ((TcpQueryManager.ExecQuery("GetAllFilms") as IEnumerable<Film>).Count() % AmountOfInPageElements != 0)
 				{
 					return total + 1;
 				}
@@ -217,7 +215,7 @@ namespace MoiveHubSystem.ViewModels
 		// supporting private methods
 		private IEnumerable<Film> GetPageForList(int pageNumber)
 		{
-			return _filmRepo.GetPage(AmountOfInPageElements, AmountOfInPageElements * (pageNumber - 1));
+			return TcpQueryManager.ExecQuery("GetFilmsPage", AmountOfInPageElements, AmountOfInPageElements * (pageNumber - 1)) as IEnumerable<Film>;
 		}
 		private void RefillObservedFilms()
 		{

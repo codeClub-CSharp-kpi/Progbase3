@@ -1,6 +1,7 @@
 ﻿using EntitiesLibrary;
 using MoiveHubSystem.Commands;
 using MoiveHubSystem.Views;
+using NetManagers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,12 +16,6 @@ namespace MoiveHubSystem.ViewModels
 	class ReviewsViewModel
 	{
 		const int AmountOfInPageElements = 5;
-
-		
-
-		private ReviewRepository _reviewRepository = new();
-		private ReviewAccountRepository _reviewAccountRepository = new();
-		private AccountRepository _accountRepository = new();
 
 		public ObservableCollection<Review> Reviews { get; set; } = new ObservableCollection<Review>();
 
@@ -53,8 +48,8 @@ namespace MoiveHubSystem.ViewModels
 		{
 			get
 			{
-				int total = _reviewRepository.GetAll().Count() / AmountOfInPageElements;
-				if (_reviewRepository.GetAll().Count() % AmountOfInPageElements != 0)
+				int total = (TcpQueryManager.ExecQuery("GetAllReviews") as IEnumerable<Review>).Count() / AmountOfInPageElements;
+				if ((TcpQueryManager.ExecQuery("GetAllReviews") as IEnumerable<Review>).Count() % AmountOfInPageElements != 0)
 				{
 					return total + 1;
 				}
@@ -78,12 +73,12 @@ namespace MoiveHubSystem.ViewModels
 				string authorOfReviewLogin = (obj as ReviewsWindow).userName.Text;
 				if (!String.IsNullOrEmpty(authorOfReviewLogin))
 				{
-					_currentAccountId = _accountRepository.GetAll().Where(obj => obj.Login == authorOfReviewLogin).FirstOrDefault().Id;
+					_currentAccountId = (TcpQueryManager.ExecQuery("GetAllAccounts") as IEnumerable<Account>).Where(obj => obj.Login == authorOfReviewLogin).FirstOrDefault().Id;
 
-					var recentlyAddedRev = _reviewRepository.GetAll().Where(obj => obj.Title == addWnd.titleField.Text).FirstOrDefault();
+					var recentlyAddedRev = (TcpQueryManager.ExecQuery("GetAllReviews") as IEnumerable<Review>).Where(obj => obj.Title == addWnd.titleField.Text).FirstOrDefault();
 					if (recentlyAddedRev != null)
 					{
-						_reviewAccountRepository.Insert(new ReviewAccount()
+						TcpQueryManager.ExecQuery("AddReviewAccount", new ReviewAccount()
 						{
 							AccountId = _currentAccountId,
 							ReviewId = recentlyAddedRev.Id
@@ -100,15 +95,14 @@ namespace MoiveHubSystem.ViewModels
 				MessageBoxResult userDecisionDelOrNotDel = MessageBox.Show("You're deleting the review! Sure?", "Earasing review", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
 				if (userDecisionDelOrNotDel == MessageBoxResult.OK)
 				{
-					var relationsToDel = _reviewAccountRepository.GetAll().Where(obj => obj.ReviewId == SelectedReview.Id);
+					var relationsToDel = (TcpQueryManager.ExecQuery("GetAllReviewsAccounts") as IEnumerable<ReviewAccount>).Where(obj => obj.ReviewId == SelectedReview.Id);
 
 					foreach (var item in relationsToDel)
 					{
-						_reviewAccountRepository.Delete(item.Id);
+						TcpQueryManager.ExecQuery("DelReviewAccount", item.Id);
 					}
-					
-					
-					_reviewRepository.Delete(SelectedReview.Id);
+
+					TcpQueryManager.ExecQuery("DeleteReview", SelectedReview.Id);
 
 					RefillObservedReviews();
 				}
@@ -119,7 +113,7 @@ namespace MoiveHubSystem.ViewModels
 				string authorOfReviewLogin = (obj as ReviewsWindow).userName.Text;
 				if (!String.IsNullOrEmpty(authorOfReviewLogin))
 				{
-					_currentAccountId = _accountRepository.GetAll().Where(obj => obj.Login == authorOfReviewLogin).FirstOrDefault().Id;
+					_currentAccountId = (TcpQueryManager.ExecQuery("GetAllAccounts") as IEnumerable<Account>).Where(obj => obj.Login == authorOfReviewLogin).FirstOrDefault().Id;
 				}
 
 
@@ -129,7 +123,7 @@ namespace MoiveHubSystem.ViewModels
 					reviewIsSelected = true;
 				}
 
-				var reviewIDsOfCurrentAccount = _reviewAccountRepository.GetAll().Where(obj => obj.AccountId == _currentAccountId).Select(obj => obj.ReviewId);
+				var reviewIDsOfCurrentAccount = (TcpQueryManager.ExecQuery("GetAllReviewsAccounts") as IEnumerable<ReviewAccount>).Where(obj => obj.AccountId == _currentAccountId).Select(obj => obj.ReviewId);
 
 				bool isAccountsReview = false;
 				if (SelectedReview != null && reviewIDsOfCurrentAccount.Contains(SelectedReview.Id))
@@ -138,7 +132,7 @@ namespace MoiveHubSystem.ViewModels
 				}
 
 
-				var currAccount = _accountRepository.GetAll().Where(obj => obj.Id == _currentAccountId).FirstOrDefault();
+				var currAccount = (TcpQueryManager.ExecQuery("GetAllAccounts") as IEnumerable<Account>).Where(obj => obj.Id == _currentAccountId).FirstOrDefault();
 				if (currAccount?.RoleId == (int)Role_Id.Moderator)
 				{
 					isAccountsReview = true;
@@ -161,7 +155,7 @@ namespace MoiveHubSystem.ViewModels
 				string authorOfReviewLogin = (obj as ReviewsWindow).userName.Text;
 				if (!String.IsNullOrEmpty(authorOfReviewLogin))
 				{
-					_currentAccountId = _accountRepository.GetAll().Where(obj => obj.Login == authorOfReviewLogin).FirstOrDefault().Id;
+					_currentAccountId = (TcpQueryManager.ExecQuery("GetAllAccounts") as IEnumerable<Account>).Where(obj => obj.Login == authorOfReviewLogin).FirstOrDefault().Id;
 				}
 
 
@@ -171,7 +165,7 @@ namespace MoiveHubSystem.ViewModels
 					reviewIsSelected = true;
 				}
 
-				var reviewIDsOfCurrentAccount = _reviewAccountRepository.GetAll().Where(obj => obj.AccountId == _currentAccountId).Select(obj => obj.ReviewId);
+				var reviewIDsOfCurrentAccount = (TcpQueryManager.ExecQuery("GetAllReviewsAccounts") as IEnumerable<ReviewAccount>).Where(obj => obj.AccountId == _currentAccountId).Select(obj => obj.ReviewId);
 
 				bool isAccountsReview = false;
 				if (SelectedReview != null && reviewIDsOfCurrentAccount.Contains(SelectedReview.Id))
@@ -179,7 +173,7 @@ namespace MoiveHubSystem.ViewModels
 					isAccountsReview = true;
 				}
 
-				var currAccount = _accountRepository.GetAll().Where(obj => obj.Id == _currentAccountId).FirstOrDefault();
+				var currAccount = (TcpQueryManager.ExecQuery("GetAllAccounts") as IEnumerable<Account>).Where(obj => obj.Id == _currentAccountId).FirstOrDefault();
 				if (currAccount?.RoleId == (int)Role_Id.Moderator)
 				{
 					isAccountsReview = true;
@@ -215,7 +209,7 @@ namespace MoiveHubSystem.ViewModels
 		// supporting private methods
 		private IEnumerable<Review> GetPageForList(int pageNumber)
 		{
-			return _reviewRepository.GetPage(AmountOfInPageElements, AmountOfInPageElements * (pageNumber - 1));
+			return TcpQueryManager.ExecQuery("GetReviewsPage", AmountOfInPageElements, AmountOfInPageElements * (pageNumber - 1)) as IEnumerable<Review>;
 		}
 		private void RefillObservedReviews()
 		{

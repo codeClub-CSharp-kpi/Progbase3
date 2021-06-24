@@ -1,4 +1,5 @@
 ﻿using EntitiesLibrary;
+using RepositoryLibrary;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -191,7 +192,7 @@ namespace Server
 									break;
 								case Queries.AddFilm:
 									{
-										_actRepo.Insert(argumentsDeserialized[0] as Actor);
+										_filmRepo.Insert(argumentsDeserialized[0] as Film);
 									}
 									break;
 								case Queries.AddFilmActor:

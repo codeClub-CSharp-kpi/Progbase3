@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using NetManagers;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -81,7 +82,7 @@ namespace EntitiesLibrary
 		{
 			get
 			{
-				return new PhotoRepository().GetById(PhotoId);
+				return TcpQueryManager new PhotoRepository().GetById(PhotoId);
 			}
 		}
 

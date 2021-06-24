@@ -1,15 +1,9 @@
-﻿using Dapper;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
-using System.Linq;
-using System.Net;
 using System.Net.Sockets;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MoiveHubSystem
+namespace NetManagers
 {
 	public static class TcpQueryManager
 	{
@@ -37,42 +31,6 @@ namespace MoiveHubSystem
 			}
 			return queryResult;
 		}
-
-		//public static object ExecSelect(string procedureName, params object[] args)
-		//{
-		//	object queryResultCollection = default;
-		//	try
-		//	{
-		//		using (_client = new TcpClient(_ipAddress, _port))
-		//		{
-		//			using (NetworkStream netStream = _client.GetStream())
-		//			{
-		//				using (StreamWriter sw = new StreamWriter(netStream))
-		//				{
-		//					BinaryFormatter bf = new();
-		//					byte[] encodedParams = null;
-
-		//					using (MemoryStream ms = new())
-		//					{
-		//						bf.Serialize(ms, args);
-		//						encodedParams = ms.ToArray();
-		//					}
-
-		//					string query = $"SELECT;{procedureName};{Convert.ToBase64String(encodedParams)}";
-		//					sw.WriteLine(query);
-		//					sw.Flush();
-
-		//					var querRes = bf.Deserialize(netStream);
-		//				}
-		//			}
-		//		}
-		//	}
-		//	catch (Exception err)
-		//	{
-		//		throw new Exception($"Select Error: {err.Message}");
-		//	}
-		//	return queryResultCollection;
-		//}
 
 		private static string PrepareQuery(string procedureName, params object[] args)
 		{

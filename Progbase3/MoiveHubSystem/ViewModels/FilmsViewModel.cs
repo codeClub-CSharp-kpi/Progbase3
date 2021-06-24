@@ -1,6 +1,7 @@
 ﻿using EntitiesLibrary;
 using MoiveHubSystem.Commands;
 using MoiveHubSystem.Views;
+using NetManagers;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -14,10 +15,6 @@ namespace MoiveHubSystem.ViewModels
 	class FilmsViewModel: INotifyPropertyChanged
 	{
 		const int AmountOfInPageElements = 5;
-
-		private FilmRepository _filmRepository = new();
-		private FilmActorRepository _filmActorRepository = new();
-		private ReviewRepository _reviewRepository = new();
 
 		public ObservableCollection<Film> Films { get; set; } = new ObservableCollection<Film>();
 
@@ -45,8 +42,8 @@ namespace MoiveHubSystem.ViewModels
 		{
 			get
 			{
-				int total = _filmRepository.GetAll().Count() / AmountOfInPageElements;
-				if (_filmRepository.GetAll().Count() % AmountOfInPageElements != 0)
+				int total = (TcpQueryManager.ExecQuery("GetAllFilms") as IEnumerable<Film>).Count() / AmountOfInPageElements;
+				if ((TcpQueryManager.ExecQuery("GetAllFilms") as IEnumerable<Film>).Count() % AmountOfInPageElements != 0)
 				{
 					return total + 1;
 				}
@@ -74,16 +71,16 @@ namespace MoiveHubSystem.ViewModels
 				MessageBoxResult userDecisionDelOrNotDel = MessageBox.Show("You're deleting the film! Sure?", "Earasing film", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
 				if (userDecisionDelOrNotDel == MessageBoxResult.OK)
 				{
-					foreach (var item in _filmActorRepository.GetAll().Where(obj=> obj.FilmId == SelectedFilm.Id))
+					foreach (var item in (TcpQueryManager.ExecQuery("GetAllFilmsActors") as IEnumerable<FilmActor>).Where(obj=> obj.FilmId == SelectedFilm.Id))
 					{
-						_filmActorRepository.Delete(item.Id);
+						TcpQueryManager.ExecQuery("DelFilmActor", item.Id);
 					}
 
-					foreach (var item in _reviewRepository.GetAll().Where(obj => obj.FilmId == SelectedFilm.Id))
+					foreach (var item in (TcpQueryManager.ExecQuery("GetAllReviews") as IEnumerable<Review>).Where(obj => obj.FilmId == SelectedFilm.Id))
 					{
-						_reviewRepository.Delete(item.Id);
+						TcpQueryManager.ExecQuery("DeleteReview", item.Id);
 					}
-					_filmRepository.Delete(SelectedFilm.Id);
+					TcpQueryManager.ExecQuery("DelFilm", SelectedFilm.Id);
 
 					RefillObservedActors();
 				}
@@ -125,7 +122,7 @@ namespace MoiveHubSystem.ViewModels
 		// supporting private methods
 		private IEnumerable<Film> GetPageForList(int pageNumber)
 		{
-			return _filmRepository.GetPage(AmountOfInPageElements, AmountOfInPageElements * (pageNumber - 1));
+			return (TcpQueryManager.ExecQuery("GetFilmsPage", AmountOfInPageElements, AmountOfInPageElements * (pageNumber - 1)) as IEnumerable<Film>);
 		}
 		private void RefillObservedActors()
 		{
