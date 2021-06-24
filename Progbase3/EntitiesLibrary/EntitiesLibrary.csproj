@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataManagersLibrary\DataManagersLibrary.csproj" />
+    <ProjectReference Include="..\NetManagers\NetManagers.csproj" />
   </ItemGroup>
 
 </Project>
