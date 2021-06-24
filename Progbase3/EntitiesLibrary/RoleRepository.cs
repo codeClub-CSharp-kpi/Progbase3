@@ -21,12 +21,12 @@ namespace EntitiesLibrary
 			throw new NotImplementedException();
 		}
 
-		IEnumerable<Role> IRepository<Role>.GetAll()
+		public IEnumerable<Role> GetAll()
 		{
 			return QueryManager.ExecSelect<Role>("GetAllRoles");
 		}
 
-		Role IRepository<Role>.GetById(int id)
+		public Role GetById(int id)
 		{
 			throw new NotImplementedException();
 		}

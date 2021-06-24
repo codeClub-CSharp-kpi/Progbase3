@@ -12,11 +12,6 @@ namespace Server
 	{
 		private static TcpListener listener;
 
-		private IAccountRepository _accRepo = new AccountRepository();
-		private IActorRepository _actRepo = new ActorRepository();
-		private ICityRepository _cityRepo = new CityRepository();
-		private ICountryRepository _countryRepo = new CountryRepository();
-
 		enum Queries
 		{
 			AddAccount,
@@ -67,7 +62,7 @@ namespace Server
 			UpdatePhoto,
 			UpdateReview,
 		}
-		private static Dictionary<string, Queries> QueryExecution = new()
+		private static Dictionary<string, Queries> QueryStr_QueryEnumDitct= new()
 		{
 			{ "AddAccount", Queries.AddAccount },
 			{ "AddActor", Queries.AddActor },
@@ -145,119 +140,263 @@ namespace Server
 						NetworkStream netStream = client.GetStream();
 
 						StreamReader sr = new(netStream);
-						string userQuery = sr.ReadLine();
+						string userQueryRaw = sr.ReadLine();
 
-						BinaryFormatter br = new();
+						string[] parts = userQueryRaw.Split(';');
 
-						if (!QueryExecution.ContainsKey(userQuery))
+						string queryName = parts[0];
+						byte[] argumentsInBytes = Convert.FromBase64String(parts[1]);
+						object[] argumentsDeserialized = null;
+
+						using (MemoryStream ms = new MemoryStream())
+						{
+							ms.Write(argumentsInBytes, 0, argumentsInBytes.Length);
+							argumentsDeserialized = (new BinaryFormatter().Deserialize(ms)) as object[];
+						}
+
+
+						if (!QueryStr_QueryEnumDitct.ContainsKey(queryName))
 						{
 							throw new Exception("The query is invalid");
 						}
 
-						switch (QueryExecution[userQuery])
+						BinaryFormatter bf = new();
+						switch (QueryStr_QueryEnumDitct[queryName])
 						{
 							case Queries.AddAccount:
+								{
+									_accRepo.Insert(argumentsDeserialized[0] as Account);
+								}
 								break;
 							case Queries.AddActor:
+								{
+									_actRepo.Insert(argumentsDeserialized[0] as Actor);
+								}
 								break;
 							case Queries.AddCity:
+								{
+									_cityRepo.Insert(argumentsDeserialized[0] as City);
+								}
 								break;
 							case Queries.AddCountry:
+								{
+									_countryRepo.Insert(argumentsDeserialized[0] as Country);
+								}
 								break;
 							case Queries.AddFilm:
+								{
+									_actRepo.Insert(argumentsDeserialized[0] as Actor);
+								}
 								break;
 							case Queries.AddFilmActor:
+								{
+									_filmActorRepo.Insert(argumentsDeserialized[0] as FilmActor);
+								}
 								break;
 							case Queries.AddPhoto:
+								{
+									_photoRepo.Insert(argumentsDeserialized[0] as Photo);
+								}
 								break;
 							case Queries.AddReview:
+								{
+									_reviewRepo.Insert(argumentsDeserialized[0] as Review);
+								}
 								break;
 							case Queries.AddReviewAccount:
+								{
+									_reviewAccountRepo.Insert(argumentsDeserialized[0] as ReviewAccount);
+								}
 								break;
 							case Queries.DelActor:
+								{
+									_actRepo.Delete(Convert.ToInt32(argumentsDeserialized[0]));
+								}
 								break;
 							case Queries.DeleteCity:
+								{
+									_cityRepo.Delete(Convert.ToInt32(argumentsDeserialized[0]));
+								}
 								break;
 							case Queries.DeleteCountry:
+								{
+									_countryRepo.Delete(Convert.ToInt32(argumentsDeserialized[0]));
+								}
 								break;
 							case Queries.DeletePhoto:
+								{
+									_photoRepo.Delete(Convert.ToInt32(argumentsDeserialized[0]));
+								}
 								break;
 							case Queries.DeleteReview:
+								{
+									_reviewRepo.Delete(Convert.ToInt32(argumentsDeserialized[0]));
+								}
 								break;
 							case Queries.DelFilm:
+								{
+									_filmRepo.Delete(Convert.ToInt32(argumentsDeserialized[0]));
+								}
 								break;
 							case Queries.DelFilmActor:
-								break;
-							case Queries.DelReview:
+								{
+									_filmActorRepo.Delete(Convert.ToInt32(argumentsDeserialized[0]));
+								}
 								break;
 							case Queries.DelReviewAccount:
+								{
+									_reviewAccountRepo.Delete(Convert.ToInt32(argumentsDeserialized[0]));
+								}
 								break;
 							case Queries.GetActor:
+								{
+									bf.Serialize(netStream, _actRepo.GetById(Convert.ToInt32(argumentsDeserialized[0])));
+								}
 								break;
 							case Queries.GetActorsByFilm:
+								{
+									bf.Serialize(netStream,_filmActorRepo.GetActorsByFilm(Convert.ToInt32(argumentsDeserialized[0])));
+								}
 								break;
 							case Queries.GetActorsPage:
+								{
+									bf.Serialize(netStream, _actRepo.GetPage(Convert.ToInt32(argumentsDeserialized[0]), Convert.ToInt32(argumentsDeserialized[1])));
+								}
 								break;
 							case Queries.GetAllAccounts:
+								{
+
+									bf.Serialize(netStream, _accRepo.GetAll());
+								}
 								break;
 							case Queries.GetAllActors:
+								{
+									bf.Serialize(netStream, _actRepo.GetAll());
+								}
 								break;
 							case Queries.GetAllCities:
+								{
+									bf.Serialize(netStream, _cityRepo.GetAll());
+								}
 								break;
 							case Queries.GetAllCountries:
+								{
+									bf.Serialize(netStream, _countryRepo.GetAll());
+								}
 								break;
 							case Queries.GetAllFilms:
+								{
+									bf.Serialize(netStream, _filmRepo.GetAll());
+								}
 								break;
 							case Queries.GetAllFilmsActors:
+								{
+									bf.Serialize(netStream, _filmActorRepo.GetAll());
+								}
 								break;
 							case Queries.GetAllPhotos:
+								{
+									bf.Serialize(netStream, _photoRepo.GetAll());
+								}
 								break;
 							case Queries.GetAllReviews:
+								{
+									bf.Serialize(netStream, _reviewRepo.GetAll());
+								}
 								break;
 							case Queries.GetAllReviewsAccounts:
+								{
+									bf.Serialize(netStream, _reviewAccountRepo.GetAll());
+								}
 								break;
 							case Queries.GetAllRoles:
+								{
+									bf.Serialize(netStream, _roleRepo.GetAll());
+								}
 								break;
 							case Queries.GetCityById:
+								{
+									bf.Serialize(netStream, _cityRepo.GetById(Convert.ToInt32(argumentsDeserialized[0])));
+								}
 								break;
 							case Queries.GetCountryById:
-								break;
-							case Queries.GetFilm:
+								{
+									bf.Serialize(netStream, _countryRepo.GetById(Convert.ToInt32(argumentsDeserialized[0])));
+								}
 								break;
 							case Queries.GetFilmById:
+								{
+									bf.Serialize(netStream, _filmRepo.GetById(Convert.ToInt32(argumentsDeserialized[0])));
+								}
 								break;
 							case Queries.GetFilmsByActor:
+								{
+									bf.Serialize(netStream, _filmActorRepo.GetFilmsByActor(Convert.ToInt32(argumentsDeserialized[0])));
+								}
 								break;
 							case Queries.GetFilmsPage:
+								{
+									bf.Serialize(netStream, _filmRepo.GetPage(Convert.ToInt32(argumentsDeserialized[0]), Convert.ToInt32(argumentsDeserialized[1])));
+								}
 								break;
 							case Queries.GetPhotoById:
+								{
+									bf.Serialize(netStream, _photoRepo.GetById(Convert.ToInt32(argumentsDeserialized[0])));
+								}
 								break;
 							case Queries.GetReview:
+								{
+									bf.Serialize(netStream, _reviewRepo.GetById(Convert.ToInt32(argumentsDeserialized[0])));
+								}
 								break;
 							case Queries.GetReviewsPage:
+								{
+									bf.Serialize(netStream, _reviewRepo.GetPage(Convert.ToInt32(argumentsDeserialized[0]), Convert.ToInt32(argumentsDeserialized[1])));
+								}
 								break;
 							case Queries.UpdateActor:
+								{
+									_actRepo.Update(argumentsDeserialized[0] as Actor);
+								}
 								break;
 							case Queries.UpdateCity:
+								{
+									_cityRepo.Update(argumentsDeserialized[0] as City);
+								}
 								break;
 							case Queries.UpdateCountry:
+								{
+									_countryRepo.Update(argumentsDeserialized[0] as Country);
+								}
 								break;
 							case Queries.UpdateFilm:
+								{
+									_filmRepo.Update(argumentsDeserialized[0] as Film);
+								}
 								break;
 							case Queries.UpdateFilmActor:
+								{
+									_filmActorRepo.Update(argumentsDeserialized[0] as FilmActor);
+								}
 								break;
 							case Queries.UpdatePhoto:
+								{
+									_photoRepo.Update(argumentsDeserialized[0] as Photo);
+								}
 								break;
 							case Queries.UpdateReview:
+								{
+									_reviewRepo.Update(argumentsDeserialized[0] as Review);
+								}
 								break;
 							default:
 								break;
 						}
+						Console.WriteLine($"\n>Executed {QueryStr_QueryEnumDitct[queryName]}");
 
 						sr.Close();
 						netStream.Close();
 						client.Close();
-
 					}
 				}
 				catch (Exception err)
@@ -272,10 +411,68 @@ namespace Server
 		}
 
 
+		// repository refferences
+		private static AccountRepository _accRepo = new();
+		private static ActorRepository _actRepo = new();
+		private static CityRepository _cityRepo = new();
+		private static CountryRepository _countryRepo = new();
+		private static FilmRepository _filmRepo = new();
+		private static FilmActorRepository _filmActorRepo = new();
+		private static PhotoRepository _photoRepo = new();
+		private static ReviewRepository _reviewRepo = new();
+		private static ReviewAccountRepository _reviewAccountRepo = new();
+		private static RoleRepository _roleRepo = new();
+
 		// methods
 		private void AddAccount()
 		{
 			
 		}
+		private void AddActor(){}
+		private void AddCity(){}
+		private void AddCountry(){}
+		private void AddFilm(){}
+		private void AddFilmActor(){}
+		private void AddPhoto(){}
+		private void AddReview(){}
+		private void AddReviewAccount(){}
+		private void DelActor(){}
+		private void DeleteCity(){}
+		private void DeleteCountry(){}
+		private void DeletePhoto(){}
+		private void DeleteReview(){}
+		private void DelFilm(){}
+		private void DelFilmActor(){}
+		private void DelReview(){}
+		private void DelReviewAccount(){}
+		private void GetActor(){}
+		private void GetActorsByFilm(){}
+		private void GetActorsPage(){}
+		private void GetAllAccounts() { }
+		private void GetAllActors() { }
+		private void GetAllCities() { }
+		private void GetAllCountries() { }
+		private void GetAllFilms() { }
+		private void GetAllFilmsActors() { }
+		private void GetAllPhotos(){}
+		private void GetAllReviews(){}
+		private void GetAllReviewsAccounts(){}
+		private void GetAllRoles(){}
+		private void GetCityById(){}
+		private void GetCountryById(){}
+		private void GetFilm(){}
+		private void GetFilmById(){}
+		private void GetFilmsByActor(){}
+		private void GetFilmsPage(){}
+		private void GetPhotoById(){}
+		private void GetReview(){}
+		private void GetReviewsPage(){}
+		private void UpdateActor(){}
+		private void UpdateCity(){}
+		private void UpdateCountry(){}
+		private void UpdateFilm(){}
+		private void UpdateFilmActor(){}
+		private void UpdatePhoto(){}
+		private void UpdateReview(){}
 	}
 }
