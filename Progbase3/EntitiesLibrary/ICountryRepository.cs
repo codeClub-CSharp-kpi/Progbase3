@@ -1,6 +1,6 @@
 ﻿namespace EntitiesLibrary
 {
-	interface ICountryRepository : IRepository<Country>
+	public interface ICountryRepository : IRepository<Country>
 	{
 	}
 
