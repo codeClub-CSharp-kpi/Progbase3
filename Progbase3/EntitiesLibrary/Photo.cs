@@ -1,9 +1,11 @@
 ﻿using NetManagers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace EntitiesLibrary
 {
+	[Serializable]
 	public class Photo : IEntity
 	{
 		public int Id { get; set; }
@@ -13,7 +15,7 @@ namespace EntitiesLibrary
 		{
 			get
 			{
-				return (TcpQueryManager.ExecQuery("GetAllActors") as IEnumerable<Actor>).GetAll().Where(a => a.PhotoId == Id).FirstOrDefault();
+				return (TcpQueryManager.ExecQuery("GetAllActors") as IEnumerable<Actor>).Where(a => a.PhotoId == Id).FirstOrDefault();
 			}
 		}
 	}

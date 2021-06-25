@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using NetManagers;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace EntitiesLibrary
 {
+	[Serializable]
 	public class City : IEntity
 	{
 		public int Id { get; set; }
@@ -12,7 +15,7 @@ namespace EntitiesLibrary
 		{
 			get
 			{
-				return new CountryRepository().GetById(CountryId);
+				return TcpQueryManager.ExecQuery("GetCountryById", CountryId) as Country;
 			}
 		}
 
@@ -20,7 +23,7 @@ namespace EntitiesLibrary
 		{
 			get
 			{
-				return new ActorRepository().GetAll().Where(a => a.CityId == Id);
+				return (TcpQueryManager.ExecQuery("GetAllActors") as IEnumerable<Actor>).Where(a => a.CityId == Id);
 			}
 		}
 

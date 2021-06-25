@@ -1,9 +1,11 @@
-﻿using System;
+﻿using NetManagers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace EntitiesLibrary
 {
+	[Serializable]
 	public class Film : IEntity
 	{
 		public int Id { get; set; }
@@ -16,7 +18,7 @@ namespace EntitiesLibrary
 		{
 			get
 			{
-				return new ReviewRepository().GetAll().Where(r => r.FilmId == Id);
+				return (TcpQueryManager.ExecQuery("GetAllReviews") as IEnumerable<Review>).Where(r => r.FilmId == Id);
 			}
 		}
 
@@ -25,7 +27,7 @@ namespace EntitiesLibrary
 		{
 			get
 			{
-				return new FilmActorRepository().GetActorsByFilm(Id);
+				return TcpQueryManager.ExecQuery("GetActorsByFilm", Id) as IEnumerable<Actor>;
 			}
 		}// Cast(by other words)
 

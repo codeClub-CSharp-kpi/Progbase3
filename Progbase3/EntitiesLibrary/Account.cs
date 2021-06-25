@@ -1,5 +1,8 @@
-﻿namespace EntitiesLibrary
+﻿using System;
+
+namespace EntitiesLibrary
 {
+    [Serializable]
 	public class Account : IEntity
 	{
         public int Id { get; set; }

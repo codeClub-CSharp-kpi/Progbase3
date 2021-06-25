@@ -1,5 +1,9 @@
-﻿namespace EntitiesLibrary
+﻿using NetManagers;
+using System;
+
+namespace EntitiesLibrary
 {
+	[Serializable]
 	public class Review : IEntity
 	{
 		public int Id { get; set; }
@@ -13,7 +17,7 @@
 		{
 			get
 			{
-				return new FilmRepository().GetById(FilmId);
+				return TcpQueryManager.ExecQuery("GetFilmById", FilmId) as Film;
 			}
 		}
 	}

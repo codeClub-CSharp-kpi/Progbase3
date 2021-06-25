@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using NetManagers;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -17,8 +18,7 @@ namespace EntitiesLibrary
 		}
 		public static void ExportFilmsByActor(Actor concreteActor, string directoryToPlaceExport)
 		{
-			FilmActorRepository filmActorRepository = new();
-			_filmsForXMLRecord = filmActorRepository.GetFilmsByActor(concreteActor.Id).ToList();
+			_filmsForXMLRecord =  (TcpQueryManager.ExecQuery("GetFilmsByActor", concreteActor.Id) as IEnumerable<Film>).ToList();
 
 			string fileName = $"{concreteActor.Name}{concreteActor.Patronimic}{concreteActor.Surname}";
 			string secureFileName = new(fileName.Select(ch => Path.GetInvalidFileNameChars().Contains(ch) ? '_' : ch).ToArray());

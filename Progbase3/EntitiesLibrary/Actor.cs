@@ -1,10 +1,12 @@
 ﻿using NetManagers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace EntitiesLibrary
 {
+	[Serializable]
 	public class Actor : IEntity, INotifyPropertyChanged
 	{
 		public int _id;
@@ -82,7 +84,7 @@ namespace EntitiesLibrary
 		{
 			get
 			{
-				return TcpQueryManager new PhotoRepository().GetById(PhotoId);
+				return TcpQueryManager.ExecQuery("GetPhotoById", PhotoId) as Photo;
 			}
 		}
 
@@ -91,7 +93,7 @@ namespace EntitiesLibrary
 		{
 			get
 			{
-				return new CityRepository().GetById(CityId);
+				return TcpQueryManager.ExecQuery("GetCityById", CityId) as City;
 			}
 		}
 
@@ -100,7 +102,7 @@ namespace EntitiesLibrary
 		{
 			get
 			{
-				return new FilmActorRepository().GetFilmsByActor(Id);
+				return TcpQueryManager.ExecQuery("GetAllFilms", Id) as IEnumerable<Film>;
 			}
 		}// featured films
 
