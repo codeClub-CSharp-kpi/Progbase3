@@ -6,8 +6,12 @@ namespace Generator
 {
 	class Program
 	{
+		public string ConnString { get; init; }
+
 		static void Main(string[] args)
 		{
+			ConnString = args[0];
+
 			Menu m = new Menu();
 			try
 			{
@@ -18,9 +22,7 @@ namespace Generator
 					{
 						break;
 					}
-					Task t1 = new(() => m.ProceedGeneration());
-					t1.Start();
-					t1.Wait();
+					m.ProceedGeneration();
 				} 
 				while (true);
 			}
