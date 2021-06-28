@@ -1,9 +1,11 @@
 ﻿using Dapper;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 
 namespace DataManagersLibrary
 {
@@ -15,13 +17,18 @@ namespace DataManagersLibrary
 
 		static QueryManager()
 		{
-			_connectionString = @"Data Source=SQL5080.site4now.net;
-			Initial Catalog=db_a76153_filmmanagmentdb;
-			User ID=db_a76153_filmmanagmentdb_admin;
-			Password=filmDb753"; // insecure(?) how to create app.config in .net core&
+			// Getting connection string literal in a 'concating commandline arguments' way
+			string[] cmdArgs = Environment.GetCommandLineArgs();
+			StringBuilder sb = new();
+			for (int i = 1; i < cmdArgs.Length; i++)
+			{
+				sb.Append($"{cmdArgs[i]} ");
+			}
+
+			// intialize the connection string variable with the literal from StringBuidler
+			_connectionString = sb.ToString();
 
 			string providerName = "System.Data.SqlClient";
-
 			DbProviderFactories.RegisterFactory(providerName, SqlClientFactory.Instance);
 
 			IEnumerable<string> invariants = DbProviderFactories.GetProviderInvariantNames();
