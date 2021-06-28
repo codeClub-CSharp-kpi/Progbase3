@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MoiveHubSystem.Views"
         xmlns:vmF="clr-namespace:MoiveHubSystem.ViewModels"
         mc:Ignorable="d"
-        Title="Films Window" Height="450" Width="800">
+        Title="Films Window" Height="600" Width="940" MinHeight="570" MinWidth="920" >
     <Window.DataContext>
         <vmF:FilmsViewModel/>
     </Window.DataContext>

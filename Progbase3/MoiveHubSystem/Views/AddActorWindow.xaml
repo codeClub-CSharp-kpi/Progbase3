@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         x:Name="addActorWnd"
-        Title="AddActorWindow" Height="450" Width="800">
+        Title="AddActorWindow" Height="450" Width="800" MinHeight="450" MinWidth="800">
     
     <Grid x:Name="mainGrid">
         <Grid.ColumnDefinitions>

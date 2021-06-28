@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         xmlns:vmR="clr-namespace:MoiveHubSystem.ViewModels" 
         x:Name="revWnd"
-        Title="Reviews Window" Height="450" Width="800">
+        Title="Reviews Window" MinHeight="570" MinWidth="920" Height="600" Width="940">
     <Window.DataContext>
         <vmR:ReviewsViewModel/>
     </Window.DataContext>

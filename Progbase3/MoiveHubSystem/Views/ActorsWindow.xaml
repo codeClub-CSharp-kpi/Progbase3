@@ -7,7 +7,7 @@
         xmlns:vmAct="clr-namespace:MoiveHubSystem.ViewModels"
         mc:Ignorable="d"
         x:Name="actorWnd"
-        Title="Actor Window" MinHeight="650" Height="650" Width="800">
+        Title="Actor Window" MinHeight="670" MinWidth="800" Height="670" Width="800">
     <Window.DataContext>
         <vmAct:ActorsViewModel/>
     </Window.DataContext>
