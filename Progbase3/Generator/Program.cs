@@ -6,12 +6,8 @@ namespace Generator
 {
 	class Program
 	{
-		public string ConnString { get; init; }
-
 		static void Main(string[] args)
 		{
-			ConnString = args[0];
-
 			Menu m = new Menu();
 			try
 			{
