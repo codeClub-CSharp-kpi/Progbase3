@@ -102,7 +102,7 @@ namespace EntitiesLibrary
 		{
 			get
 			{
-				return TcpQueryManager.ExecQuery("GetAllFilms", Id) as IEnumerable<Film>;
+				return TcpQueryManager.ExecQuery("GetFilmsByActor", Id) as IEnumerable<Film>;
 			}
 		}// featured films
 
