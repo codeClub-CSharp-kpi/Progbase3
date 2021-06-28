@@ -7,7 +7,7 @@
         xmlns:vm="clr-namespace:MoiveHubSystem.ViewModels"
         mc:Ignorable="d"
         x:Name="importWnd"
-        Title="ImportFilmsWindow" Height="450" Width="800">
+        Title="ImportFilmsWindow" Height="450" Width="800" MinHeight="450" MinWidth="800" MaxHeight="450" MaxWidth="800">
     <Window.DataContext>
         <vm:ImportViewModel />
     </Window.DataContext>
@@ -24,7 +24,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <TextBox Grid.Row="1" Grid.ColumnSpan="2" Margin="10 50" IsEnabled="False" Text="{Binding PathOfXML}" />
+        <TextBox Grid.Row="1" Grid.ColumnSpan="2" Margin="10 50" IsReadOnly="True" Text="{Binding PathOfXML}" />
         <StackPanel Grid.Column="3" Grid.RowSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button Content="Destination of XML" Margin="10" Command="{Binding PickDirectory}"/>
             <Button Content="Submit" Margin="10" CommandParameter="{Binding ElementName=importWnd}" Command="{Binding ExecImport}"/>    
