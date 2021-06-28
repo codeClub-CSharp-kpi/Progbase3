@@ -439,57 +439,5 @@ namespace Server
 		private static ReviewRepository _reviewRepo = new();
 		private static ReviewAccountRepository _reviewAccountRepo = new();
 		private static RoleRepository _roleRepo = new();
-
-		// methods
-		private void AddAccount()
-		{
-			
-		}
-		private void AddActor(){}
-		private void AddCity(){}
-		private void AddCountry(){}
-		private void AddFilm(){}
-		private void AddFilmActor(){}
-		private void AddPhoto(){}
-		private void AddReview(){}
-		private void AddReviewAccount(){}
-		private void DelActor(){}
-		private void DeleteCity(){}
-		private void DeleteCountry(){}
-		private void DeletePhoto(){}
-		private void DeleteReview(){}
-		private void DelFilm(){}
-		private void DelFilmActor(){}
-		private void DelReview(){}
-		private void DelReviewAccount(){}
-		private void GetActor(){}
-		private void GetActorsByFilm(){}
-		private void GetActorsPage(){}
-		private void GetAllAccounts() { }
-		private void GetAllActors() { }
-		private void GetAllCities() { }
-		private void GetAllCountries() { }
-		private void GetAllFilms() { }
-		private void GetAllFilmsActors() { }
-		private void GetAllPhotos(){}
-		private void GetAllReviews(){}
-		private void GetAllReviewsAccounts(){}
-		private void GetAllRoles(){}
-		private void GetCityById(){}
-		private void GetCountryById(){}
-		private void GetFilm(){}
-		private void GetFilmById(){}
-		private void GetFilmsByActor(){}
-		private void GetFilmsPage(){}
-		private void GetPhotoById(){}
-		private void GetReview(){}
-		private void GetReviewsPage(){}
-		private void UpdateActor(){}
-		private void UpdateCity(){}
-		private void UpdateCountry(){}
-		private void UpdateFilm(){}
-		private void UpdateFilmActor(){}
-		private void UpdatePhoto(){}
-		private void UpdateReview(){}
 	}
 }

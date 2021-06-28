@@ -3,6 +3,7 @@ using Microsoft.Win32;
 using MoiveHubSystem.Commands;
 using MoiveHubSystem.Views;
 using NetManagers;
+using Ookii.Dialogs.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -60,12 +61,11 @@ namespace MoiveHubSystem.ViewModels
 			{
 				try
 				{
-					OpenFileDialog ofd = new();
+					VistaFolderBrowserDialog folderDlg = new();
 
-					if (ofd.ShowDialog() == true)
+					if (folderDlg.ShowDialog() == true)
 					{
-						DirectoryInfo di = new(ofd.FileName);
-						PathToDirectory = di.Parent.FullName;
+						PathToDirectory = folderDlg.SelectedPath;
 					}
 				}
 				catch (Exception err)
