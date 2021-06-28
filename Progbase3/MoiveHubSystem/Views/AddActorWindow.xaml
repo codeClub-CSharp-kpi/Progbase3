@@ -20,17 +20,17 @@
 
         <DockPanel x:Name="fieldPanel" Grid.Column="0">
             <Label DockPanel.Dock="Top" Content="Name: "/>
-            <TextBox DockPanel.Dock="Top" x:Name="nameField" Text="{Binding Name}"/>
+            <TextBox DockPanel.Dock="Top" x:Name="nameField" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label DockPanel.Dock="Top" Content="Patronimic: "/>
-            <TextBox DockPanel.Dock="Top" x:Name="patronimicField" Text="{Binding Patronimic}"/>
+            <TextBox DockPanel.Dock="Top" x:Name="patronimicField" Text="{Binding Patronimic, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label DockPanel.Dock="Top" Content="Surname: "/>
-            <TextBox DockPanel.Dock="Top" x:Name="surnameField" Text="{Binding Surname}"/>
+            <TextBox DockPanel.Dock="Top" x:Name="surnameField" Text="{Binding Surname, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label DockPanel.Dock="Top" Content="Bio: "/>
             <ScrollViewer>
-                <TextBox x:Name="bioField" Text="{Binding Bio}" TextWrapping="WrapWithOverflow"/>
+                <TextBox x:Name="bioField" Text="{Binding Bio, UpdateSourceTrigger=PropertyChanged}" TextWrapping="WrapWithOverflow"/>
             </ScrollViewer>
 
             

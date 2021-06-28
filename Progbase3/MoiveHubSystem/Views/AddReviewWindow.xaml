@@ -28,7 +28,7 @@
         <ScrollViewer>
             <DockPanel x:Name="fieldPanel" Grid.Column="0" Margin="5 0">
             <Label DockPanel.Dock="Top" Content="Title: "/>
-            <TextBox DockPanel.Dock="Top" x:Name="titleField" Text="{Binding Title}"/>
+                <TextBox DockPanel.Dock="Top" x:Name="titleField" Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label DockPanel.Dock="Top" Content="Rate: "/>
             <Slider DockPanel.Dock="Top" x:Name="rateField" 
@@ -36,13 +36,13 @@
                     AutoToolTipPlacement="BottomRight" AutoToolTipPrecision="2" 
                     Maximum="10" Minimum="1"
                     TickFrequency="0.5"
-                    Value="{Binding Rate}"
+                    Value="{Binding Rate, UpdateSourceTrigger=PropertyChanged}"
                     Ticks="1, 1,5, 2, 2.5, 3, 3.5, 4.5, 5, 5.5, 6, 6.5, 7, 7.5,8, 8.5, 9, 9.5, 10"/>
 
 
 
             <Label DockPanel.Dock="Top" Content="Status or review: "/>
-            <ComboBox DockPanel.Dock="Top" x:Name="isPositiveField" ItemsSource="{Binding Source={resc:EnumBindingSource {x:Type viewmodels:ReviewStatus}}}" SelectedItem="{Binding Path=ReviewStatus}"/>
+                <ComboBox DockPanel.Dock="Top" x:Name="isPositiveField" ItemsSource="{Binding Source={resc:EnumBindingSource {x:Type viewmodels:ReviewStatus}}}" SelectedItem="{Binding Path=ReviewStatus, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label DockPanel.Dock="Top" Content="The Film: "/>
             <ListBox x:Name="castField" ItemsSource="{Binding FilmOnReview}"  SelectedItem="{Binding SelectedFilm}" DockPanel.Dock="Top">
@@ -61,7 +61,7 @@
             
             <Label DockPanel.Dock="Top" Content="Review text:" />
             <ScrollViewer >
-                <TextBox x:Name="reviewTextField" Text="{Binding ReviewText}" TextWrapping="WrapWithOverflow"/>
+                    <TextBox x:Name="reviewTextField" Text="{Binding ReviewText, UpdateSourceTrigger=PropertyChanged}" TextWrapping="WrapWithOverflow"/>
             </ScrollViewer>
 
             

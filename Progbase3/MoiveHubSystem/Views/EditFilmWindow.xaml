@@ -20,17 +20,17 @@
 
         <DockPanel x:Name="fieldPanel" Grid.Column="0">
             <Label DockPanel.Dock="Top" Content="Title: "/>
-            <TextBox DockPanel.Dock="Top" x:Name="titleField" Text="{Binding Title}"/>
+            <TextBox DockPanel.Dock="Top" x:Name="titleField" Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label DockPanel.Dock="Top" Content="Release date: "/>
-            <DatePicker DockPanel.Dock="Top" x:Name="officialReleaseDateField" SelectedDate="{Binding OfficialReleaseDate}"/>
+            <DatePicker DockPanel.Dock="Top" x:Name="officialReleaseDateField" SelectedDate="{Binding OfficialReleaseDate, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label DockPanel.Dock="Top" Content="Slogan: "/>
-            <TextBox DockPanel.Dock="Top" x:Name="sloganField" Text="{Binding Slogan}"/>
+            <TextBox DockPanel.Dock="Top" x:Name="sloganField" Text="{Binding Slogan, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label DockPanel.Dock="Top" Content="Story Line:" />
             <ScrollViewer DockPanel.Dock="Top">
-                <TextBox x:Name="storyLineField" Text="{Binding StoryLine}" TextWrapping="WrapWithOverflow"/>
+                <TextBox x:Name="storyLineField" Text="{Binding StoryLine, UpdateSourceTrigger=PropertyChanged}" TextWrapping="WrapWithOverflow"/>
             </ScrollViewer>
 
 

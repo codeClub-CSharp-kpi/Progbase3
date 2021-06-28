@@ -70,7 +70,7 @@
                     <Button Margin="5 0" Content="Prev Page" Command="{Binding LoadPrevPage}"/>
                     <Button Margin="5 0" Content="Next  Page" Command="{Binding LoadNextPage}"/>
                 </WrapPanel>
-                <TextBox x:Name="searchField" Text="{Binding SearchField}"/>
+                <TextBox x:Name="searchField" Text="{Binding SearchField, UpdateSourceTrigger=PropertyChanged}"/>
                 <Button Content="Find Actor" Command="{Binding FindActor}"/>
             </StackPanel>
         </GroupBox>
