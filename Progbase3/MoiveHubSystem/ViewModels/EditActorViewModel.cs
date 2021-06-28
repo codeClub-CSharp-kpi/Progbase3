@@ -149,18 +149,22 @@ namespace MoiveHubSystem.ViewModels
 					int newCityId = SelectedCity?.Id ?? 0;
 
 					//
-					byte[] buff = null;
-					using (var ms = new MemoryStream())
+					int newImage_InBaseId = _preChnagedOriginal.PhotoId;
+
+					if (NewImagePath != "Your new selected image")
 					{
-						new Bitmap(NewImagePath).Save(ms, ImageFormat.Png);
-						buff = ms.ToArray();
+						byte[] buff = null;
+						using (var ms = new MemoryStream())
+						{
+							new Bitmap(NewImagePath).Save(ms, ImageFormat.Png);
+							buff = ms.ToArray();
+						}
+
+						string imageInBase64 = Convert.ToBase64String(buff);
+						TcpQueryManager.ExecQuery("AddPhoto", new Photo() { Path = imageInBase64 });
+
+						newImage_InBaseId = (TcpQueryManager.ExecQuery("GetAllPhotos") as IEnumerable<Photo>).FirstOrDefault(obj => obj.Path == imageInBase64).Id;
 					}
-					
-					string imageInBase64 = Convert.ToBase64String(buff);
-					TcpQueryManager.ExecQuery("AddPhoto", new Photo() { Path = imageInBase64 });
-
-					int newImage_InBaseId = (TcpQueryManager.ExecQuery("GetAllPhotos") as IEnumerable<Photo>).FirstOrDefault(obj => obj.Path == imageInBase64).Id;
-
 					_updatedActor = new Actor()
 					{
 						Id = _preChnagedOriginal.Id,
@@ -174,7 +178,7 @@ namespace MoiveHubSystem.ViewModels
 					TcpQueryManager.ExecQuery("UpdateActor", _updatedActor);
 
 					// Deleting old photo of actor
-					if (_preChnagedOriginal.PhotoId != (int)StandartPhoto_Ids.Default)
+					if (_preChnagedOriginal.PhotoId != (int)StandartPhoto_Ids.Default && NewImagePath != "Your new selected image")
 					{
 						TcpQueryManager.ExecQuery("DeletePhoto", _preChnagedOriginal.PhotoId);
 					}

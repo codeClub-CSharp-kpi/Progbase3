@@ -20,13 +20,13 @@
 
         <DockPanel x:Name="fieldPanel" Grid.Column="0">
             <Label DockPanel.Dock="Top" Content="Name: "/>
-            <TextBox DockPanel.Dock="Top" x:Name="nameField" Text="{Binding Name}"/>
+            <TextBox DockPanel.Dock="Top" x:Name="nameField" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label DockPanel.Dock="Top" Content="Patronimic: "/>
-            <TextBox DockPanel.Dock="Top" x:Name="patronimicField" Text="{Binding Patronimic}"/>
+            <TextBox DockPanel.Dock="Top" x:Name="patronimicField" Text="{Binding Patronimic, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label DockPanel.Dock="Top" Content="Surname: "/>
-            <TextBox DockPanel.Dock="Top" x:Name="surnameField" Text="{Binding Surname}"/>
+            <TextBox DockPanel.Dock="Top" x:Name="surnameField" Text="{Binding Surname, UpdateSourceTrigger=PropertyChanged}"/>
 
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Center">
                 <Grid Margin="5 0 5 0">
@@ -51,7 +51,7 @@
             </StackPanel>
             <Label DockPanel.Dock="Top" Content="Bio: "/>
             <ScrollViewer>
-                <TextBox x:Name="bioField" Text="{Binding Bio}" TextWrapping="WrapWithOverflow"/>
+                <TextBox x:Name="bioField" Text="{Binding Bio, UpdateSourceTrigger=PropertyChanged}" TextWrapping="WrapWithOverflow"/>
             </ScrollViewer>
             
             
@@ -68,7 +68,7 @@
 
                 <GroupBox Header="Change Image" Margin="10">
                     <StackPanel>
-                        <TextBox Margin="10 10 10 0" IsReadOnly="True" Text="{Binding NewImagePath}"/>
+                        <TextBox Margin="10 10 10 0" IsReadOnly="True" Text="{Binding NewImagePath, UpdateSourceTrigger=PropertyChanged}"/>
                         <Button Margin="10" Content="New image"  Command="{Binding SelectNewImage}"/>
                     </StackPanel>
                     

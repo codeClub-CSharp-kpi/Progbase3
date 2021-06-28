@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataGeneratorsLibrary\DataGeneratorsLibrary.csproj" />
+    <ProjectReference Include="..\RepositoryLibrary\RepositoryLibrary.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Net.Sockets;
 using System.Runtime.Serialization.Formatters.Binary;
 
@@ -12,24 +13,33 @@ namespace NetManagers
 
 		private static TcpClient _client;
 
+		private static BinaryFormatter bf = new BinaryFormatter();
+
 		public static object ExecQuery(string procedureName, params object[] args)
 		{
-			object queryResult = null;
-			using (_client = new TcpClient(_ipAddress, _port))
-			{
-				using (NetworkStream netStream = _client.GetStream())
-				{
-					using (StreamWriter sw = new StreamWriter(netStream))
-					{
-						string query = PrepareQuery(procedureName, args);
-						sw.WriteLine(query);
-						sw.Flush();
+			_client = new TcpClient();
 
-						object queryResultFromServer = new BinaryFormatter().Deserialize(netStream);
-					}
-				}
+			IPEndPoint entryPoint = new IPEndPoint(IPAddress.Parse(_ipAddress), _port);
+			_client.Connect(entryPoint);
+
+			NetworkStream netStream = _client.GetStream();
+			
+			StreamWriter sw = new StreamWriter(netStream);
+			string query = PrepareQuery(procedureName, args);
+			sw.WriteLine(query);
+			sw.Flush();
+
+			object queryResultFromServer = null;
+			if (!(procedureName.StartsWith("Add") || procedureName.StartsWith("Del") || procedureName.StartsWith("Upd")))
+			{
+				queryResultFromServer = bf.Deserialize(netStream);
 			}
-			return queryResult;
+
+			sw.Close();
+			netStream.Close();
+			_client.Close();
+
+			return queryResultFromServer;
 		}
 
 		private static string PrepareQuery(string procedureName, params object[] args)
