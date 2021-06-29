@@ -61,7 +61,7 @@ namespace MoiveHubSystem.ViewModels
 			}
 		}
 
-		private double _rate;
+		private double _rate = 1;
 		public double Rate
 		{
 			get
