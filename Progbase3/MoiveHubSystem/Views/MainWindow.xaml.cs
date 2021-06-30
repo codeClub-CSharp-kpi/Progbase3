@@ -28,10 +28,6 @@ namespace MoiveHubSystem.Views
 			InitializeComponent();
 			try
 			{
-				DirectoryInfo di = new("../../../../../images");
-				Icon = new BitmapImage(new Uri(di.FullName + @"/icons/favicon.ico", UriKind.Absolute));
-				
-
 				this.DataContext = new NavigationViewModel();
 			}
 			catch (Exception err)

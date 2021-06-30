@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Server": {
+      "commandName": "Project",
+      "commandLineArgs": "Data Source=SQL5080.site4now.net;Initial Catalog=db_a76153_filmmanagmentdb;User ID=db_a76153_filmmanagmentdb_admin;Password=filmDb753"
+    }
+  }
+}

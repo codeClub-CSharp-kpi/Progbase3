@@ -408,7 +408,7 @@ namespace Server
 						catch (Exception err)
 						{
 							string errorMessage = $"Error in operation: {err.Message}";
-							bf.Serialize(netStream, errorMessage);
+							//bf.Serialize(netStream, errorMessage);
 							throw new Exception(err.Message);
 						}
 					}
@@ -419,12 +419,14 @@ namespace Server
 				}
 				finally
 				{
-					sr?.Close();
-					netStream?.Close();
-					client?.Close();
-					listener?.Stop();
+					
 				}
 			} while (true);
+
+			sr?.Close();
+			netStream?.Close();
+			client?.Close();
+			listener?.Stop();
 		}
 
 
