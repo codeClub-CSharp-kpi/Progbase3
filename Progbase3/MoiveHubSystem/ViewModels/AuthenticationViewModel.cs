@@ -6,6 +6,7 @@ using NetManagers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -72,7 +73,7 @@ namespace MoiveHubSystem.ViewModels
                         var isSuchLogin = (TcpQueryManager.ExecQuery("GetAllAccounts") as IEnumerable<Account>).Where(a => a.Login == Login).FirstOrDefault();
                         if (isSuchLogin != null)
                         {
-                            throw new Exception("Such Login Already Exist");
+                            throw new ApplicationException("Such Login Already Exist");
                         }
 
                         Account newAcc = new()
@@ -82,17 +83,18 @@ namespace MoiveHubSystem.ViewModels
                             RoleId = (int)Role_Id.User
                         };
 
-
                         TcpQueryManager.ExecQuery("AddAccount", newAcc);
                         ClearFields();
 
-                        MessageBox.Show($"Your account has been registered!", "Success",
-                            MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show("Your account has been registered!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
-                    catch (Exception err)
+                    catch (ApplicationException appErr)
                     {
-                        MessageBox.Show($"{err.InnerException?.Message ?? err.Message}", "Error",
-                            MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show(appErr.Message, "Registration Failed", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                    catch (SystemException sysErr)
+                    {
+                        MessageBox.Show(sysErr.Message, "Oops! Some system troubles occured", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }, obj => (!string.IsNullOrWhiteSpace(Login) && !string.IsNullOrWhiteSpace(Password)) && (ValidateLogin() && ValidatePassword()));
             }
@@ -111,18 +113,17 @@ namespace MoiveHubSystem.ViewModels
                         Account accountByLogin = (TcpQueryManager.ExecQuery("GetAllAccounts") as IEnumerable<Account>).Where(acc => acc.Login == _login).FirstOrDefault();
                         if (accountByLogin == null)
                         {
-                            throw new Exception("User with this login has not been found!");
+                            throw new ApplicationException("User with this login has not been found!");
                         }
                         if (accountByLogin.Password != hashedPasswordToCheck)
                         {
-                            throw new Exception($"Password is incorrect!");
+                            throw new ApplicationException($"Password is incorrect!");
                         }
 
-
-                        var entryRole =(TcpQueryManager.ExecQuery("GetAllRoles") as IEnumerable<Role>).Where(role => role.Id == accountByLogin.RoleId).FirstOrDefault();
+                        var entryRole = (TcpQueryManager.ExecQuery("GetAllRoles") as IEnumerable<Role>).Where(role => role.Id == accountByLogin.RoleId).FirstOrDefault();
                         if (entryRole == null)
                         {
-                            throw new Exception("Cannot proccess user with invalid role! Please add such role.");
+                            throw new ApplicationException("Cannot proccess user with invalid role! Please add such role.");
                         }
 
                         ClearFields();
@@ -139,22 +140,22 @@ namespace MoiveHubSystem.ViewModels
                                 MessageBox.Show($"Welcome {entryRole.Name}!", "Client", MessageBoxButton.OK, MessageBoxImage.Information);
                                 break;
                             default:
-                                throw new Exception("Cannot proccess user with invalid role! Please add such role.");
+                                throw new ApplicationException("Cannot proccess user with invalid role! Please add such role.");
                         }
-                        
+
 
                         mapWnd.userName.Text = $"{accountByLogin.Login}";
                         mapWnd.ShowDialog();
                     }
-                    catch (Exception err)
+                    catch (ApplicationException appErr)
                     {
-                        MessageBox.Show($"{err.InnerException?.Message ?? err.Message}", "Error",
-                            MessageBoxButton.OK, MessageBoxImage.Error);
-					}
-					finally
-					{
-                        (obj as AuthenticationWindow).Close();
+                        MessageBox.Show(appErr.Message, "Authentication Failed", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
+                    catch (SystemException sysErr)
+                    {
+                        MessageBox.Show(sysErr.Message, "Oops! Some system troubles occured", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+
                 }, obj => !string.IsNullOrWhiteSpace(Login) && !string.IsNullOrWhiteSpace(Password));
             }
         }
