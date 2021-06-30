@@ -145,6 +145,7 @@ namespace MoiveHubSystem.ViewModels
 
 
                         mapWnd.userName.Text = $"{accountByLogin.Login}";
+
                         mapWnd.ShowDialog();
                     }
                     catch (ApplicationException appErr)

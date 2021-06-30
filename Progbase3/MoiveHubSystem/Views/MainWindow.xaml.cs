@@ -26,16 +26,7 @@ namespace MoiveHubSystem.Views
 		public MainWindow()
 		{
 			InitializeComponent();
-			try
-			{
-				this.DataContext = new NavigationViewModel();
-			}
-			catch (Exception err)
-			{
-				throw new Exception(err.Message);
-				//MessageBox.Show(err.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-				//Process.GetCurrentProcess().Kill();
-			}
+			this.DataContext = new NavigationViewModel();
 		}
 	}
 }

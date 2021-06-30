@@ -103,6 +103,7 @@ namespace MoiveHubSystem.ViewModels
 		{
 			get => new Commands.RelayCommand(obj =>
 			{
+				Application.Current.MainWindow.Close();
 				(obj as MainWindow).Close();
 			});
 		}

@@ -3,13 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MoiveHubSystem"
-        xmlns:vm="clr-namespace:MoiveHubSystem.ViewModels"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         x:Name="mapWnd"
         Title="Map Window" 
-        Height="450" 
+        Height="450"
         Width="800" MinHeight="350" MinWidth="500">
+    
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closed">
+            <i:InvokeCommandAction CommandParameter="{Binding ElementName=mapWnd}" Command="{Binding ExecExit}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -89,5 +95,4 @@
             </Button>
         </UniformGrid>
     </Grid>
-
 </Window>
