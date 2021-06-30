@@ -15,6 +15,7 @@ using Microsoft.Win32;
 using System.Windows;
 using NetManagers;
 using MoiveHubSystem.Porters;
+using System.Diagnostics;
 
 namespace MoiveHubSystem.ViewModels
 {
@@ -103,8 +104,26 @@ namespace MoiveHubSystem.ViewModels
 		{
 			get => new Commands.RelayCommand(obj =>
 			{
-				Application.Current.MainWindow.Close();
-				(obj as MainWindow).Close();
+
+				// Many-line solution vs...->
+				//try
+				//{
+				//	foreach (var item in Application.Current.Windows.OfType<MainWindow>())
+				//	{
+				//		item.Close();
+				//	}
+				//}
+				//catch(InvalidOperationException)
+				//{
+
+				//}
+
+				//foreach (var item in Application.Current.Windows.OfType<AuthenticationWindow>())
+				//{
+				//	item.Close();
+				//}
+
+				Process.GetCurrentProcess().Kill(); //-> one-line solution
 			});
 		}
 		

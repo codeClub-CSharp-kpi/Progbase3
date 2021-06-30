@@ -11,7 +11,7 @@
         Width="800" MinHeight="350" MinWidth="500">
     
     <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Closed">
+        <i:EventTrigger EventName="Closing">
             <i:InvokeCommandAction CommandParameter="{Binding ElementName=mapWnd}" Command="{Binding ExecExit}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
