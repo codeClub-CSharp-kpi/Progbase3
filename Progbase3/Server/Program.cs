@@ -417,10 +417,7 @@ namespace Server
 				{
 					Console.WriteLine($"\n>Server error: {err.Message}");
 				}
-				finally
-				{
-					
-				}
+				
 			} while (true);
 
 			sr?.Close();
