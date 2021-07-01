@@ -7,18 +7,39 @@
         xmlns:vm="clr-namespace:MoiveHubSystem.ViewModels" xmlns:resources="clr-namespace:MoiveHubSystem.Resources"
         mc:Ignorable="d"
         x:Name="authWnd"
-        Title="AuthenticationWindow" Height="450" Width="800">
+        Title="AuthenticationWindow" 
+        MinHeight="400" MinWidth="450" Height="450" Width="800">
     <Window.DataContext>
         <vm:AuthenticationViewModel/>
     </Window.DataContext>
     
     <Grid>
+        <Grid.Background>
+            <LinearGradientBrush>
+                <LinearGradientBrush.GradientStops>
+                    <GradientStop  Color="#7b4397" Offset="0.0"/>
+                    <GradientStop  Color="#dc2430" Offset="1"/>
+                </LinearGradientBrush.GradientStops>
+            </LinearGradientBrush>
+        </Grid.Background>
         <StackPanel VerticalAlignment="Center" Margin="70 0" >
 
-            <Label Content="Login:"/>
-            <TextBox x:Name="loginField" Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}"/>
-            <Label Content="Password:"/>
-            <resources:BindablePasswordBox x:Name="passwordField" Password="{Binding Password}" FontFamily="Trebuchet MS" FontSize="24"  Margin="5 0" Padding="5 20"/>
+            <GroupBox Margin="0 0 0 15" Background="White">
+                <StackPanel Margin="5">
+                    <Label Content="Login:"/>
+                    <TextBox x:Name="loginField" Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+
+            </GroupBox>
+
+            <GroupBox Margin="0 0 0 15" Background="White">
+                <StackPanel Margin="5">
+                    <Label Content="Password:" />
+                    <resources:BindablePasswordBox x:Name="passwordField" Password="{Binding Password}" FontFamily="Trebuchet MS" FontSize="24"  Margin="5 0" Padding="5"/>
+                </StackPanel>
+            </GroupBox>
+
+            
             <WrapPanel HorizontalAlignment="Center" Margin="10">
                 <Button  Content="Login" Margin="10 0" CommandParameter="{Binding ElementName=authWnd}" Command="{Binding ExecLoginization}"/>
                 <Button Content="Register" Margin="10 0" Command="{Binding ExecRegistation}"/>
