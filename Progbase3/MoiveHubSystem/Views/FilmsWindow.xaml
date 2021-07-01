@@ -11,6 +11,10 @@
         <vmF:FilmsViewModel/>
     </Window.DataContext>
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="../images/pictures/filmsLogo.png" Stretch="Uniform"  Opacity="0.03" />
+        </Grid.Background>
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition/>

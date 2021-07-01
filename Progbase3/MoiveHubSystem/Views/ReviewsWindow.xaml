@@ -15,6 +15,10 @@
         
     </Window.Resources>
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="../images/pictures/reviewsLogo.png" Stretch="Uniform"  Opacity="0.03" />
+        </Grid.Background>
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition/>

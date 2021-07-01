@@ -12,11 +12,14 @@
         <vm:ExportViewModel />
     </Window.DataContext>
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="../images/icons/exportIco.png" Stretch="Uniform"  Opacity="0.3" />
+        </Grid.Background>
+        
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="*"/>

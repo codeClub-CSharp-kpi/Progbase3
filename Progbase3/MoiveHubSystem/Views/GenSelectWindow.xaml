@@ -13,6 +13,9 @@
     </Window.DataContext>
     
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="../images/icons/genReport.png" Stretch="Uniform"   Opacity="0.3" />
+        </Grid.Background>
         <GroupBox Grid.Column="0" Grid.RowSpan="3" Header="" Grid.Row="1">
             <StackPanel VerticalAlignment="Center">
                 <ListBox DockPanel.Dock="Top" Margin="10" x:Name="reviewsList" ItemsSource="{Binding PickList}" SelectedItem="{Binding SelectedActor}"/>

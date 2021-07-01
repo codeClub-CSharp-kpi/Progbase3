@@ -13,6 +13,9 @@
     </Window.DataContext>
     
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="../images/pictures/actorsLogo.png" Stretch="Uniform"  Opacity="0.03" />
+        </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition/>
