@@ -15,6 +15,7 @@
     <None Remove="images\icons\favicon.ico" />
     <None Remove="images\icons\file.ico" />
     <None Remove="images\icons\genReport.ico" />
+    <None Remove="images\icons\genReport.png" />
     <None Remove="images\icons\help.ico" />
     <None Remove="images\icons\importIco.png" />
     <None Remove="images\pictures\actorsLogo.png" />
@@ -51,6 +52,7 @@
     <Resource Include="images\icons\genReport.ico">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="images\icons\genReport.png" />
     <Resource Include="images\icons\help.ico">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
